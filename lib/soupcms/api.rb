@@ -1,7 +1,5 @@
-require "soupcms/api/version"
+require 'soupcms/api/version'
 
-module Soupcms
-  module Api
-    # Your code goes here...
-  end
-end
+require 'soupcms/api/database/connections'
+require 'soupcms/api/model/models'
+require 'soupcms/api/service/services'

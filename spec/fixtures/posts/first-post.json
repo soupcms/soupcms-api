@@ -1,0 +1,15 @@
+{
+    "title": "My first blog post",
+    "post": "This is my first blog post and I am really exiced about this. \n I hope u will enjoy it. \n Thanks - Sunit",
+
+    "tags": ["software","agile","first"],
+    "slug": "my-first-blog-post",
+
+    "state": "published",
+
+    "doc_id": 1,
+    "version": 1385717720,
+    "publish_datetime":  1385717720,
+    "create_datetime": 1385717720,
+    "created_by": "sunitparekh"
+}

@@ -1,0 +1,1 @@
+require 'soupcms/api/service/data_service'
