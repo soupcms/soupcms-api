@@ -7,7 +7,7 @@ module SoupCMS
 
       def connect
         @conn ||= Mongo::MongoClient.new(@host, @port)
-        @db ||= @conn.db(@database)
+        @db ||= @conn.db(@database_name)
       end
 
       attr_accessor :db, :conn

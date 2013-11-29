@@ -4,10 +4,12 @@ class DocumentBuilder
   def initialize model
     @model = model
     @data = {}
+    @@db ||= SoupCMS::Api::MongoDbConnection.new('sunitparekh').db
   end
 
   def with(data = {})
-    data.merge! data
+    @data.merge! data
+    self
   end
 
   def add_common_fields
@@ -25,7 +27,7 @@ class DocumentBuilder
 
   def create
     add_missing_fields
-    SoupCMS::Api::MongoDbConnection.new('sunitparekh').db.collection(@model).insert(@data)
+    @@db.collection(@model).insert(@data)
   end
 
 end

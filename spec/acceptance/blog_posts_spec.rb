@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe 'End 2 End API tests for blog post model' do
 
-  describe 'data service' do
-
     it 'should return post as document objects' do
       BlogPostBuilder.new.create
       documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').fetch
@@ -11,7 +9,13 @@ describe 'End 2 End API tests for blog post model' do
       expect(document).to be_kind_of(SoupCMS::Api::Document)
     end
 
-    it 'should not return posts in draft state for published documents'
+    it 'should not return posts in draft state for published documents' do
+      BlogPostBuilder.new.with({state: SoupCMS::Api::Document::DRAFT}).create
+      BlogPostBuilder.new.with({state: SoupCMS::Api::Document::PUBLISHED}).create
+      documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').published.fetch
+      expect(documents.size).to eq(1)
+
+    end
 
     it 'should by default sort on published date as latest posts'
     it 'should limit  posts to 2 when specified'
@@ -22,6 +26,5 @@ describe 'End 2 End API tests for blog post model' do
     #it 'should return all the blog posts published and draft'
     #it "should return latest version of the blog post 'first post'"
 
-  end
 
 end

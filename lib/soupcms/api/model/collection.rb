@@ -3,8 +3,8 @@ module SoupCMS
 
     class Collection
 
-      def initialize(database, collection_name)
-        @database = database
+      def initialize(db, collection_name)
+        @db = db
         @collection_name = collection_name
         @filters = {}
         @sort = {publish_date: :desc}
@@ -12,16 +12,18 @@ module SoupCMS
       end
 
       def published
-        @filters.merge!(state: 'published')
+        @filters.merge!(state: SoupCMS::Api::Document::PUBLISHED)
+        self
       end
 
       def latest
         @sort.merge!(publish_datetime: :desc)
+        self
       end
 
       def fetch
-        coll = @database.collection(@collection_name)
-        coll.find.to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
+        coll = @db.collection(@collection_name)
+        coll.find(@filters).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
       end
 
     end

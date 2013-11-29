@@ -12,7 +12,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    SoupCMS::Api::MongoDbConnection.new('sunitparekh').conn.drop_database('sunitparekh')
+    SoupCMS::Api::MongoDbConnection.new('sunitparekh').db.collection('posts').remove
   end
 
   config.after(:suite) do
