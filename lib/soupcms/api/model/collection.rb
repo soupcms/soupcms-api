@@ -3,11 +3,13 @@ module SoupCMS
 
     class Collection
 
+      DEFAULT_SORT_ON_PUBLISH_DATETIME = {publish_datetime: :desc}
+
       def initialize(db, collection_name)
         @db = db
         @collection_name = collection_name
         @filters = {}
-        @sort = {publish_date: :desc}
+        @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         @limit = 10
       end
 
@@ -17,13 +19,18 @@ module SoupCMS
       end
 
       def latest
-        @sort.merge!(publish_datetime: :desc)
+        @sort.merge!(DEFAULT_SORT_ON_PUBLISH_DATETIME)
+        self
+      end
+
+      def limit(limit)
+        @limit = limit
         self
       end
 
       def fetch
         coll = @db.collection(@collection_name)
-        coll.find(@filters).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
+        coll.find(@filters, { limit: @limit }).sort(@sort).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
       end
 
     end

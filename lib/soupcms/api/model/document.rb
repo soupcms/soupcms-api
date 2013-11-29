@@ -12,6 +12,10 @@ module SoupCMS
         @doc = doc
       end
 
+      def [](key)
+        @doc[key]
+      end
+
     end
 
   end

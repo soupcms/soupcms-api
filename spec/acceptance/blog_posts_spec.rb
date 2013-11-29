@@ -17,10 +17,28 @@ describe 'End 2 End API tests for blog post model' do
 
     end
 
-    it 'should by default sort on published date as latest posts'
-    it 'should limit  posts to 2 when specified'
+    it 'should by default sort on published date as latest posts' do
+      time = Time.now.to_i
+      id1 = BlogPostBuilder.new.with(publish_datetime: (time-50000)).create
+      id2 = BlogPostBuilder.new.with(publish_datetime: (time-2000)).create
+      documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').fetch
+      expect(documents[0]['_id']).to eq(id2)
+      expect(documents[1]['_id']).to eq(id1)
 
-    it 'should by default limit to 10 published posts max'
+    end
+
+    it 'should limit posts to 2 when specified' do
+      5.times { BlogPostBuilder.new.create }
+      documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').limit(2).fetch
+      expect(documents.size).to eq(2)
+
+    end
+
+    it 'should by default limit to 10 published posts max' do
+      20.times { BlogPostBuilder.new.create }
+      documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').fetch
+      expect(documents.size).to eq(10)
+    end
 
     #it "should return a published blog post 'first post'"
     #it 'should return all the blog posts published and draft'
