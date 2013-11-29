@@ -5,7 +5,7 @@ class DocumentBuilder
   def initialize model
     @model = model
     @data = {}
-    @@db ||= SoupCMS::Api::MongoDbConnection.new('sunitparekh').db
+    @@db ||= SoupCMS::Api::MongoDbConnection.new('soupcms-api-test').db
   end
 
   def with(data = {})

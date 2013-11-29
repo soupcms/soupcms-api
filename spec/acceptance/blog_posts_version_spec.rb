@@ -11,7 +11,7 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SoupCMS::Api::Document::DRAFT,'publish_datetime' => (time-30000)}).create
     BlogPostBuilder.new.with({'doc_id' => 23345,'state' => SoupCMS::Api::Document::DRAFT,'publish_datetime' => (time-25000)}).create
 
-    document = SoupCMS::Api::DataService.model('sunitparekh', 'posts').doc_id(1234).published.get
+    document = SoupCMS::Api::DataService.model('soupcms-api-test', 'posts').doc_id(1234).published.get
     expect(document['state']).to eq(SoupCMS::Api::Document::PUBLISHED)
     expect(document['publish_datetime']).to eq(time-35000)
 
@@ -24,7 +24,7 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SoupCMS::Api::Document::DRAFT, 'version' => 4, 'latest' => true}).create
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SoupCMS::Api::Document::PUBLISHED, 'version' => 3, 'latest' => false}).create
 
-    document = SoupCMS::Api::DataService.model('sunitparekh', 'posts').doc_id(1234).draft.get
+    document = SoupCMS::Api::DataService.model('soupcms-api-test', 'posts').doc_id(1234).draft.get
 
     expect(document['state']).to eq(SoupCMS::Api::Document::DRAFT)
     expect(document['version']).to eq(4)
@@ -35,7 +35,7 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SoupCMS::Api::Document::PUBLISHED, 'version' => 3, 'latest' => true}).create
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SoupCMS::Api::Document::ARCHIVE, 'version' => 2, 'latest' => false}).create
 
-    document = SoupCMS::Api::DataService.model('sunitparekh', 'posts').doc_id(1234).draft.get
+    document = SoupCMS::Api::DataService.model('soupcms-api-test', 'posts').doc_id(1234).draft.get
 
     expect(document['state']).to eq(SoupCMS::Api::Document::PUBLISHED)
     expect(document['version']).to eq(3)
@@ -54,7 +54,7 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'doc_id' => 23345,'state' => SoupCMS::Api::Document::DRAFT,'publish_datetime' => (doc2_time-15000)}).create
     BlogPostBuilder.new.with({'doc_id' => 23345,'state' => SoupCMS::Api::Document::PUBLISHED,'publish_datetime' => (doc2_time-25000)}).create
 
-    documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').published.fetch
+    documents = SoupCMS::Api::DataService.model('soupcms-api-test', 'posts').published.fetch
 
     expect(documents.size).to eq(2)
     expect(documents[0]['publish_datetime']).to eq(doc1_time - 35000)
@@ -76,7 +76,7 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'create_datetime' => 1307500000, 'doc_id' => 23345,'state' => SoupCMS::Api::Document::DRAFT,'version' => 1, 'latest' => false}).create
     BlogPostBuilder.new.with({'create_datetime' => 1307600000, 'doc_id' => 23345,'state' => SoupCMS::Api::Document::DRAFT,'version' => 2, 'latest' => true}).create
 
-    documents = SoupCMS::Api::DataService.model('sunitparekh', 'posts').draft.fetch
+    documents = SoupCMS::Api::DataService.model('soupcms-api-test', 'posts').draft.fetch
 
     expect(documents.size).to eq(3)
     expect(documents[2]['doc_id']).to eq(1234)

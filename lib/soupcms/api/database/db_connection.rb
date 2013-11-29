@@ -3,7 +3,7 @@ module SoupCMS
 
     class DbConnection
 
-      def initialize(database_name, host: 'localhost', port: '27017', **options)
+      def initialize(database_name = 'test', host = 'localhost', port = '27017', options ={})
         @database_name = database_name
         @host = host
         @port = port
