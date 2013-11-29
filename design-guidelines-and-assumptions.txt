@@ -1,7 +1,7 @@
 - _id    - unique mongodb id
 - doc_id - unique for each document and remains same for all version of the document
 
-- at a time only one version of the object will remain in either published or draft state
+- at a time only one version of the object will remain in either published
  (this will simplify finding documents)
 
  document states are  =>  'published', 'draft', 'scheduled', 'archive'
@@ -12,7 +12,7 @@
  - archive - when new version is published the old versions are archived. only published versions are marked as archived
 
 - version # is EPOC timestamp
-
+- latest => true or false, this helps to identify which is the last edited version
 - publish_datetime
 - create_datetime
 - created_by

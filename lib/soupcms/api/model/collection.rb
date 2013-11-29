@@ -3,7 +3,7 @@ module SoupCMS
 
     class Collection
 
-      DEFAULT_SORT_ON_PUBLISH_DATETIME = {publish_datetime: :desc}
+      DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
 
       def initialize(db, collection_name)
         @db = db
@@ -14,7 +14,13 @@ module SoupCMS
       end
 
       def published
-        @filters.merge!(state: SoupCMS::Api::Document::PUBLISHED)
+        @filters.merge!('state' => SoupCMS::Api::Document::PUBLISHED)
+        self
+      end
+
+      def draft
+        @sort = {'create_datetime' => :desc}
+        @filters.merge!({'latest' => true})
         self
       end
 
@@ -28,9 +34,18 @@ module SoupCMS
         self
       end
 
+      def doc_id(doc_id)
+        @filters.merge!('doc_id' => doc_id)
+        self
+      end
+
       def fetch
         coll = @db.collection(@collection_name)
         coll.find(@filters, { limit: @limit }).sort(@sort).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
+      end
+
+      def get
+        fetch[0]
       end
 
     end

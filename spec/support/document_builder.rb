@@ -14,7 +14,7 @@ class DocumentBuilder
 
   def add_common_fields
     doc_id = SecureRandom.uuid
-    @data['doc_id'] = doc_id  unless @data['doc_id']
+    @data['doc_id'] = doc_id unless @data['doc_id']
     @data['slug'] = "slug-#{doc_id}" unless @data['slug']
     @data['tags'] = %w(tag1 tag2) unless @data['tags']
     timestamp = Time.now.to_i - 1000
@@ -23,6 +23,7 @@ class DocumentBuilder
     @data['create_datetime'] = timestamp unless @data['create_datetime']
     @data['create_by'] = 'test-builder' unless @data['create_by']
     @data['state'] = SoupCMS::Api::Document::DRAFT unless @data['state']
+    @data['latest'] = false unless @data['latest']
   end
 
   def create
