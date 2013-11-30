@@ -2,7 +2,7 @@ require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
 
-describe 'End 2 End API tests for blog post model' do
+describe 'versions' do
 
   let(:service) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
 
@@ -51,8 +51,8 @@ describe 'End 2 End API tests for blog post model' do
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => ARCHIVE, 'version' => 1}).create
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => PUBLISHED,'publish_datetime' => (doc1_time-35000), 'version' => 4}).create
     BlogPostBuilder.new.with({'doc_id' => 1234,'state' => PUBLISHED_ARCHIVE,'publish_datetime' => (doc1_time-45000), 'version' => 2}).create
-    BlogPostBuilder.new.with({'doc_id' => 1234,'state' => PUBLISHED_ARCHIVE,'publish_datetime' => (doc1_time-40000), 'version' => 3}).create
-    BlogPostBuilder.new.with({'doc_id' => 1234,'state' => DRAFT, 'version' => 5}).create
+    BlogPostBuilder.new.with({'doc_id' => 1234,'state' => SCHEDULED,'publish_datetime' => (doc1_time-40000), 'version' => 5}).create
+    BlogPostBuilder.new.with({'doc_id' => 1234,'state' => DRAFT, 'version' => 6}).create
 
     doc2_time = doc1_time - 60000
     BlogPostBuilder.new.with({'doc_id' => 23345,'state' => DRAFT,'publish_datetime' => (doc2_time-15000)}).create

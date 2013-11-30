@@ -2,7 +2,7 @@ require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
 
-describe 'Data Service tests for different filters and sorting options on post model' do
+describe 'filters n sorting' do
 
   let(:posts) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
 

@@ -11,11 +11,13 @@ module SoupCMS
         @db = db
         @collection_name = collection_name
         @filters = {}
+        @duplicate_docs_compare_key = 'version'
         @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         @limit = 10
       end
 
       def published
+        @duplicate_docs_compare_key = 'publish_datetime'
         @filters.merge!('state' => PUBLISHED)
         self
       end
@@ -59,7 +61,9 @@ module SoupCMS
       def fetch
         coll = @db.collection(@collection_name)
         published if @filters.empty?
-        coll.find(@filters, { limit: @limit }).sort(@sort).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
+        docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
+        coll.find(@filters, { limit: @limit }).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
+        docs.docs
       end
 
       def get
