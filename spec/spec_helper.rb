@@ -1,4 +1,8 @@
 require 'rspec'
+
+require 'coveralls'
+Coveralls.wear!
+
 require 'soupcms/api'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
