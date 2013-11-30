@@ -1,16 +1,15 @@
 module SoupCMS
   module Api
 
-    class Document
-
+    module DocumentState
       PUBLISHED = 'published'
       PUBLISHED_ARCHIVE = 'published_archive'
       DRAFT = 'draft'
       SCHEDULED = 'scheduled'
       ARCHIVE = 'archive'
+    end
 
-      VALID_STATES = [PUBLISHED, DRAFT, SCHEDULED]
-
+    class Document
 
       def initialize doc
         @doc = doc

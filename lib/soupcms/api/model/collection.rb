@@ -3,6 +3,8 @@ module SoupCMS
 
     class Collection
 
+      include SoupCMS::Api::DocumentState
+
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
 
       def initialize(db, collection_name)
@@ -14,7 +16,7 @@ module SoupCMS
       end
 
       def published
-        @filters.merge!('state' => SoupCMS::Api::Document::PUBLISHED)
+        @filters.merge!('state' => PUBLISHED)
         self
       end
 

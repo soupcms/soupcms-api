@@ -23,7 +23,7 @@ class DocumentBuilder
     @data['version'] = timestamp unless @data['version']
     @data['create_datetime'] = timestamp unless @data['create_datetime']
     @data['create_by'] = 'test-builder' unless @data['create_by']
-    @data['state'] = SoupCMS::Api::Document::DRAFT unless @data['state']
+    @data['state'] = SoupCMS::Api::DocumentState::DRAFT unless @data['state']
     @data['latest'] = false unless @data['latest']
   end
 
