@@ -84,13 +84,56 @@ describe 'Data Service tests for different filters and sorting options on post m
   end
 
   context 'filters based on any document specific fields' do
-    it 'should return published document matching title of the document'
-    it 'should return draft document matching title of the document'
-    it 'should return document matching regular expression on title field'
+    it 'should return published document matching title of the document' do
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'My first blog post'}).create
+
+      documents = posts.published.with('title' => 'My first blog post').fetch
+
+      expect(documents.size).to eq(1)
+      expect(documents[0]['title']).to eq('My first blog post')
+    end
+
+    it 'should return zero document matching title of the document' do
+      BlogPostBuilder.new.with({'state' => DRAFT, 'title' => 'My first blog post'}).create
+      documents = posts.published.with('title' => 'My first blog post').fetch
+      expect(documents.size).to eq(0)
+    end
+
+    it 'should return draft document matching title of the document' do
+      doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'state' => PUBLISHED, 'title' => 'My first blog post', 'latest' => false}).create
+      doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'state' => DRAFT, 'title' => 'My first blog post', 'latest' => true}).create
+
+      documents = posts.draft.with('title' => 'My first blog post').fetch
+
+      expect(documents.size).to eq(1)
+      expect(documents[0]['_id']).to eq(doc2)
+    end
+
+
+    it 'should return document matching regular expression on title field' do
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'My first blog post'}).create
+      documents = posts.published.with('title' => /blog/ ).fetch
+      expect(documents.size).to eq(1)
+      expect(documents[0]['title']).to eq('My first blog post')
+    end
+
+    it 'should allow multiple filters' do
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'My first blog post','slug' => 'my-first-blog'}).create
+      documents = posts.published.with('title' => /blog/ ).with('slug' => 'my-first-blog').fetch
+      expect(documents.size).to eq(1)
+      expect(documents[0]['title']).to eq('My first blog post')
+    end
   end
 
   context 'sorting' do
-    it 'should return documents sorted based on specified field and order'
+    it 'should return documents sorted based on specified field and order' do
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'B My first blog post'}).create
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'A My second blog post'}).create
+      documents = posts.published.sort({'title' => :asc}).fetch
+      expect(documents.size).to eq(2)
+      expect(documents[0]['title']).to eq('A My second blog post')
+      expect(documents[1]['title']).to eq('B My first blog post')
+    end
   end
 
 

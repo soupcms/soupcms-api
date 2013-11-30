@@ -51,6 +51,11 @@ module SoupCMS
         self
       end
 
+      def sort(order)
+        @sort = order
+        self
+      end
+
       def fetch
         coll = @db.collection(@collection_name)
         published if @filters.empty?
