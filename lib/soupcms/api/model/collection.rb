@@ -53,6 +53,7 @@ module SoupCMS
 
       def fetch
         coll = @db.collection(@collection_name)
+        published if @filters.empty?
         coll.find(@filters, { limit: @limit }).sort(@sort).to_a.collect { |doc| SoupCMS::Api::Document.new(doc) }
       end
 
