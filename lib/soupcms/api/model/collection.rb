@@ -63,7 +63,7 @@ module SoupCMS
         published if @filters.empty?
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
         coll.find(@filters, { limit: @limit }).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
-        docs.docs
+        docs.documents
       end
 
       def get

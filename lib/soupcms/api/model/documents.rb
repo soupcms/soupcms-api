@@ -5,19 +5,19 @@ module SoupCMS
 
       def initialize(field_to_compare = 'version')
         @field_to_compare = field_to_compare
-        @docs = []
+        @documents = []
       end
 
-      attr_accessor :docs
+      attr_accessor :documents
 
       def add(document)
-        index = @docs.index { |doc| doc['doc_id'] == document['doc_id'] }
+        index = @documents.index { |doc| doc['doc_id'] == document['doc_id'] }
         if index.nil?
-          @docs << document
+          @documents << document
         else
-          existing_doc = @docs[index]
+          existing_doc = @documents[index]
           if existing_doc[@field_to_compare] < document[@field_to_compare]
-            @docs[index] = document
+            @documents[index] = document
           end
         end
       end
