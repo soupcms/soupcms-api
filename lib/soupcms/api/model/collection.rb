@@ -36,6 +36,16 @@ module SoupCMS
         self
       end
 
+      def tags(*tags)
+        @filters.merge!({'tags' => { '$in' => tags }})
+        self
+      end
+
+      def with(filters)
+        @filters.merge!(filters)
+        self
+      end
+
       def doc_id(doc_id)
         @filters.merge!('doc_id' => doc_id)
         self
