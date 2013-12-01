@@ -35,11 +35,11 @@ module SoupCMS
         end
 
 
-        desc 'get a document'
-        get ':doc_id' do
+        desc 'get a document by key'
+        get ':key/:value' do
           service_model = get_service_model
-          doc = service_model.doc_id(params['doc_id']).fetch_one
-          error!("Document #{params['doc_id']} not found.", 404) if doc.nil?
+          doc = service_model.with(params['key'] => params['value']).fetch_one
+          error!("Document #{params['value']} not found.", 404) if doc.nil?
           doc.document
         end
 
