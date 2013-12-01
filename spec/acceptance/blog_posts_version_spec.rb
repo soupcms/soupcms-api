@@ -29,7 +29,7 @@ describe 'versions' do
       BlogPostBuilder.new.with({'doc_id' => 1234,'state' => DRAFT, 'version' => 4, 'latest' => true}).create
       BlogPostBuilder.new.with({'doc_id' => 1234,'state' => PUBLISHED, 'version' => 3, 'latest' => false}).create
 
-      document = service.doc_id(1234).draft.fetch_one
+      document = service.doc_id(1234).drafts.fetch_one
 
       expect(document['state']).to eq(DRAFT)
       expect(document['version']).to eq(4)
@@ -39,7 +39,7 @@ describe 'versions' do
       BlogPostBuilder.new.with({'doc_id' => 1234,'state' => PUBLISHED, 'version' => 3, 'latest' => true}).create
       BlogPostBuilder.new.with({'doc_id' => 1234,'state' => ARCHIVE, 'version' => 2, 'latest' => false}).create
 
-      document = service.doc_id(1234).draft.fetch_one
+      document = service.doc_id(1234).drafts.fetch_one
 
       expect(document['state']).to eq(PUBLISHED)
       expect(document['version']).to eq(3)
@@ -80,7 +80,7 @@ describe 'versions' do
     BlogPostBuilder.new.with({'create_datetime' => 1307500000, 'doc_id' => 23345,'state' => DRAFT,'version' => 1, 'latest' => false}).create
     BlogPostBuilder.new.with({'create_datetime' => 1307600000, 'doc_id' => 23345,'state' => DRAFT,'version' => 2, 'latest' => true}).create
 
-    documents = service.draft.fetch_all
+    documents = service.drafts.fetch_all
 
     expect(documents.size).to eq(3)
     expect(documents[2]['doc_id']).to eq(1234)

@@ -55,7 +55,7 @@ describe 'basic' do
     BlogPostBuilder.new.with({'state' => DRAFT, 'latest' => true}).create
     BlogPostBuilder.new.with({'state' => PUBLISHED, 'latest' => true}).create
     BlogPostBuilder.new.with({'state' => SCHEDULED, 'latest' => true}).create
-    documents = posts.draft.fetch_all
+    documents = posts.drafts.fetch_all
     expect(documents.size).to eq(3)
   end
 

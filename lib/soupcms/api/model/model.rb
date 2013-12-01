@@ -23,7 +23,7 @@ module SoupCMS
         self
       end
 
-      def draft
+      def drafts
         @sort = {'create_datetime' => :desc}
         @filters.merge!({'latest' => true})
         self

@@ -22,7 +22,7 @@ describe 'filters n sorting' do
       doc2 = BlogPostBuilder.new.with({'state' => PUBLISHED, 'tags' => %w(tag1), 'latest' => true}).create
       doc3 = BlogPostBuilder.new.with({'state' => DRAFT, 'tags' => %w(tag3), 'latest' => true}).create
 
-      documents = posts.draft.tags('tag1').fetch_all
+      documents = posts.drafts.tags('tag1').fetch_all
 
       expect(documents.size).to eq(2)
       expect([documents[0]['_id'], documents[1]['_id']]).to match_array([doc1, doc2])
@@ -44,7 +44,7 @@ describe 'filters n sorting' do
       doc2 = BlogPostBuilder.new.with({'state' => PUBLISHED, 'tags' => %w(tag1), 'latest' => true}).create
       doc3 = BlogPostBuilder.new.with({'state' => DRAFT, 'tags' => %w(tag3), 'latest' => true}).create
 
-      documents = posts.draft.tags('tag2','tag3').fetch_all
+      documents = posts.drafts.tags('tag2','tag3').fetch_all
 
       expect(documents.size).to eq(2)
       expect([documents[0]['_id'], documents[1]['_id']]).to match_array([doc1, doc3])
@@ -76,7 +76,7 @@ describe 'filters n sorting' do
       doc1 = BlogPostBuilder.new.with({'state' => DRAFT, 'slug' => 'my-first-post', 'latest' => true}).create
       doc2 = BlogPostBuilder.new.with({'state' => PUBLISHED, 'slug' => 'my-second-post', 'latest' => true}).create
 
-      documents = posts.draft.with('slug' => 'my-first-post').fetch_all
+      documents = posts.drafts.with('slug' => 'my-first-post').fetch_all
 
       expect(documents.size).to eq(1)
       expect(documents[0]['_id']).to eq(doc1)
@@ -103,7 +103,7 @@ describe 'filters n sorting' do
       doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'state' => PUBLISHED, 'title' => 'My first blog post', 'latest' => false}).create
       doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'state' => DRAFT, 'title' => 'My first blog post', 'latest' => true}).create
 
-      documents = posts.draft.with('title' => 'My first blog post').fetch_all
+      documents = posts.drafts.with('title' => 'My first blog post').fetch_all
 
       expect(documents.size).to eq(1)
       expect(documents[0]['_id']).to eq(doc2)

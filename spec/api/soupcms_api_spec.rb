@@ -51,7 +51,7 @@ describe 'API' do
     BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'Title 1','latest' => true).create
     BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 2','latest' => true).create
 
-    get '/api/soupcms-api-test/posts?include=draft'
+    get '/api/soupcms-api-test/posts?include=drafts'
 
     docs = JSON.parse(last_response.body)
     expect(docs.length).to eq(2)

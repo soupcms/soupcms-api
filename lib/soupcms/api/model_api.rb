@@ -14,7 +14,7 @@ module SoupCMS
     end
     get ':app_name/:model_name', requirements: { app_name: /[A-Za-z0-9\-]*/, model_name: /[A-Za-z0-9]*/ } do
       service_model = SoupCMS::Api::DataService.model(params['app_name'], params['model_name'])
-      params['include'] == 'published' ? service_model.published : service_model.draft
+      params['include'] == 'published' ? service_model.published : service_model.drafts
       service_model.tags(params['tags']) unless params['tags'].empty?
       documents = service_model.fetch_all
       documents.collect { |doc| doc.document }
