@@ -9,6 +9,11 @@ module SoupCMS
       ARCHIVE = 'archive'
     end
 
+    module DocumentDefaults
+      DEFAULT_LOCALE = 'en_US'
+
+    end
+
     class Document
 
       def initialize doc

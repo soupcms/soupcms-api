@@ -1,12 +1,12 @@
 module SoupCMS
   module Api
 
-    class Collection
+    class Model
 
       include SoupCMS::Api::DocumentState
+      include SoupCMS::Api::DocumentDefaults
 
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
-      DEFAULT_LOCALE = 'en_US'
 
       def initialize(db, collection_name)
         @db = db

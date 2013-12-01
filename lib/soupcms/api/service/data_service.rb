@@ -4,7 +4,7 @@ module SoupCMS
 
       def self.model(application_name, collection_name)
         db = SoupCMS::Api::MongoDbConnection.new(application_name).db
-        SoupCMS::Api::Collection.new(db,collection_name)
+        SoupCMS::Api::Model.new(db,collection_name)
       end
 
     end
