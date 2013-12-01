@@ -14,6 +14,18 @@ module SoupCMS
         params['include'] == 'published' ? service_model.published : service_model.drafts
         service_model
       end
+
+      def apply_custom_field_filters(service_model)
+        params['filters'].each { |filter|
+          filter_value = params[filter]
+          if filter_value.kind_of?(Array)
+            values = filter_value.collect { |v| eval(v) }
+            service_model.with(filter => { '$in' => values} )
+          else
+            service_model.with(filter => eval(filter_value))
+          end
+        }
+      end
     end
 
 
@@ -33,15 +45,7 @@ module SoupCMS
           service_model = get_service_model
           service_model.tags(params['tags']) unless params['tags'].empty?
 
-          params['filters'].each { |filter|
-            filter_value = params[filter]
-            if filter_value.kind_of?(Array)
-              values = filter_value.collect { |v| eval(v) }
-              service_model.with(filter => { '$in' => values} )
-            else
-              service_model.with(filter => eval(filter_value))
-            end
-          }
+          apply_custom_field_filters(service_model)
 
           service_model.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
 
