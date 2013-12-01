@@ -19,12 +19,15 @@ module SoupCMS
 
       def published
         @duplicate_docs_compare_key = 'publish_datetime'
+        @filters.delete('latest') # remove if latest filter added, conflicting filters
         @filters.merge!('state' => PUBLISHED)
         self
       end
 
       def drafts
         @sort = {'create_datetime' => :desc}
+
+        @filters.delete('state') # remove if state added in filters, conflicting filters
         @filters.merge!({'latest' => true})
         self
       end

@@ -37,5 +37,18 @@ describe 'resilience' do
 
   end
 
+  context 'conflicting filters' do
+    it 'should return published documents' do
+      BlogPostBuilder.new.with({'state' => PUBLISHED, 'latest' => false}).create
+      documents = posts.drafts.published.fetch_all
+      expect(documents.size).to eq(1)
+    end
+    it 'should return draft documents' do
+      BlogPostBuilder.new.with({'state' => DRAFT, 'latest' => true}).create
+      documents = posts.published.drafts.fetch_all
+      expect(documents.size).to eq(1)
+    end
+  end
+
 
 end
