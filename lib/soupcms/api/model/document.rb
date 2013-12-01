@@ -12,12 +12,14 @@ module SoupCMS
     class Document
 
       def initialize doc
-        @doc = doc
+        @document = doc
       end
 
       def [](key)
-        @doc[key]
+        @document[key]
       end
+
+      attr_accessor :document
 
     end
 
