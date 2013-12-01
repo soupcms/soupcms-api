@@ -21,6 +21,7 @@ class DocumentBuilder
     timestamp = Time.now.to_i - 1000
     @data['publish_datetime'] = timestamp unless @data['publish_datetime']
     @data['version'] = timestamp unless @data['version']
+    @data['locale'] = SoupCMS::Api::Collection::DEFAULT_LOCALE unless @data['locale']
     @data['create_datetime'] = timestamp unless @data['create_datetime']
     @data['create_by'] = 'test-builder' unless @data['create_by']
     @data['state'] = SoupCMS::Api::DocumentState::DRAFT unless @data['state']

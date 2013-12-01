@@ -4,7 +4,27 @@ include SoupCMS::Api::DocumentState
 
 describe 'locale' do
 
-  let(:service) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
+  let(:posts) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
+
+  it 'should return en_US locale documents by default' do
+    doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 1}).create
+    doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_GB', 'latest' => true, 'version' => 2}).create
+
+    documents = posts.draft.fetch
+
+    expect(documents.size).to eq(1)
+    expect(documents[0]['_id']).to eq(doc1)
+  end
+
+  it 'should return specific locale documents' do
+    doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 1}).create
+    doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_GB', 'latest' => true, 'version' => 2}).create
+
+    documents = posts.draft.locale('en_GB').fetch
+
+    expect(documents.size).to eq(1)
+    expect(documents[0]['_id']).to eq(doc2)
+  end
 
 
 end

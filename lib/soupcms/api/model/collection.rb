@@ -6,6 +6,7 @@ module SoupCMS
       include SoupCMS::Api::DocumentState
 
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
+      DEFAULT_LOCALE = 'en_US'
 
       def initialize(db, collection_name)
         @db = db
@@ -58,9 +59,16 @@ module SoupCMS
         self
       end
 
+      def locale(locale)
+        @filters.merge!({'locale' => locale})
+        self
+      end
+
+
       def fetch
         coll = @db.collection(@collection_name)
         published if @filters.empty?
+        locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
         coll.find(@filters, { limit: @limit }).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
         docs.documents
