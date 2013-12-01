@@ -26,10 +26,22 @@ module SoupCMS
         desc 'get published documents'
         params do
           optional :tags, type: Array, default: []
+          optional :filters, type: Array, default: []
         end
         get do
           service_model = get_service_model
           service_model.tags(params['tags']) unless params['tags'].empty?
+
+          params['filters'].each { |filter|
+            filter_value = params[filter]
+            if filter_value.kind_of?(Array)
+              values = filter_value.collect { |v| eval(v) }
+              service_model.with(filter => { '$in' => values} )
+            else
+              service_model.with(filter => eval(filter_value))
+            end
+          }
+
           documents = service_model.fetch_all
           documents.collect { |doc| doc.document }
         end
