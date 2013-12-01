@@ -27,6 +27,7 @@ module SoupCMS
         params do
           optional :tags, type: Array, default: []
           optional :filters, type: Array, default: []
+          optional :sort_order, type: String, default: :ascending
         end
         get do
           service_model = get_service_model
@@ -41,6 +42,8 @@ module SoupCMS
               service_model.with(filter => eval(filter_value))
             end
           }
+
+          service_model.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
 
           documents = service_model.fetch_all
           documents.collect { |doc| doc.document }
