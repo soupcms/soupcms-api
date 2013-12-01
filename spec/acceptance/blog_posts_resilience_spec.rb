@@ -14,7 +14,7 @@ describe 'resilience' do
       doc3 = BlogPostBuilder.new.with({'create_datetime' => 1305400000, 'doc_id' => 1234, 'state' => PUBLISHED, 'publish_datetime' => 1305000000, 'version' => 10, 'latest' => false}).create
       doc5 = BlogPostBuilder.new.with({'create_datetime' => 1305100000, 'doc_id' => 1234, 'state' => DRAFT, 'version' => 5, 'latest' => true}).create
 
-      documents = posts.published.fetch
+      documents = posts.published.fetch_all
 
       expect(documents.size).to eq(1)
       expect(documents[0]['_id']).to eq(doc4)
@@ -29,7 +29,7 @@ describe 'resilience' do
       doc4 = BlogPostBuilder.new.with({'create_datetime' => 1306000000, 'doc_id' => 1234, 'state' => PUBLISHED, 'publish_datetime' => 1305200000, 'version' => 4, 'latest' => true}).create
       doc3 = BlogPostBuilder.new.with({'create_datetime' => 1305300000, 'doc_id' => 1234, 'state' => DRAFT, 'version' => 3, 'latest' => true}).create
 
-      documents = posts.draft.fetch
+      documents = posts.draft.fetch_all
 
       expect(documents.size).to eq(1)
       expect(documents[0]['_id']).to eq(doc4)

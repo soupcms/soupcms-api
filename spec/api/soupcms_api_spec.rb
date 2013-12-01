@@ -7,7 +7,7 @@ describe 'API' do
   include Rack::Test::Methods
 
   def app
-    SoupCMS::API
+    SoupCMS::ModelAPI
   end
 
   context 'get request for published documents' do

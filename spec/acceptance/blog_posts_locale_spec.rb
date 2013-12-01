@@ -10,7 +10,7 @@ describe 'locale' do
     doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 1}).create
     doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_GB', 'latest' => true, 'version' => 2}).create
 
-    documents = posts.draft.fetch
+    documents = posts.draft.fetch_all
 
     expect(documents.size).to eq(1)
     expect(documents[0]['_id']).to eq(doc1)
@@ -20,7 +20,7 @@ describe 'locale' do
     doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 1}).create
     doc2 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_GB', 'latest' => true, 'version' => 2}).create
 
-    documents = posts.draft.locale('en_GB').fetch
+    documents = posts.draft.locale('en_GB').fetch_all
 
     expect(documents.size).to eq(1)
     expect(documents[0]['_id']).to eq(doc2)

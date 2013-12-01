@@ -29,11 +29,6 @@ module SoupCMS
         self
       end
 
-      def latest
-        @sort.merge!(DEFAULT_SORT_ON_PUBLISH_DATETIME)
-        self
-      end
-
       def limit(limit)
         @limit = limit
         self
@@ -65,7 +60,7 @@ module SoupCMS
       end
 
 
-      def fetch
+      def fetch_all
         coll = @db.collection(@collection_name)
         published if @filters.empty?
         locale(DEFAULT_LOCALE) unless @filters['locale']
@@ -74,8 +69,8 @@ module SoupCMS
         docs.documents
       end
 
-      def get
-        fetch[0]
+      def fetch_one
+        fetch_all[0]
       end
 
     end
