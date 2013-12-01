@@ -3,7 +3,15 @@ require 'mongo'
 module SoupCMS
   module Api
 
-    class MongoDbConnection < SoupCMS::Api::DbConnection
+    class MongoDbConnection
+
+      def initialize(database_name = 'test', host = 'localhost', port = '27017', options ={})
+        @database_name = database_name
+        @host = host
+        @port = port
+        @options = options
+        connect
+      end
 
       def connect
         @conn ||= Mongo::MongoClient.new(@host, @port)
