@@ -20,6 +20,15 @@ describe 'API' do
     it { expect(JSON.parse(last_response.body).length).to eq(10) }
   end
 
+  context 'no documents found' do
+    before do
+      get '/api/soupcms-api-test/posts'
+    end
+
+    it { expect(last_response.status).to eq(200) }
+    it { expect(JSON.parse(last_response.body).length).to eq(0) }
+  end
+
   context 'get published document matching tags' do
 
     before do
@@ -59,6 +68,42 @@ describe 'API' do
     expect(docs[0]['title']).to eq('Title 1')
     expect(docs[1]['title']).to eq('Title 2')
     expect(docs[2]['title']).to eq('Title 3')
+  end
+
+  context 'request with doc_id' do
+    it 'should return 404 when document not found' do
+      get '/api/soupcms-api-test/posts/1234'
+      expect(last_response.status).to eq(404)
+      expect(JSON.parse(last_response.body)['error']).to eq('Document 1234 not found.')
+    end
+
+    it 'should get a document when search by doc_id' do
+      BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'Title 1','doc_id' => '1234').create
+
+      get '/api/soupcms-api-test/posts/1234'
+
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body)['title']).to eq('Title 1')
+    end
+
+    it 'should not get draft document when search by doc_id' do
+      BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 1','doc_id' => '1234').create
+
+      get '/api/soupcms-api-test/posts/1234'
+
+      expect(last_response.status).to eq(404)
+      expect(JSON.parse(last_response.body)['error']).to eq('Document 1234 not found.')
+    end
+
+    it 'should not get draft document when search by doc_id' do
+      BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 1','doc_id' => '1234', 'latest' => true).create
+
+      get '/api/soupcms-api-test/posts/1234?include=drafts'
+
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body)['title']).to eq('Title 1')
+    end
+
   end
 
 
