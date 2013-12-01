@@ -50,13 +50,15 @@ describe 'API' do
   it 'should get all draft documents' do
     BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'Title 1','latest' => true).create
     BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 2','latest' => true).create
+    BlogPostBuilder.new.with('state' => SCHEDULED, 'title' => 'Title 3','latest' => true).create
 
     get '/api/soupcms-api-test/posts?include=drafts'
 
     docs = JSON.parse(last_response.body)
-    expect(docs.length).to eq(2)
+    expect(docs.length).to eq(3)
     expect(docs[0]['title']).to eq('Title 1')
     expect(docs[1]['title']).to eq('Title 2')
+    expect(docs[2]['title']).to eq('Title 3')
   end
 
 
