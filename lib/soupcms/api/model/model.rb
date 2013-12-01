@@ -35,6 +35,7 @@ module SoupCMS
       end
 
       def tags(*tags)
+        tags.flatten!
         @filters.merge!({'tags' => { '$in' => tags }})
         self
       end
