@@ -18,6 +18,7 @@ module SoupCMS
       def apply_custom_field_filters(service_model)
         params['filters'].each { |filter|
           filter_value = params[filter]
+          #TODO eval are security risk, scope it if possible
           if filter_value.kind_of?(Array)
             values = filter_value.collect { |v| eval(v) }
             service_model.with(filter => { '$in' => values} )

@@ -10,7 +10,7 @@ describe 'API' do
     SoupCMS::ModelAPI
   end
 
-  context 'default results' do
+  context 'basic default' do
 
     context 'get published documents' do
       before do
