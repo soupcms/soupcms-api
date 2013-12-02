@@ -12,6 +12,7 @@ module SoupCMS
       def get_service_model
         service_model = SoupCMS::Api::DataService.model(params['app_name'], params['model_name'])
         params['include'] == 'published' ? service_model.published : service_model.drafts
+        service_model.locale(params['locale'])
         service_model
       end
 
@@ -33,6 +34,7 @@ module SoupCMS
     group ':app_name' do
       params do
         optional :include, type: String, default: 'published'
+        optional :locale, type: String, default: 'en_US'
       end
       group ':model_name' do
 
