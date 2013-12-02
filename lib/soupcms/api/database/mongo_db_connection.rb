@@ -20,6 +20,10 @@ module SoupCMS
 
       attr_accessor :db, :conn
 
+      def close
+        @conn.close
+      end
+
     end
 
   end
