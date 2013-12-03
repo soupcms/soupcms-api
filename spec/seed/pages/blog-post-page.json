@@ -1,0 +1,61 @@
+{
+    "doc_id": 1,
+    "version": 1385717720,
+    "publish_datetime":  1385717720,
+    "create_datetime": 1385717720,
+    "created_by": "sunitparekh",
+    "locale": "en_US",
+
+    "state": "published",
+    "latest": true,
+
+    "areas": [
+        {
+            "name": "body",
+            "modules" : [
+                {
+                    "dataRecipes": [
+                        {
+                            "type": "soupcms-api",
+                            "model": "#{context['model']}",
+                            "match": {
+                                "slug": "#{context['slug']}"
+                            },
+                            "return": "document"
+                        }
+                    ],
+                    "postProcessors":[
+                        {
+                            "name":"markdown",
+                            "fields": ["data['document']['content']"]
+                        }
+                    ],
+                    "template": {
+                        "type": "slim",
+                        "theme": "bootstrap",
+                        "name": "article"
+                    }
+                },
+                {
+                    "dataRecipes": [
+                        {
+                            "type": "soupcms-api",
+                            "model": "posts",
+                            "match": {
+                                "tags": "#{data['document']['tags']}"
+                            },
+                            "return": "posts"
+                        }
+                    ],
+                    "template": {
+                        "type": "slim",
+                        "theme": "bootstrap",
+                        "name": "blog-post"
+                    }
+                }
+            ]
+        }
+    ]
+
+
+}

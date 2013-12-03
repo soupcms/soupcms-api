@@ -8,7 +8,7 @@ task :default => :spec
 
 
 task :seed do
-  conn = SoupCMS::Api::MongoDbConnection.new('soupcms-api-test')
+  conn = SoupCMS::Api::MongoDbConnection.new('soupcms-test')
   db = conn.db
   # clean up database
   db.collection_names.each { |name|

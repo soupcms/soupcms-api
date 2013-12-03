@@ -17,10 +17,21 @@
 - slug
 - tags
 
+
 BLOG POST
 
 - blog
 - title
 - post
+
+
+PAGES
+
+- dataRecipe types
+
+    - inline:   data are inline into page object
+    - soupcms-api: data is retrieved using soupcms-api services, library knows how to parse and build the api request
+    - ruby: data is returned by a ruby class with method 'fetch'
+    - url: data is retrieved from the specified url with params evaluated
 
 

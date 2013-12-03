@@ -1,0 +1,69 @@
+{
+    "doc_id": 1,
+    "version": 1385717720,
+    "publish_datetime": 1385717720,
+    "create_datetime": 1385717720,
+    "created_by": "sunitparekh",
+    "locale": "en_US",
+
+    "slug": "/",
+
+    "state": "published",
+    "latest": true,
+
+    "title": "Home page",
+    "seo": {
+        "keywords": "sunitparekh,sunit, parekh, blog",
+        "description": "Sunit Parekh blog"
+
+    },
+
+    "areas": [
+        {
+            "name": "header",
+            "modules": [
+                {
+                    "dataRecipes": [
+                        {
+                            "type": "inline",
+                            "data": {
+                                "title": "Tech stuff that matters",
+                                "subHeadline": "place where I write about technical solutions tried & implemented by me"
+                            },
+                            "return": "data"
+                        }
+                    ],
+                    "template": {
+                        "type": "slim",
+                        "theme": "bootstrap",
+                        "name": "page-header-view"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "body",
+            "modules": [
+                {
+                    "dataRecipes": [
+                        {
+                            "type": "soupcms-api",
+                            "model": "posts",
+                            "match": {
+                                "tags": "popular"
+                            },
+                            "return": "posts"
+                        }
+                    ],
+                    "template": {
+                        "type": "slim",
+                        "theme": "bootstrap",
+                        "name": "tile-view"
+                    }
+                }
+            ]
+        }
+    ]
+
+
+}
