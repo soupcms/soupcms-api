@@ -9,12 +9,19 @@
     "state": "published",
     "latest": true,
 
+    "model": "posts",
+
+    "layout": {
+        "type": "slim",
+        "name": "bootstrap/default"
+    },
+
     "areas": [
         {
             "name": "body",
             "modules" : [
                 {
-                    "dataRecipes": [
+                    "recipes": [
                         {
                             "type": "soupcms-api",
                             "model": "#{context['model']}",
@@ -32,25 +39,24 @@
                     ],
                     "template": {
                         "type": "slim",
-                        "theme": "bootstrap",
-                        "name": "article"
+                        "name": "bootstrap/article"
                     }
                 },
                 {
-                    "dataRecipes": [
+                    "recipes": [
                         {
                             "type": "soupcms-api",
                             "model": "posts",
                             "match": {
                                 "tags": "#{data['document']['tags']}"
                             },
+                            "limit" : 3,
                             "return": "posts"
                         }
                     ],
                     "template": {
                         "type": "slim",
-                        "theme": "bootstrap",
-                        "name": "blog-post"
+                        "name": "bootstrap/article-list-view"
                     }
                 }
             ]

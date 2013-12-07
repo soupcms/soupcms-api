@@ -46,7 +46,7 @@ module SoupCMS
         end
         get do
           service_model = get_service_model
-          service_model.tags(params['tags']) unless params['tags'].empty?
+          service_model.tags(params['tags'].collect { |tag| eval(tag)}) unless params['tags'].empty?
 
           apply_custom_field_filters(service_model)
 

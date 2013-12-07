@@ -1,0 +1,23 @@
+{
+    "title": "My third blog post",
+    "description" : "This is my first blog post and I am really excited about this.",
+    "content": "This is my third blog post and I am really exiced about this. \n I hope u will enjoy it. \n Thanks - Sunit",
+    "author": {
+        "name" : "Sunit Parekh",
+        "twitter_handle" : "sunitparekh",
+        "email" : "parekh.sunit@gmail.com"
+    },
+
+    "tags": ["software","agile","third"],
+    "slug": "my-third-blog-post",
+
+    "state": "published",
+    "latest": true,
+
+    "doc_id": 3,
+    "version": 1386717720,
+    "publish_datetime":  1386717720,
+    "create_datetime": 1386717720,
+    "created_by": "sunitparekh",
+    "locale": "en_US"
+}

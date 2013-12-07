@@ -1,20 +1,20 @@
 {
-    "title": "My first blog post",
+    "title": "My fourth blog post",
     "description" : "This is my first blog post and I am really excited about this.",
-    "content": "This is my first blog post and I am really excited about this. \n I hope u will enjoy it. \n Thanks - Sunit",
+    "content": "This is my fourth blog post and I am really exiced about this. \n I hope u will enjoy it. \n Thanks - Sunit",
     "author": {
         "name" : "Sunit Parekh",
         "twitter_handle" : "sunitparekh",
         "email" : "parekh.sunit@gmail.com"
     },
 
-    "tags": ["software","agile","first","popular"],
-    "slug": "my-first-blog-post",
+    "tags": ["software","agile","fourth","popular"],
+    "slug": "my-fourth-blog-post",
 
     "state": "published",
     "latest": true,
 
-    "doc_id": 1,
+    "doc_id": 4,
     "version": 1385717720,
     "publish_datetime":  1385717720,
     "create_datetime": 1385717720,
