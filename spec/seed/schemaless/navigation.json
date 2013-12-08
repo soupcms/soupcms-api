@@ -17,20 +17,51 @@
     },
 
     "menu": {
-        "left": {
-            "Home": "http://www.soupcms.com/soupcms",
-            "Blog": "http://www.soupcms.com/soupcms-blog",
-            "Resources": {
-                "Screencasts": "http://www.soupcms.com/soupcms/resources/screencasts",
-                "Getting started": "http://www.soupcms.com/soupcms/resources/getting-started",
-                "Documentation": "http://www.soupcms.com/soupcms/resources/documentation",
-                "Demo": "http://www.soupcms.com/soupcms/demo"
+        "left": [
+            {
+                "label": "Home",
+                "link" : "http://www.soupcms.com/soupcms",
+                "font_icon" : "fa fa-home"
+            },
+            {
+                "label": "Blog",
+                "link" : "http://www.soupcms.com/soupcms-blog"
+            },
+            {
+                "label": "Resources",
+                "submenu" : [
+                    {
+                        "label": "Screencasts",
+                        "link" : "http://www.soupcms.com/soupcms/resources/screencasts",
+                        "font_icon" : "fa fa-desktop"
+                    },
+                    {
+                        "label": "Getting started",
+                        "link" : "http://www.soupcms.com/soupcms/resources/getting-started"
+                    },
+                    {
+                        "label": "Documentation",
+                        "link" : "http://www.soupcms.com/soupcms/resources/documentation",
+                        "font_icon" : "fa fa-file-text"
+                    },
+                    {
+                        "label": "Demo",
+                        "link" : "http://www.soupcms.com/soupcms/demo"
+                    }
+                ]
             }
-        },
-        "right": {
-            "About": "http://www.soupcms.com/soupcms/about",
-            "Contact Us": "http://www.soupcms.com/soupcms/contact-us"
-        }
+        ],
+        "right": [
+            {
+                "label": "About",
+                "link" : "http://www.soupcms.com/soupcms/about"
+            },
+            {
+                "label": "Contact Us",
+                "link" : "http://www.soupcms.com/soupcms/contact-us",
+                "font_icon" : "fa fa-envelope-o"
+            }
+        ]
     }
 
 }
