@@ -1,0 +1,36 @@
+{
+    "state": "published",
+    "latest": true,
+
+    "doc_id": 1000,
+    "version": 1385717720,
+    "publish_datetime": 1385717720,
+    "create_datetime": 1385717720,
+    "created_by": "sunitparekh",
+    "locale": "en_US",
+
+    "name": "navigation",
+
+    "logo": {
+        "font_icon" : "fa fa-magic",
+        "text": "soupCMS"
+    },
+
+    "menu": {
+        "left": {
+            "Home": "http://www.soupcms.com/soupcms",
+            "Blog": "http://www.soupcms.com/soupcms-blog",
+            "Resources": {
+                "Screencasts": "http://www.soupcms.com/soupcms/resources/screencasts",
+                "Getting started": "http://www.soupcms.com/soupcms/resources/getting-started",
+                "Documentation": "http://www.soupcms.com/soupcms/resources/documentation",
+                "Demo": "http://www.soupcms.com/soupcms/demo"
+            }
+        },
+        "right": {
+            "About": "http://www.soupcms.com/soupcms/about",
+            "Contact Us": "http://www.soupcms.com/soupcms/contact-us"
+        }
+    }
+
+}
