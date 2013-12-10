@@ -1,3 +1,5 @@
+require 'bson'
+
 module SoupCMS
   module Api
 
@@ -39,7 +41,7 @@ module SoupCMS
 
       def tags(*tags)
         tags.flatten!
-        @filters.merge!({'tags' => { '$in' => tags }})
+        @filters.merge!({'tags' => {'$in' => tags}})
         self
       end
 
@@ -69,12 +71,53 @@ module SoupCMS
         published if @filters.empty?
         locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
-        coll.find(@filters, { limit: @limit }).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
+        coll.find(@filters, {limit: @limit}).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
         docs.documents
       end
 
       def fetch_one
         fetch_all[0]
+      end
+
+      TAG_CLOUD_MAP_FUNCTION = BSON::Code.new <<-map_function
+          function() {
+              if (!this.tags) {
+                  return;
+              }
+
+              for (index in this.tags) {
+                  emit(this.tags[index], 1);
+              }
+          };
+      map_function
+
+      TAG_CLOUD_REDUCE_FUNCTION = BSON::Code.new <<-reduce_function
+          function(previous, current) {
+              var count = 0;
+
+              for (index in current) {
+                  count += current[index];
+              }
+
+              return count;
+          };
+      reduce_function
+
+      def tag_cloud
+
+        collection = @db.collection(@collection_name)
+        result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, filters: @filters})
+
+        tags = {'tags' => []}
+        result['results'].each do |tag|
+          tag_result = {}
+          tag_result['label'] = tag['_id']
+          tag_result['weight'] = Integer(tag['value'])
+          tag_result['link'] = { 'model_name' => 'posts', 'match' => { 'tags' => tag['_id'] } }
+          tags['tags'] << tag_result
+        end
+
+        tags
       end
 
     end

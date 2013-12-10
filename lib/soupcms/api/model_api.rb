@@ -7,6 +7,10 @@ module SoupCMS
     prefix 'api'
     format :json
 
+    def self.config
+      @@config ||= SoupCMS::Api::Utils::Config.new
+    end
+
     helpers do
 
       def get_service_model
@@ -38,6 +42,12 @@ module SoupCMS
       end
       group ':model_name' do
 
+        desc 'get a tag cloud'
+        get 'tag-cloud' do
+          service_model = get_service_model
+          service_model.tag_cloud
+        end
+
         desc 'get published documents'
         params do
           optional :tags, type: Array, default: []
@@ -56,7 +66,6 @@ module SoupCMS
           documents.collect { |doc| doc.document }
         end
 
-
         desc 'get a document by key'
         get ':key/:value' do
           service_model = get_service_model
@@ -64,7 +73,6 @@ module SoupCMS
           error!("Document #{params['value']} not found.", 404) if doc.nil?
           doc.document
         end
-
 
       end
     end

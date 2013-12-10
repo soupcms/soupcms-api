@@ -24,7 +24,11 @@ module SoupCMS
         @document[key]
       end
 
-      attr_accessor :document
+      attr_reader :document
+
+      def resolve_dependencies(context)
+        @document = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+      end
 
     end
 
