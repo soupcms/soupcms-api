@@ -22,6 +22,18 @@ module SoupCMS
         end
       end
 
+      def to_json(*args)
+        documents.collect { |doc| doc.document }.to_json
+      end
+
+      def size
+        @documents.size
+      end
+
+      def [](index)
+        @documents[index]
+      end
+
     end
 
   end

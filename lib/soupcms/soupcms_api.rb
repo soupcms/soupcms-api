@@ -65,8 +65,7 @@ class SoupCMSApi < Grape::API
 
           service_model.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
 
-          documents = service_model.fetch_all
-          documents.collect { |doc| doc.document }
+          service_model.fetch_all
         end
 
         desc 'get a document by key'
@@ -74,7 +73,7 @@ class SoupCMSApi < Grape::API
           service_model = get_service_model
           doc = service_model.with(params['key'] => params['value']).fetch_one
           error!("Document #{params['value']} not found.", 404) if doc.nil?
-          doc.document
+          doc
         end
 
       end

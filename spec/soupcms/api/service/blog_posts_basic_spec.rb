@@ -13,7 +13,7 @@ describe 'basic' do
   it 'should return post as document objects' do
     BlogPostBuilder.new.with('state' => PUBLISHED).create
     documents = posts.fetch_all
-    document = documents[0]
+    document = documents.documents[0]
     expect(document).to be_kind_of(SoupCMS::Api::Document)
   end
 

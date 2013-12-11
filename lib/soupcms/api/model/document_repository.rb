@@ -18,8 +18,10 @@ module SoupCMS
         @limit = 10
       end
 
+      attr_reader :context
+
       def collection
-        @collection ||= @context.application.connection.db.collection(@context.model_name)
+        @collection ||= context.application.connection.db.collection(context.model_name)
       end
 
       def published
@@ -73,12 +75,16 @@ module SoupCMS
         published if @filters.empty?
         locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
-        collection.find(@filters, {limit: @limit}).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
-        docs.documents
+        collection.find(@filters, {limit: @limit}).sort(@sort).each do |doc|
+          doc = SoupCMS::Api::Document.new(doc)
+          doc.resolve_dependencies(context)
+          docs.add(doc)
+        end
+        docs
       end
 
       def fetch_one
-        fetch_all[0]
+        fetch_all.documents[0]
       end
 
       TAG_CLOUD_MAP_FUNCTION = BSON::Code.new <<-map_function
@@ -109,16 +115,16 @@ module SoupCMS
 
         result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, filters: @filters})
 
-        tags = {'tags' => []}
+        docs = SoupCMS::Api::TagCloud.new
         result['results'].each do |tag|
           tag_result = {}
           tag_result['label'] = tag['_id']
           tag_result['weight'] = Integer(tag['value'])
           tag_result['link'] = { 'model_name' => 'posts', 'match' => { 'tags' => tag['_id'] } }
-          tags['tags'] << tag_result
+          document = SoupCMS::Api::Document.new(tag_result).resolve_dependencies(context)
+          docs.add(document)
         end
-
-        tags
+        docs
       end
 
     end

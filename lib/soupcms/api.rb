@@ -11,6 +11,7 @@ require 'soupcms/api/model/application'
 require 'soupcms/api/model/request_context'
 require 'soupcms/api/model/document'
 require 'soupcms/api/model/documents'
+require 'soupcms/api/model/tag_cloud'
 require 'soupcms/api/model/document_repository'
 
 require 'soupcms/soupcms_api'

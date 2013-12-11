@@ -16,8 +16,8 @@ module SoupCMS
 
     class Document
 
-      def initialize doc
-        @document = doc
+      def initialize(document)
+        @document = document
       end
 
       def [](key)
@@ -26,9 +26,15 @@ module SoupCMS
 
       attr_reader :document
 
+      def to_json(*args)
+        @document.to_json
+      end
+
       def resolve_dependencies(context)
         @document = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+        self
       end
+
 
     end
 
