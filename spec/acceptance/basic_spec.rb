@@ -7,7 +7,7 @@ describe 'API' do
   include Rack::Test::Methods
 
   def app
-    SoupCMS::ModelAPI
+    SoupCMSApi
   end
 
   context 'basic default' do

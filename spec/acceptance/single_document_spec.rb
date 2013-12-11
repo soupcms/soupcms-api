@@ -7,7 +7,7 @@ describe 'API' do
   include Rack::Test::Methods
 
   def app
-    SoupCMS::ModelAPI
+    SoupCMSApi
   end
 
   context 'search by doc_id' do

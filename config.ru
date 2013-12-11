@@ -1,2 +1,2 @@
 require 'soupcms/api'
-run SoupCMS::ModelAPI
+run SoupCMSApi

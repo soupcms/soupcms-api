@@ -17,5 +17,4 @@ require 'soupcms/api/model/model'
 
 require 'soupcms/api/service/data_service'
 
-
-require 'soupcms/api/model_api'
+require 'soupcms/soupcms_api'

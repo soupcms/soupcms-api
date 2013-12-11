@@ -1,9 +1,7 @@
 require 'grape'
 require 'json'
 
-module SoupCMS
-
-  class ModelAPI < ::Grape::API
+class SoupCMSApi < Grape::API
     prefix 'api'
     format :json
 
@@ -76,10 +74,5 @@ module SoupCMS
 
       end
     end
-
-
-
-
-  end
 
 end
