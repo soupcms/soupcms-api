@@ -11,8 +11,9 @@ module SoupCMS
 
       def resolve(document)
         document.each do |key, value|
-          if resolvers[key]
-            document[key] = resolvers[key].new.resolve(value,@context)
+          resolver = find_resolver(key)
+          if resolver
+            document[key] = resolver.new.resolve(value,@context)
           elsif value.kind_of?(Array)
             document[key] = value.collect { |item| item.kind_of?(Hash) ? resolve(item) : item }
           elsif value.kind_of?(Hash)
@@ -20,6 +21,12 @@ module SoupCMS
           end
         end
         document
+      end
+
+      def find_resolver(key)
+        resolver = nil
+        resolvers.select { |k,v| resolver = v if key.match(k) }
+        resolver
       end
 
     end

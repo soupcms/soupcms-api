@@ -5,7 +5,7 @@ module SoupCMS
 
       module ConfigDefaults
         DEPENDENCY_RESOLVER = {
-            'link' => SoupCMS::Api::Resolver::LinkResolver
+            /link$/ => SoupCMS::Api::Resolver::LinkResolver
         }
       end
 
