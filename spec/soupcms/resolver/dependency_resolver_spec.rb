@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoupCMS::Api::DependencyResolver do
 
   let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application) }
+  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
   it 'should resolve link dependency' do
     document = {
@@ -52,6 +52,28 @@ describe SoupCMS::Api::DependencyResolver do
     }
     actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(actual).to eq(expected)
+  end
+
+  it 'should resolve tags with links' do
+    document = {
+        'tags' => %w(tag1 tag2)
+    }
+    expected = {
+        'tags' => [
+            {
+                'label' => 'tag1',
+                'link' => '/soupcms-test/posts?tags=%22tag1%22'
+            },
+            {
+                'label' => 'tag2',
+                'link' => '/soupcms-test/posts?tags=%22tag2%22'
+            }
+        ]
+    }
+    actual = SoupCMS::Api::Dependency
+    Resolver.new(context).resolve(document)
+    expect(actual).to eq(expected)
+
   end
 
 end
