@@ -70,8 +70,7 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
-    actual = SoupCMS::Api::Dependency
-    Resolver.new(context).resolve(document)
+    actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(actual).to eq(expected)
 
   end
