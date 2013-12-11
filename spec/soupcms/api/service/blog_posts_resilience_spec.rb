@@ -7,7 +7,7 @@ describe 'resilience' do
 
   let (:application) { Application.new('soupcms-test') }
   let (:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
-  let(:posts) { SoupCMS::Api::DataService.model(context) }
+  let(:posts) { SoupCMS::Api::DocumentRepository.new(context) }
 
   context 'having multiple published version of a document' do
     it 'should return only latest published document' do

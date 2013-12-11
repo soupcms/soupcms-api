@@ -32,9 +32,9 @@ describe 'API' do
     end
 
     it 'should get all draft documents' do
-      BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'Title 1', 'latest' => true).create
-      BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 2', 'latest' => true).create
-      BlogPostBuilder.new.with('state' => SCHEDULED, 'title' => 'Title 3', 'latest' => true).create
+      BlogPostBuilder.new.with('create_datetime' => 1305000000, 'state' => PUBLISHED, 'title' => 'Title 1', 'latest' => true).create
+      BlogPostBuilder.new.with('create_datetime' => 1302000000, 'state' => DRAFT, 'title' => 'Title 2', 'latest' => true).create
+      BlogPostBuilder.new.with('create_datetime' => 1301000000, 'state' => SCHEDULED, 'title' => 'Title 3', 'latest' => true).create
 
       get '/api/soupcms-test/posts?include=drafts'
 

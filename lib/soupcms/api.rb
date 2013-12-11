@@ -7,14 +7,10 @@ require 'soupcms/api/resolver/link_resolver'
 require 'soupcms/api/utils/url_builder'
 require 'soupcms/api/utils/config'
 
-require 'soupcms/api/database/mongo_db_connection'
-
 require 'soupcms/api/model/application'
 require 'soupcms/api/model/request_context'
 require 'soupcms/api/model/document'
 require 'soupcms/api/model/documents'
 require 'soupcms/api/model/document_repository'
-
-require 'soupcms/api/service/data_service'
 
 require 'soupcms/soupcms_api'

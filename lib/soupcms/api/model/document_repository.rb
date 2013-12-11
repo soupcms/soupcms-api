@@ -10,8 +10,7 @@ module SoupCMS
 
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
 
-      def initialize(db, context)
-        @db = db
+      def initialize(context)
         @context = context
         @filters = {}
         @duplicate_docs_compare_key = 'version'
@@ -20,7 +19,7 @@ module SoupCMS
       end
 
       def collection
-        @db.collection(@context.model_name)
+        @collection ||= @context.application.connection.db.collection(@context.model_name)
       end
 
       def published

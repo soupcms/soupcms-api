@@ -12,8 +12,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    application = SoupCMS::Api::Model::Application.new('soupcms-test')
-    SoupCMS::Api::MongoDbConnection.new(application).db.collection('posts').remove
+    SoupCMS::Api::Model::Application.new('soupcms-test').connection.db.collection('posts').remove
   end
 
   config.after(:suite) do

@@ -7,7 +7,7 @@ describe 'versions' do
 
   let(:application) { Application.new('soupcms-test') }
   let(:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
-  let(:service) { SoupCMS::Api::DataService.model(context) }
+  let(:service) { SoupCMS::Api::DocumentRepository.new(context) }
 
   it 'should return only one latest published blog post for multiple versions of posts' do
     time = Time.now.to_i

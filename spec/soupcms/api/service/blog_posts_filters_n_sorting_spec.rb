@@ -7,7 +7,7 @@ describe 'filters n sorting' do
 
   let (:application) { Application.new('soupcms-test') }
   let (:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
-  let(:posts) { SoupCMS::Api::DataService.model(context) }
+  let(:posts) { SoupCMS::Api::DocumentRepository.new(context) }
 
   context 'filters based on tags' do
     it 'should return all the published documents matching tag' do

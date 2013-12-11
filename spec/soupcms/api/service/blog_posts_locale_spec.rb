@@ -7,7 +7,7 @@ describe 'locale' do
 
   let (:application) { Application.new('soupcms-test') }
   let (:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
-  let(:posts) { SoupCMS::Api::DataService.model(context) }
+  let(:posts) { SoupCMS::Api::DocumentRepository.new(context) }
 
   it 'should return en_US locale documents by default' do
     doc1 = BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 1}).create

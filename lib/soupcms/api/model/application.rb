@@ -1,3 +1,5 @@
+require 'mongo'
+
 module SoupCMS
   module Api
     module Model
@@ -9,10 +11,15 @@ module SoupCMS
           @name = name
         end
 
+        attr_writer :mongo_uri
         attr_reader :name
 
         def mongo_uri
-          "mongodb://localhost:27017/#{name}"
+          @mongo_uri || "mongodb://localhost:27017/#{name}"
+        end
+
+        def connection
+          Mongo::MongoClient.from_uri(mongo_uri)
         end
 
         def self.get(name)
