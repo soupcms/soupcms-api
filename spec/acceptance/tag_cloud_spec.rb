@@ -19,7 +19,7 @@ describe 'API' do
     end
 
     it 'should return tag cloud with weight' do
-      get URI.escape('/api/soupcms-api-test/posts/tag-cloud')
+      get URI.escape('/api/soupcms-test/posts/tag-cloud')
 
       tags = JSON.parse(last_response.body)['tags']
       expect(tags.size).to eq(4)

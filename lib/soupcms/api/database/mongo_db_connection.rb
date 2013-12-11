@@ -5,20 +5,16 @@ module SoupCMS
 
     class MongoDbConnection
 
-      def initialize(database_name = 'test', host = 'localhost', port = '27017', options ={})
-        @database_name = database_name
-        @host = host
-        @port = port
-        @options = options
-        connect
-      end
-
-      def connect
-        @conn ||= Mongo::MongoClient.new(@host, @port)
-        @db ||= @conn.db(@database_name)
+      def initialize(application)
+        @application = application
+        @conn = Mongo::MongoClient.from_uri(@application.mongo_uri)
       end
 
       attr_accessor :db, :conn
+
+      def db
+        conn.db
+      end
 
       def close
         @conn.close

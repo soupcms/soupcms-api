@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
+include SoupCMS::Api::Model
 
 describe 'resilience' do
 
-  let(:posts) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
+  let (:application) { Application.new('soupcms-test') }
+  let (:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
+  let(:posts) { SoupCMS::Api::DataService.model(context) }
 
   context 'having multiple published version of a document' do
     it 'should return only latest published document' do

@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
+include SoupCMS::Api::Model
 
 describe 'versions' do
 
-  let(:service) { SoupCMS::Api::DataService.model('soupcms-api-test', 'posts') }
+  let(:application) { Application.new('soupcms-test') }
+  let(:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
+  let(:service) { SoupCMS::Api::DataService.model(context) }
 
   it 'should return only one latest published blog post for multiple versions of posts' do
     time = Time.now.to_i

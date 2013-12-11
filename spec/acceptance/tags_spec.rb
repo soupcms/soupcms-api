@@ -19,7 +19,7 @@ describe 'API' do
     end
 
     it 'should return documents matching a single tag' do
-      get URI.escape('/api/soupcms-api-test/posts?tags="tag1"')
+      get URI.escape('/api/soupcms-test/posts?tags="tag1"')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(1)
@@ -27,7 +27,7 @@ describe 'API' do
     end
 
     it 'should return documents matching multiple tags' do
-      get URI.escape('/api/soupcms-api-test/posts?tags[]="tag3"&tags[]="tag4"')
+      get URI.escape('/api/soupcms-test/posts?tags[]="tag3"&tags[]="tag4"')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(2)

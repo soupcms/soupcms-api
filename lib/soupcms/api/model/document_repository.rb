@@ -10,13 +10,17 @@ module SoupCMS
 
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
 
-      def initialize(db, collection_name)
+      def initialize(db, context)
         @db = db
-        @collection_name = collection_name
+        @context = context
         @filters = {}
         @duplicate_docs_compare_key = 'version'
         @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         @limit = 10
+      end
+
+      def collection
+        @db.collection(@context.model_name)
       end
 
       def published
@@ -67,11 +71,10 @@ module SoupCMS
 
 
       def fetch_all
-        coll = @db.collection(@collection_name)
         published if @filters.empty?
         locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
-        coll.find(@filters, {limit: @limit}).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
+        collection.find(@filters, {limit: @limit}).sort(@sort).each { |doc| docs.add(SoupCMS::Api::Document.new(doc)) }
         docs.documents
       end
 
@@ -105,7 +108,6 @@ module SoupCMS
 
       def tag_cloud
 
-        collection = @db.collection(@collection_name)
         result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, filters: @filters})
 
         tags = {'tags' => []}

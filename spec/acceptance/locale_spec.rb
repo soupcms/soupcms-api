@@ -16,7 +16,7 @@ describe 'API' do
       BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_GB', 'latest' => true, 'version' => 1}).create
       BlogPostBuilder.new.with({'doc_id' => 1234, 'locale' => 'en_US', 'latest' => true, 'version' => 2}).create
 
-      get '/api/soupcms-api-test/posts?include=drafts&locale=en_GB'
+      get '/api/soupcms-test/posts?include=drafts&locale=en_GB'
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(1)

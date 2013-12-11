@@ -15,7 +15,7 @@ describe 'API' do
     context 'get published documents' do
       before do
         20.times { BlogPostBuilder.new.with('state' => PUBLISHED).create }
-        get '/api/soupcms-api-test/posts'
+        get '/api/soupcms-test/posts'
       end
 
       it { expect(last_response.status).to eq(200) }
@@ -24,7 +24,7 @@ describe 'API' do
 
     context 'no documents found' do
       before do
-        get '/api/soupcms-api-test/posts'
+        get '/api/soupcms-test/posts'
       end
 
       it { expect(last_response.status).to eq(200) }
@@ -36,7 +36,7 @@ describe 'API' do
       BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Title 2', 'latest' => true).create
       BlogPostBuilder.new.with('state' => SCHEDULED, 'title' => 'Title 3', 'latest' => true).create
 
-      get '/api/soupcms-api-test/posts?include=drafts'
+      get '/api/soupcms-test/posts?include=drafts'
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(3)

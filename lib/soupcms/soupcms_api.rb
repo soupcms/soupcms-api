@@ -11,8 +11,13 @@ class SoupCMSApi < Grape::API
 
     helpers do
 
+      def context
+        application = SoupCMS::Api::Model::Application.get(params['app_name'])
+        SoupCMS::Api::Model::RequestContext.new(application, params)
+      end
+
       def get_service_model
-        service_model = SoupCMS::Api::DataService.model(params['app_name'], params['model_name'])
+        service_model = SoupCMS::Api::DataService.model(context)
         params['include'] == 'published' ? service_model.published : service_model.drafts
         service_model.locale(params['locale'])
         service_model

@@ -17,7 +17,7 @@ describe 'API' do
       BlogPostBuilder.new.with('state' => DRAFT, 'title' => 'Z Title 2', 'latest' => true).create
       BlogPostBuilder.new.with('state' => SCHEDULED, 'title' => 'C Title 3', 'latest' => true).create
 
-      get '/api/soupcms-api-test/posts?include=drafts&sort_by=title&sort_order=descending'
+      get '/api/soupcms-test/posts?include=drafts&sort_by=title&sort_order=descending'
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(3)

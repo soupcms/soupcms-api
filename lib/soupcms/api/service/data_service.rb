@@ -2,9 +2,9 @@ module SoupCMS
   module Api
     class DataService
 
-      def self.model(application_name, collection_name)
-        db = SoupCMS::Api::MongoDbConnection.new(application_name).db
-        SoupCMS::Api::DocumentRepository.new(db,collection_name)
+      def self.model(context)
+        db = SoupCMS::Api::MongoDbConnection.new(context.application).db
+        SoupCMS::Api::DocumentRepository.new(db,context)
       end
 
     end
