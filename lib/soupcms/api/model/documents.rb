@@ -34,6 +34,12 @@ module SoupCMS
         @documents[index]
       end
 
+      def resolve_dependencies(context)
+        documents.each { |doc| doc.resolve_dependencies(context) }
+        self
+      end
+
+
     end
 
   end

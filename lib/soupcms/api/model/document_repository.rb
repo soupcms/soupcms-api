@@ -77,10 +77,9 @@ module SoupCMS
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
         collection.find(@filters, {limit: @limit}).sort(@sort).each do |doc|
           doc = SoupCMS::Api::Document.new(doc)
-          doc.resolve_dependencies(context)
           docs.add(doc)
         end
-        docs
+        docs.resolve_dependencies(context)
       end
 
       def fetch_one
@@ -121,10 +120,10 @@ module SoupCMS
           tag_result['label'] = tag['_id']
           tag_result['weight'] = Integer(tag['value'])
           tag_result['link'] = { 'model_name' => 'posts', 'match' => { 'tags' => tag['_id'] } }
-          document = SoupCMS::Api::Document.new(tag_result).resolve_dependencies(context)
+          document = SoupCMS::Api::Document.new(tag_result)
           docs.add(document)
         end
-        docs
+        docs.resolve_dependencies(context)
       end
 
     end
