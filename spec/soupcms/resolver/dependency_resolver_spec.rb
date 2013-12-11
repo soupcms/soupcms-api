@@ -12,7 +12,7 @@ describe SoupCMS::Api::DependencyResolver do
     }
     expected = {
         'title' => 'Title',
-        'link' => '/soupcms-test/posts?tags="popular"'
+        'link' => '/soupcms-test/posts?tags=%22popular%22'
     }
     actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(actual).to eq(expected)
@@ -33,7 +33,7 @@ describe SoupCMS::Api::DependencyResolver do
         'menu' => [
             {
                 'label' => 'Menu 1',
-                'link' => '/soupcms-test/posts?tags="popular"'
+                'link' => '/soupcms-test/posts?tags=%22popular%22'
             }
         ]
     }
@@ -48,7 +48,7 @@ describe SoupCMS::Api::DependencyResolver do
     }
     expected = {
         'title' => 'Title',
-        'title_link' => '/soupcms-test/posts?tags="popular"'
+        'title_link' => '/soupcms-test/posts?tags=%22popular%22'
     }
     actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(actual).to eq(expected)

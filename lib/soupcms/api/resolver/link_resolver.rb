@@ -6,7 +6,8 @@ module SoupCMS
       class LinkResolver < Base
 
         def resolve(value,context)
-          "/#{context.application.name}/#{SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'],value['match'])}"
+          return value unless value.kind_of?(Hash)
+          URI.escape("/#{context.application.name}/#{SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'],value['match'])}")
         end
       end
 
