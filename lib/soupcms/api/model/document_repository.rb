@@ -3,7 +3,7 @@ require 'bson'
 module SoupCMS
   module Api
 
-    class Model
+    class DocumentRepository
 
       include SoupCMS::Api::DocumentState
       include SoupCMS::Api::DocumentDefaults

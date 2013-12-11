@@ -4,7 +4,7 @@ module SoupCMS
 
       def initialize(context)
         @context = context
-        @resolvers = SoupCMS::ModelAPI.config.dependency_resolvers
+        @resolvers = SoupCMSApi.config.dependency_resolvers
       end
 
       attr_reader :resolvers

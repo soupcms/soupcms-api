@@ -13,7 +13,7 @@ require 'soupcms/api/model/application'
 require 'soupcms/api/model/request_context'
 require 'soupcms/api/model/document'
 require 'soupcms/api/model/documents'
-require 'soupcms/api/model/model'
+require 'soupcms/api/model/document_repository'
 
 require 'soupcms/api/service/data_service'
 
