@@ -17,7 +17,7 @@ describe 'filters n sorting' do
       documents = posts.published.tags('tag1').fetch_all
 
       expect(documents.size).to eq(1)
-      expect([documents[0]['tags'][0]['label'],documents[0]['tags'][1]['label']]).to match_array(['tag1', 'tag2'])
+      expect(documents[0]['tags']).to match_array(['tag1', 'tag2'])
     end
 
     it 'should return all the draft documents matching tag' do

@@ -35,6 +35,14 @@ describe 'API' do
       expect(docs[1]['title']).to eq('Title 2')
     end
 
+    it 'should resolve tags with label and link' do
+      get URI.escape('/api/soupcms-test/posts?tags="tag1"')
+
+      documents = JSON.parse(last_response.body)
+      expect([documents[0]['tags'][0]['label'],documents[0]['tags'][1]['label']]).to match_array(['tag1', 'tag2'])
+      expect([documents[0]['tags'][0]['link'],documents[0]['tags'][1]['link']]).to match_array([URI.escape('/soupcms-test/posts?tags="tag1"'), URI.escape('/soupcms-test/posts?tags="tag2"')])
+    end
+
   end
 
 end

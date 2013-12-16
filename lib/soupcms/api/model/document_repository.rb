@@ -84,8 +84,7 @@ module SoupCMS
           doc = SoupCMS::Api::Document.new(doc)
           docs.add(doc)
         end
-        docs.enrich_documents(context)
-        docs.resolve_dependencies(context)
+        docs
       end
 
       def fetch_one
@@ -129,8 +128,7 @@ module SoupCMS
           document = SoupCMS::Api::Document.new(tag_result)
           docs.add(document)
         end
-        docs.enrich_documents(context)
-        docs.resolve_dependencies(context)
+        docs
       end
 
     end

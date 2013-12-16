@@ -18,15 +18,25 @@ module SoupCMS
           repo.tags(params['tags'].collect { |tag| eval(tag)}) unless params['tags'].empty?
           apply_custom_field_filters
           repo.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
-          repo.fetch_all
+          docs = repo.fetch_all
+          docs.enrich_documents(context)
+          docs.resolve_dependencies(context)
+          docs
         end
 
         def fetch_one
-          repo.with(params['key'] => params['value']).fetch_one
+          doc = repo.with(params['key'] => params['value']).fetch_one
+          if doc
+            doc.enrich_document(context)
+            doc.resolve_dependencies(context)
+          end
+          doc
         end
 
         def tag_cloud
-          repo.tag_cloud
+          docs = repo.tag_cloud
+          docs.resolve_dependencies(context)
+          docs
         end
 
         private

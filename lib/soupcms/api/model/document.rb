@@ -35,7 +35,12 @@ module SoupCMS
       end
 
       def resolve_dependencies(context)
-        @document = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+        SoupCMS::Api::DependencyResolver.new(context).resolve(self)
+        self
+      end
+
+      def enrich_document(context)
+        SoupCMSApi.config.enrichers.each { |enricher| enricher.new(context).enrich(self) }
         self
       end
 

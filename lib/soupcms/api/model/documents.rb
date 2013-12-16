@@ -40,9 +40,8 @@ module SoupCMS
       end
 
       def enrich_documents(context)
-        documents.each { |doc| SoupCMSApi.config.enrichers.each { |enricher| enricher.new.enrich(doc,context) } }
+        documents.each { |doc| doc.enrich_document(context)  }
       end
-
 
     end
 

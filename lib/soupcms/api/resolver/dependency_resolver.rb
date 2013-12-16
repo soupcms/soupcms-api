@@ -9,18 +9,21 @@ module SoupCMS
 
       attr_reader :resolvers
 
-      def resolve(document)
+      def resolve(doc)
+        resolve_dependency_recursive(doc.document)
+      end
+
+      def resolve_dependency_recursive(document)
         document.each do |key, value|
           resolver = find_resolver(key)
           if resolver
             document[key] = resolver.new.resolve(value,@context)
           elsif value.kind_of?(Array)
-            document[key] = value.collect { |item| item.kind_of?(Hash) ? resolve(item) : item }
+            document[key] = value.collect { |item| item.kind_of?(Hash) ? resolve_dependency_recursive(item) : item }
           elsif value.kind_of?(Hash)
-            document[key] = resolve(value)
+            document[key] = resolve_dependency_recursive(value)
           end
         end
-        document
       end
 
       def find_resolver(key)

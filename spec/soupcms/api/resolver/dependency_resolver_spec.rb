@@ -6,20 +6,21 @@ describe SoupCMS::Api::DependencyResolver do
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
   it 'should resolve link dependency' do
-    document = {
+    document_hash = {
         'title' => 'Title',
         'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
     }
+    document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
         'link' => '/soupcms-test/posts?tags=%22popular%22'
     }
-    actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(actual).to eq(expected)
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.document).to eq(expected)
   end
 
   it 'should resolve link dependency within array' do
-    document = {
+    document_hash = {
         'title' => 'Title',
         'menu' => [
             {
@@ -28,6 +29,7 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
+    document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
         'menu' => [
@@ -37,27 +39,29 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
-    actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(actual).to eq(expected)
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.document).to eq(expected)
   end
 
   it 'should resolve link with key ending with link' do
-    document = {
+    document_hash = {
         'title' => 'Title',
         'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
     }
+    document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
         'title_link' => '/soupcms-test/posts?tags=%22popular%22'
     }
-    actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(actual).to eq(expected)
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.document).to eq(expected)
   end
 
   it 'should resolve tags with links' do
-    document = {
+    document_hash = {
         'tags' => %w(tag1 tag2)
     }
+    document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'tags' => [
             {
@@ -70,8 +74,8 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
-    actual = SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(actual).to eq(expected)
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.document).to eq(expected)
 
   end
 

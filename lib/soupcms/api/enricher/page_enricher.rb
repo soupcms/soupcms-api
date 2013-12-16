@@ -5,9 +5,14 @@ module SoupCMS
 
       class PageEnricher < Base
 
-        def enrich(page, context)
+        def initialize(context)
+          @context = context
+        end
+
+        attr_reader :context
+
+        def enrich(page)
           return unless context.model_name == 'pages'
-          return if page['meta'] && page['meta']['name'] == 'enricher'
 
           enricher_page = fetch_enricher_page(context)
           return if enricher_page.nil?
