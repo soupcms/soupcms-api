@@ -24,8 +24,17 @@ describe SoupCMS::Api::Enricher::PageEnricher do
       expect(page['layout']).to be_nil
       actual = SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
       expect(actual['layout']).not_to be_nil
-
     end
+
+    it 'should add missing areas in page' do
+      PageBuilder.enricher_page.create
+      page = PageBuilder.any_page.build
+
+      expect(page['areas'].size).to eq(1)
+      actual = SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
+      expect(actual['areas'].size).to eq(3)
+    end
+
   end
 
 
