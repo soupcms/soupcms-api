@@ -30,8 +30,12 @@ class DocumentBuilder
   end
 
   def create
+    @@db.collection(@model).insert(build)
+  end
+
+  def build
     add_missing_fields
-    @@db.collection(@model).insert(@data)
+    @data
   end
 
 end

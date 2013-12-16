@@ -19,9 +19,14 @@ module SoupCMS
       end
 
       attr_reader :context
+      attr_writer :model_name
 
       def collection
-        @collection ||= context.application.connection.db.collection(context.model_name)
+        @collection ||= context.application.connection.db.collection(model_name)
+      end
+
+      def model_name
+        @model_name || context.model_name
       end
 
       def published

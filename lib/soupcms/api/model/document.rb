@@ -24,6 +24,10 @@ module SoupCMS
         @document[key]
       end
 
+      def merge!(hash)
+        @document.merge!(hash)
+      end
+
       attr_reader :document
 
       def to_json(*args)
