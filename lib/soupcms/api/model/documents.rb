@@ -23,7 +23,7 @@ module SoupCMS
       end
 
       def to_json(*args)
-        documents.collect { |doc| doc.document }.to_json
+        documents.collect { |doc| doc.to_hash }.to_json
       end
 
       def size

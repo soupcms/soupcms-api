@@ -10,7 +10,7 @@ module SoupCMS
       attr_reader :resolvers
 
       def resolve(doc)
-        resolve_dependency_recursive(doc.document)
+        resolve_dependency_recursive(doc.to_hash)
       end
 
       def resolve_dependency_recursive(document)

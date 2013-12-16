@@ -16,7 +16,7 @@ describe SoupCMS::Api::DependencyResolver do
         'link' => '/soupcms-test/posts?tags=%22popular%22'
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(document.document).to eq(expected)
+    expect(document.to_hash).to eq(expected)
   end
 
   it 'should resolve link dependency within array' do
@@ -40,7 +40,7 @@ describe SoupCMS::Api::DependencyResolver do
         ]
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(document.document).to eq(expected)
+    expect(document.to_hash).to eq(expected)
   end
 
   it 'should resolve link with key ending with link' do
@@ -54,7 +54,7 @@ describe SoupCMS::Api::DependencyResolver do
         'title_link' => '/soupcms-test/posts?tags=%22popular%22'
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(document.document).to eq(expected)
+    expect(document.to_hash).to eq(expected)
   end
 
   it 'should resolve tags with links' do
@@ -75,7 +75,7 @@ describe SoupCMS::Api::DependencyResolver do
         ]
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
-    expect(document.document).to eq(expected)
+    expect(document.to_hash).to eq(expected)
 
   end
 

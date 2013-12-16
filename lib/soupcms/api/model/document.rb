@@ -28,10 +28,12 @@ module SoupCMS
         @document.merge!(hash)
       end
 
-      attr_reader :document
-
       def to_json(*args)
         @document.to_json
+      end
+
+      def to_hash
+        @document.to_hash
       end
 
       def resolve_dependencies(context)
