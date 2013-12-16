@@ -4,24 +4,35 @@ module SoupCMS
     module Utils
 
       module ConfigDefaults
-        DEPENDENCY_RESOLVER = {
+        DEPENDENCY_RESOLVERS = {
             /link$/ => SoupCMS::Api::Resolver::LinkResolver,
             'tags' => SoupCMS::Api::Resolver::TagResolver
         }
+        ENRICHERS = [
+            SoupCMS::Api::Enricher::PageEnricher
+        ]
       end
 
       class Config
 
         def initialize
-          @dependency_resolvers = ConfigDefaults::DEPENDENCY_RESOLVER
+          @dependency_resolvers = ConfigDefaults::DEPENDENCY_RESOLVERS
+          @enrichers = ConfigDefaults::ENRICHERS
         end
 
-        attr_reader :dependency_resolvers
+        attr_reader :dependency_resolvers, :enrichers
 
         def register_dependency_resolver(key, resolver)
           @dependency_resolvers[key] = resolver
         end
 
+        def register_enricher(enricher)
+          @enrichers << enricher
+        end
+
+        def clear_enricher
+          @enrichers = []
+        end
 
 
 

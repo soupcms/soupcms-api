@@ -9,8 +9,8 @@ describe SoupCMS::Api::Enricher::PageEnricher do
 
     it 'should it should ignore all other models than pages' do
       document = { 'title' => 'Title' }
-      actual = SoupCMS::Api::Enricher::PageEnricher.new.enrich(document,context)
-      expect(actual).to eq(document)
+      SoupCMS::Api::Enricher::PageEnricher.new.enrich(document,context)
+      expect(document.size).to eq(1)
     end
   end
 
@@ -22,8 +22,8 @@ describe SoupCMS::Api::Enricher::PageEnricher do
       page = PageBuilder.any_page.build
 
       expect(page['layout']).to be_nil
-      actual = SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
-      expect(actual['layout']).not_to be_nil
+      SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
+      expect(page['layout']).not_to be_nil
     end
 
     it 'should add missing areas in page' do
@@ -31,8 +31,8 @@ describe SoupCMS::Api::Enricher::PageEnricher do
       page = PageBuilder.any_page.build
 
       expect(page['areas'].size).to eq(1)
-      actual = SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
-      expect(actual['areas'].size).to eq(3)
+      SoupCMS::Api::Enricher::PageEnricher.new.enrich(page,context)
+      expect(page['areas'].size).to eq(3)
     end
 
   end

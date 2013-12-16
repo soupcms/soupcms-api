@@ -16,25 +16,10 @@ class SoupCMSApi < Grape::API
         SoupCMS::Api::Model::RequestContext.new(application, params)
       end
 
-      def get_service_model
-        service_model = SoupCMS::Api::DocumentRepository.new(context)
-        params['include'] == 'published' ? service_model.published : service_model.drafts
-        service_model.locale(params['locale'])
-        service_model
+      def service
+        SoupCMS::Api::Service::DocumentService.new(context)
       end
 
-      def apply_custom_field_filters(service_model)
-        params['filters'].each { |filter|
-          filter_value = params[filter]
-          #TODO eval are security risk, scope it if possible
-          if filter_value.kind_of?(Array)
-            values = filter_value.collect { |v| eval(v) }
-            service_model.with(filter => { '$in' => values} )
-          else
-            service_model.with(filter => eval(filter_value))
-          end
-        }
-      end
     end
 
 
@@ -47,8 +32,7 @@ class SoupCMSApi < Grape::API
 
         desc 'get a tag cloud'
         get 'tag-cloud' do
-          service_model = get_service_model
-          service_model.tag_cloud
+          service.tag_cloud
         end
 
         desc 'get published documents'
@@ -58,20 +42,12 @@ class SoupCMSApi < Grape::API
           optional :sort_order, type: String, default: :ascending
         end
         get do
-          service_model = get_service_model
-          service_model.tags(params['tags'].collect { |tag| eval(tag)}) unless params['tags'].empty?
-
-          apply_custom_field_filters(service_model)
-
-          service_model.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
-
-          service_model.fetch_all
+          service.fetch_all
         end
 
         desc 'get a document by key'
         get ':key/:value' do
-          service_model = get_service_model
-          doc = service_model.with(params['key'] => params['value']).fetch_one
+          doc = service.fetch_one
           error!("Document #{params['value']} not found.", 404) if doc.nil?
           doc
         end

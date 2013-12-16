@@ -18,4 +18,5 @@ require 'soupcms/api/model/documents'
 require 'soupcms/api/model/tag_cloud'
 require 'soupcms/api/model/document_repository'
 
+require 'soupcms/api/service/document_service'
 require 'soupcms/soupcms_api'
