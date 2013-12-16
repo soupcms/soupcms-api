@@ -16,6 +16,7 @@ module SoupCMS
         @duplicate_docs_compare_key = 'version'
         @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         @limit = 10
+        published
       end
 
       attr_reader :context
@@ -33,12 +34,13 @@ module SoupCMS
         @duplicate_docs_compare_key = 'publish_datetime'
         @filters.delete('latest') # remove if latest filter added, conflicting filters
         @filters.merge!('state' => PUBLISHED)
+        @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         self
       end
 
       def drafts
         @sort = {'create_datetime' => :desc}
-
+        @duplicate_docs_compare_key = 'create_datetime'
         @filters.delete('state') # remove if state added in filters, conflicting filters
         @filters.merge!({'latest' => true})
         self
@@ -124,7 +126,7 @@ module SoupCMS
           tag_result = {}
           tag_result['label'] = tag['_id']
           tag_result['weight'] = Integer(tag['value'])
-          tag_result['link'] = { 'model_name' => 'posts', 'match' => { 'tags' => tag['_id'] } }
+          tag_result['link'] = {'model_name' => 'posts', 'match' => {'tags' => tag['_id']}}
           document = SoupCMS::Api::Document.new(tag_result)
           docs.add(document)
         end

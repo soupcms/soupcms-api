@@ -29,13 +29,13 @@ describe 'resilience' do
     it 'should return only latest document' do
       doc1 = BlogPostBuilder.new.with({'create_datetime' => 1305000000, 'doc_id' => 1234, 'state' => ARCHIVE, 'version' => 1, 'latest' => false}).create
       doc2 = BlogPostBuilder.new.with({'create_datetime' => 1305100000, 'doc_id' => 1234, 'state' => DRAFT, 'version' => 2, 'latest' => false}).create
-      doc4 = BlogPostBuilder.new.with({'create_datetime' => 1306000000, 'doc_id' => 1234, 'state' => PUBLISHED, 'publish_datetime' => 1305200000, 'version' => 4, 'latest' => true}).create
-      doc3 = BlogPostBuilder.new.with({'create_datetime' => 1305300000, 'doc_id' => 1234, 'state' => DRAFT, 'version' => 3, 'latest' => true}).create
+      doc3 = BlogPostBuilder.new.with({'create_datetime' => 1406000000, 'doc_id' => 1234, 'state' => PUBLISHED, 'publish_datetime' => 1305200000, 'version' => 4, 'latest' => true}).create
+      doc4 = BlogPostBuilder.new.with({'create_datetime' => 1305300000, 'doc_id' => 1234, 'state' => DRAFT, 'version' => 3, 'latest' => true}).create
 
       documents = posts.drafts.fetch_all
 
       expect(documents.size).to eq(1)
-      expect(documents[0]['_id']).to eq(doc4)
+      expect(documents[0]['_id']).to eq(doc3)
     end
 
   end

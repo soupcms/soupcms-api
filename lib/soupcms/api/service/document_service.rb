@@ -41,7 +41,7 @@ module SoupCMS
 
         private
         def apply_common_filters
-          params['include'] == 'published' ? repo.published : repo.drafts
+          context.drafts? ? repo.drafts : repo.published
           repo.locale(params['locale'])
         end
 

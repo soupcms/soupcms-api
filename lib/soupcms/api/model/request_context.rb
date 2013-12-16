@@ -19,6 +19,10 @@ module SoupCMS
           params['model_name']
         end
 
+        def drafts?
+          params['include'] == 'drafts'
+        end
+
       end
 
     end

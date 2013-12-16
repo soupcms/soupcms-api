@@ -24,6 +24,7 @@ module SoupCMS
         def fetch_enricher_page(context)
           repo = SoupCMS::Api::DocumentRepository.new(context)
           repo.model_name = 'pages'
+          context.drafts? ? repo.drafts : repo.published
           repo.with({'meta.name' => 'enricher'}).fetch_one
         end
 

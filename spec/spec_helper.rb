@@ -12,7 +12,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    SoupCMS::Api::Model::Application.new('soupcms-test').connection.db.collection('posts').remove
+    db = SoupCMS::Api::Model::Application.new('soupcms-test').connection.db
+    db.collection_names.each do |collection_name|
+      next if collection_name.match(/^system/)
+      db.collection(collection_name).remove
+    end
   end
 
   config.after(:suite) do
