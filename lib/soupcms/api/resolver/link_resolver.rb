@@ -7,7 +7,12 @@ module SoupCMS
 
         def resolve(value,context)
           return value unless value.kind_of?(Hash)
-          URI.escape("/#{context.application.name}/#{SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'],value['match'])}")
+          url = SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'], value['match'])
+          if context.drafts?
+            url.include?('?') ? url.concat('&') : url.concat('?')
+            url = url.concat('include=drafts')
+          end
+          URI.escape("/#{context.application.name}/#{url}")
         end
       end
 
