@@ -45,6 +45,14 @@ describe 'API' do
       expect(docs[2]['title']).to eq('Title 3')
     end
 
+    it 'should add url to the post object' do
+      BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED).create
+      get '/api/soupcms-test/posts'
+      docs = JSON.parse(last_response.body)
+      expect(docs[0]['url']).to eq('/soupcms-test/posts/first-post')
+
+    end
+
   end
 
 

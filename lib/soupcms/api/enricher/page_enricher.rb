@@ -5,12 +5,6 @@ module SoupCMS
 
       class PageEnricher < Base
 
-        def initialize(context)
-          @context = context
-        end
-
-        attr_reader :context
-
         def enrich(page)
           return unless context.model_name == 'pages'
 

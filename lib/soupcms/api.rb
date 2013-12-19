@@ -7,6 +7,7 @@ require 'soupcms/api/resolver/tag_resolver'
 
 require 'soupcms/api/enricher/base'
 require 'soupcms/api/enricher/page_enricher'
+require 'soupcms/api/enricher/url_enricher'
 
 require 'soupcms/api/utils/url_builder'
 require 'soupcms/api/utils/config'

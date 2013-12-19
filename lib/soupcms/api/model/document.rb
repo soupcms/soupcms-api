@@ -24,6 +24,10 @@ module SoupCMS
         @document[key]
       end
 
+      def []=(key,value)
+        @document[key] = value
+      end
+
       def merge!(hash)
         @document.merge!(hash)
       end

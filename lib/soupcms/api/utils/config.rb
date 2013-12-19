@@ -9,7 +9,8 @@ module SoupCMS
             'tags' => SoupCMS::Api::Resolver::TagResolver
         }
         ENRICHERS = [
-            SoupCMS::Api::Enricher::PageEnricher
+            SoupCMS::Api::Enricher::PageEnricher,
+            SoupCMS::Api::Enricher::UrlEnricher
         ]
       end
 
