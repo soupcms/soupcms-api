@@ -4,6 +4,7 @@ require 'soupcms/api/resolver/dependency_resolver'
 require 'soupcms/api/resolver/base'
 require 'soupcms/api/resolver/link_resolver'
 require 'soupcms/api/resolver/tag_resolver'
+require 'soupcms/api/resolver/markdown_resolver'
 
 require 'soupcms/api/enricher/base'
 require 'soupcms/api/enricher/page_enricher'

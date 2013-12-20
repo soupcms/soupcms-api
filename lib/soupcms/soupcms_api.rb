@@ -46,7 +46,7 @@ class SoupCMSApi < Grape::API
         end
 
         desc 'get a document by key'
-        get ':key/:value' do
+        get ':key/:value', requirements: { key: /[a-zA-Z\-\.\_]*/ } do
           doc = service.fetch_one
           error!("Document #{params['value']} not found.", 404) if doc.nil?
           doc
