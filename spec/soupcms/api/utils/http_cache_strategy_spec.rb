@@ -25,6 +25,7 @@ describe SoupCMS::Api::Utils::HttpCacheStrategy do
     expect(headers.size).to eq(2)
     expect(headers['Cache-Control']).to eq('public, max-age=5000')
     expect(headers['Expires']).not_to be_nil
+    SoupCMS::Api::Utils::HttpCacheStrategy.default_max_age = SoupCMS::Api::Utils::HttpCacheStrategy::DEFAULT_MAX_AGE
   end
 
 end
