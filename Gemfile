@@ -7,6 +7,7 @@ gem 'rouge'
 
 group :development do
   gem 'puma'
+  gem 'rack-cache'
 end
 
 group :test do
