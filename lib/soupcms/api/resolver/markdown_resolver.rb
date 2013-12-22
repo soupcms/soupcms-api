@@ -14,7 +14,7 @@ module SoupCMS
       class MarkdownResolver < Base
 
         def resolve(value,context)
-          markdown = Redcarpet::Markdown.new(RougeHTML, fenced_code_blocks: true, space_after_headers: true, tables: true)
+          markdown = Redcarpet::Markdown.new(RougeHTML, fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true, footnotes: true, superscript: true, highlight: true)
           markdown.render value
         end
 
