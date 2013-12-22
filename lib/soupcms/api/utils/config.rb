@@ -28,11 +28,15 @@ module SoupCMS
           @dependency_resolvers[key] = resolver
         end
 
+        def clear_dependency_resolvers
+          @dependency_resolvers = {}
+        end
+
         def register_enricher(enricher)
           @enrichers << enricher
         end
 
-        def clear_enricher
+        def clear_enrichers
           @enrichers = []
         end
 

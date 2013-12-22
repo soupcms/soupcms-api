@@ -7,7 +7,7 @@ describe SoupCMS::Api::Resolver::MarkdownResolver do
 
   it 'should parse simple markdown headings' do
     value = '## Getting started'
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve(value,context)
+    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
     expect(result).to include('<h2>Getting started</h2>')
   end
 
@@ -24,7 +24,7 @@ describe SoupCMS::Api::Resolver::MarkdownResolver do
   end
 ```
     markdowm
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve(value,context)
+    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
     expect(result).to include('<h2>Getting started</h2>')
     expect(result).to include('<pre class="highlight ruby">')
     expect(result).to include('\'Password\'')
@@ -46,7 +46,7 @@ Content Cell  | Content Cell
   end
 ```
     markdowm
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve(value,context)
+    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
     expect(result).to include('<h2>Getting started</h2>')
     expect(result).to include('<table>')
     expect(result).to include('</table>')

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoupCMS::Api::DependencyResolver do
 
   let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
+  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
 
   it 'should resolve link dependency' do
     document_hash = {
@@ -76,6 +76,39 @@ describe SoupCMS::Api::DependencyResolver do
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
+  end
+
+  it 'should resolve deep matching of keys and value' do
+    document_hash = {
+        'markdown_content' => {
+            'type' => 'markdown',
+            'value' => '# Getting started'
+        },
+        'html_content' => {
+            'type' => 'html',
+            'value' => '<h1>Getting started</h1>'
+        },
+        'content' => {
+            'value' => 'Getting started'
+        }
+    }
+    document = SoupCMS::Api::Document.new(document_hash)
+    expected = {
+        'markdown_content' => "<h1>Getting started</h1>\n",
+        'html_content' => {
+            'type' => 'html',
+            'value' => '<h1>Getting started</h1>'
+        },
+        'content' => {
+            'value' => 'Getting started'
+        }
+    }
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.to_hash).to eq(expected)
+
+  end
+
+  it 'should pass through multiple resolvers if matched' do
 
   end
 

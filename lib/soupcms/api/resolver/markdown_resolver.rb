@@ -8,14 +8,15 @@ module SoupCMS
     module Resolver
 
       class RougeHTML < Redcarpet::Render::HTML
-        include Rouge::Plugins::Redcarpet # yep, that's it.
+        include Rouge::Plugins::Redcarpet
       end
 
       class MarkdownResolver < Base
 
-        def resolve(value,context)
+        def resolve(value, context)
+          return value if value['type'] != 'markdown'
           markdown = Redcarpet::Markdown.new(RougeHTML, fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true, footnotes: true, superscript: true, highlight: true)
-          markdown.render value
+          markdown.render value['value']
         end
 
       end
