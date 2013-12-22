@@ -12,8 +12,7 @@ class SoupCMSApi < Grape::API
     helpers do
 
       def context
-        application = SoupCMS::Api::Model::Application.get(params['app_name'])
-        SoupCMS::Api::Model::RequestContext.new(application, params)
+        @context ||= SoupCMS::Api::Model::RequestContext.new(SoupCMS::Api::Model::Application.get(params['app_name']), params)
       end
 
       def service
@@ -22,6 +21,10 @@ class SoupCMSApi < Grape::API
 
     end
 
+    after do
+      caching_strategy = SoupCMSApi.config.http_caching_strategy.new
+      caching_strategy.headers(context).each { |key, value| header key, value }
+    end
 
     group ':app_name' do
       params do

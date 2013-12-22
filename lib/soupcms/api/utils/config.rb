@@ -20,8 +20,10 @@ module SoupCMS
         def initialize
           @dependency_resolvers = ConfigDefaults::DEPENDENCY_RESOLVERS
           @enrichers = ConfigDefaults::ENRICHERS
+          @http_caching_strategy = SoupCMS::Api::Utils::HttpCacheStrategy
         end
 
+        attr_accessor :http_caching_strategy
         attr_reader :dependency_resolvers, :enrichers
 
         def register_dependency_resolver(key, resolver)
