@@ -14,9 +14,10 @@ module SoupCMS
       class MarkdownResolver < Base
 
         def resolve(value, context)
-          return value if value['type'] != 'markdown'
+          return value, true if value['type'] != 'markdown'
           markdown = Redcarpet::Markdown.new(RougeHTML, fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true, footnotes: true, superscript: true, highlight: true)
-          markdown.render value['value']
+          value['value'] = markdown.render(value['value'])
+          return value, false
         end
 
       end

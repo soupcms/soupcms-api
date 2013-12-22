@@ -3,16 +3,17 @@ require 'spec_helper'
 describe SoupCMS::Api::Resolver::MarkdownResolver do
 
   let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
+  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
+  context 'type = markdown' do
+    it 'should parse simple markdown headings' do
+      value = '## Getting started'
+      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<h2>Getting started</h2>')
+    end
 
-  it 'should parse simple markdown headings' do
-    value = '## Getting started'
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
-    expect(result).to include('<h2>Getting started</h2>')
-  end
-
-  it 'should parse fenced code blocks markdown' do
-    value = <<-markdowm
+    it 'should parse fenced code blocks markdown' do
+      value = <<-markdowm
 ## Getting started
 
 ```ruby
@@ -23,15 +24,16 @@ describe SoupCMS::Api::Resolver::MarkdownResolver do
     end
   end
 ```
-    markdowm
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
-    expect(result).to include('<h2>Getting started</h2>')
-    expect(result).to include('<pre class="highlight ruby">')
-    expect(result).to include('\'Password\'')
-  end
+      markdowm
+      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<h2>Getting started</h2>')
+      expect(result['value']).to include('<pre class="highlight ruby">')
+      expect(result['value']).to include('\'Password\'')
+    end
 
-  it 'should parse tables markdown' do
-    value = <<-markdowm
+    it 'should parse tables markdown' do
+      value = <<-markdowm
 ## Getting started
 
 First Header  | Second Header
@@ -45,15 +47,29 @@ Content Cell  | Content Cell
     puts "param2: \#{param2}"
   end
 ```
-    markdowm
-    result = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({ 'type' => 'markdown', 'value' => value},context)
-    expect(result).to include('<h2>Getting started</h2>')
-    expect(result).to include('<table>')
-    expect(result).to include('</table>')
-    expect(result).to include('First Header')
-    expect(result).to include('<pre class="highlight ruby">')
-    expect(result).to include('method_name')
+      markdowm
+      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<h2>Getting started</h2>')
+      expect(result['value']).to include('<table>')
+      expect(result['value']).to include('</table>')
+      expect(result['value']).to include('First Header')
+      expect(result['value']).to include('<pre class="highlight ruby">')
+      expect(result['value']).to include('method_name')
+    end
   end
+
+  context 'type != markdown' do
+
+    it 'should return value as is' do
+      value = '## Getting started'
+      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'not-markdown', 'value' => value}, context)
+      expect(continue).to eq(true)
+      expect(result['value']).to include('## Getting started')
+
+    end
+  end
+
 
 end
 

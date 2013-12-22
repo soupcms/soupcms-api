@@ -5,14 +5,12 @@ module SoupCMS
 
       class TagResolver < Base
 
-        def resolve(values,context)
-          values.collect do |value|
-            tag = {}
-            tag['label'] = value
-            tags_url = SoupCMS::Api::Utils::UrlBuilder.build(context.model_name, {'tags' => value})
-            tag['link'] = URI.escape("/#{context.application.name}/#{tags_url}")
-            tag
+        def resolve(values, context)
+          return values,true unless values.kind_of?(Array)
+          tags = values.collect do |value|
+            { 'label' => value, 'link' => { 'match' => {'tags' => value} } }
           end
+          return tags, true
         end
 
       end

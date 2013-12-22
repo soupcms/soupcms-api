@@ -17,8 +17,9 @@ module SoupCMS
         document.each do |key, value|
           resolver = find_resolver(key)
           if resolver
-            value = resolver.new.resolve(value,@context)
+            value, continue = resolver.new.resolve(value,@context)
             document[key] = value
+            next unless continue
           end
           if value.kind_of?(Array)
             document[key] = value.collect { |item| item.kind_of?(Hash) ? resolve_dependency_recursive(item) : item }

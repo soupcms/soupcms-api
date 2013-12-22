@@ -13,7 +13,7 @@ describe SoupCMS::Api::DependencyResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'link' => '/soupcms-test/posts?tags=%22popular%22'
+        'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -35,7 +35,7 @@ describe SoupCMS::Api::DependencyResolver do
         'menu' => [
             {
                 'label' => 'Menu 1',
-                'link' => '/soupcms-test/posts?tags=%22popular%22'
+                'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
             }
         ]
     }
@@ -51,7 +51,7 @@ describe SoupCMS::Api::DependencyResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'title_link' => '/soupcms-test/posts?tags=%22popular%22'
+        'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -66,11 +66,11 @@ describe SoupCMS::Api::DependencyResolver do
         'tags' => [
             {
                 'label' => 'tag1',
-                'link' => '/soupcms-test/posts?tags=%22tag1%22'
+                'link' => {'match' => {'tags' => 'tag1'},'url' => '/soupcms-test/posts?tags=%22tag1%22'}
             },
             {
                 'label' => 'tag2',
-                'link' => '/soupcms-test/posts?tags=%22tag2%22'
+                'link' => {'match' => {'tags' => 'tag2'},'url' => '/soupcms-test/posts?tags=%22tag2%22'}
             }
         ]
     }
@@ -94,7 +94,10 @@ describe SoupCMS::Api::DependencyResolver do
     }
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
-        'markdown_content' => "<h1>Getting started</h1>\n",
+        'markdown_content' => {
+            'type' => 'markdown',
+            'value' => "<h1>Getting started</h1>\n"
+        },
         'html_content' => {
             'type' => 'html',
             'value' => '<h1>Getting started</h1>'
@@ -108,7 +111,27 @@ describe SoupCMS::Api::DependencyResolver do
 
   end
 
-  it 'should pass through multiple resolvers if matched' do
+  it 'should continue when resolves return true for further dependency resolution' do
+    context = SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'})
+    document_hash = {
+        'tags' => %w(popular agile)
+    }
+    document = SoupCMS::Api::Document.new(document_hash)
+    expected ={
+        'tags' =>
+            [
+                {
+                    'label' => 'popular',
+                    'link' => {'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
+                },
+                {
+                    'label' => 'agile',
+                    'link' => {'match' => {'tags' => 'agile'}, 'url' => '/soupcms-test/posts?tags=%22agile%22'}
+                }
+            ]
+    }
+    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    expect(document.to_hash).to eq(expected)
 
   end
 

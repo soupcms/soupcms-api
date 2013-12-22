@@ -9,15 +9,16 @@ describe SoupCMS::Api::Resolver::LinkResolver do
 
     it 'should resolve link dependency' do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
-      result = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
-      expect(result).to eq(URI.escape('/soupcms-test/posts?tags="popular"'))
+      result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+      expect(continue).to eq(false)
+      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags="popular"'))
     end
 
     it 'should return value if it is absolute url and not a hash' do
-      value = 'http://www.google.com/'
-      result = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
-      expect(result).to eq('http://www.google.com/')
-
+      value = { 'url' => 'http://www.google.com/' }
+      result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+      expect(continue).to eq(true)
+      expect(result['url']).to eq('http://www.google.com/')
     end
   end
 
@@ -26,9 +27,19 @@ describe SoupCMS::Api::Resolver::LinkResolver do
 
     it 'should add drafts to the url when context is drafts' do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
-      result = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
-      expect(result).to eq(URI.escape('/soupcms-test/posts?tags="popular"&include=drafts'))
+      result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+      expect(continue).to eq(false)
+      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags="popular"&include=drafts'))
     end
+
+  end
+
+  it 'build url using context model when model is not present in the link container hash' do
+    context = SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
+    value = { 'match' => {'tags' => 'popular'}}
+    result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+    expect(continue).to eq(false)
+    expect(result['url']).to eq(URI.escape('/soupcms-test/abcd?tags="popular"'))
 
   end
 

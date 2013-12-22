@@ -13,8 +13,8 @@ describe 'API' do
   context 'search by title' do
 
     before do
-      BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'My first blog post', 'category' => 'cooking', 'rank' => 25).create
-      BlogPostBuilder.new.with('state' => PUBLISHED, 'title' => 'My second blog post', 'category' => 'technical', 'rank' => 30).create
+      BlogPostBuilder.new.with('publish_datetime' => 1405000000, 'state' => PUBLISHED, 'title' => 'My first blog post', 'category' => 'cooking', 'rank' => 25).create
+      BlogPostBuilder.new.with('publish_datetime' => 1305000000,'state' => PUBLISHED, 'title' => 'My second blog post', 'category' => 'technical', 'rank' => 30).create
     end
 
     it 'should exactly match' do

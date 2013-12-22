@@ -7,12 +7,20 @@ describe SoupCMS::Api::Resolver::LinkResolver do
 
   it 'should resolve link dependency' do
     value = %w(popular agile)
-    result = SoupCMS::Api::Resolver::TagResolver.new.resolve(value,context)
+    result, continue = SoupCMS::Api::Resolver::TagResolver.new.resolve(value,context)
+    expect(continue).to eq(true)
     expect(result.size).to eq(2)
     expect(result[0]['label']).to eq('popular')
-    expect(result[0]['link']).to eq(URI.escape('/soupcms-test/posts?tags="popular"'))
+    expect(result[0]['link']).to eq({'match' => {'tags' => 'popular'}})
     expect(result[1]['label']).to eq('agile')
-    expect(result[1]['link']).to eq(URI.escape('/soupcms-test/posts?tags="agile"'))
+    expect(result[1]['link']).to eq({'match' => {'tags' => 'agile'}})
+  end
+
+  it 'should not do anything is value is not an array' do
+    value = { 'key' => 'value' }
+    result, continue = SoupCMS::Api::Resolver::TagResolver.new.resolve(value,context)
+    expect(continue).to eq(true)
+    expect(result).to eq(value)
   end
 
 end
