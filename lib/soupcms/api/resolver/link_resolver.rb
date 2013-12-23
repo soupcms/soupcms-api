@@ -6,13 +6,12 @@ module SoupCMS
       class LinkResolver < Base
 
         def resolve(value,context)
-          return value, true if !value.kind_of?(Hash) || value['url']
-          url = SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'] || context.model_name, value['match'])
-          if context.drafts?
-            url.include?('?') ? url.concat('&') : url.concat('?')
-            url = url.concat('include=drafts')
-          end
-          value['url'] = URI.escape("/#{context.application.name}/#{url}")
+          return value, true if !value.kind_of?(Hash) || (value['url'] && value['url'].match(/http/))
+          url = value['url']
+          url = SoupCMS::Api::Utils::UrlBuilder.build(value['model_name'] || context.model_name, value['match']) unless url
+          url = File.join("/#{context.application.name}",url) unless url.include?(context.application.name)
+          url = SoupCMS::Api::Utils::UrlBuilder.drafts(url, context.drafts?)
+          value['url'] = URI.escape(url)
           return value, false
         end
       end

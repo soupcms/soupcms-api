@@ -24,12 +24,19 @@ module SoupCMS
                 index += 1
               end
             end
-            url.concat("&filters[]=#{key}") unless key == "tags" || key == :tags
+            url.concat("&filters[]=#{key}") unless key == 'tags' || key == :tags
             filter_index += 1
           }
           url
         end
 
+        def self.drafts(url, drafts)
+          if drafts
+            url.include?('?') ? url.concat('&') : url.concat('?')
+            url.concat('include=drafts')
+          end
+          url
+        end
 
       end
 

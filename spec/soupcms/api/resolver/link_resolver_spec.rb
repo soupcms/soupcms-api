@@ -43,6 +43,21 @@ describe SoupCMS::Api::Resolver::LinkResolver do
 
   end
 
+  it 'should add application name if url is not absolute and application name not prefixed' do
+    context = SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
+    value = { 'url' => 'home' }
+    result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+    expect(continue).to eq(false)
+    expect(result['url']).to eq('/soupcms-test/home')
+  end
+
+  it 'should include drafts if url is not absolute and application name not prefixed' do
+    context = SoupCMS::Api::Model::RequestContext.new(application, { 'include' => 'drafts' })
+    value = { 'url' => 'home' }
+    result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+    expect(continue).to eq(false)
+    expect(result['url']).to eq('/soupcms-test/home?include=drafts')
+  end
 
 
 end

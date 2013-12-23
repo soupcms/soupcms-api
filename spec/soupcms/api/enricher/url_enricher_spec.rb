@@ -40,4 +40,15 @@ describe SoupCMS::Api::Enricher::UrlEnricher do
 
   end
 
+  context 'drafts' do
+    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts', 'include' => 'drafts' }) }
+
+    it 'should add include=drafts to link when context is drafts' do
+      document = { 'title' => 'Title', 'slug' => 'first-post' }
+      SoupCMS::Api::Enricher::UrlEnricher.new(context).enrich(document)
+      expect(document['url']).to eq('/soupcms-test/posts/first-post?include=drafts')
+    end
+
+  end
+
 end
