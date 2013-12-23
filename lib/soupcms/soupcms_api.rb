@@ -22,8 +22,10 @@ class SoupCMSApi < Grape::API
     end
 
     after do
-      caching_strategy = SoupCMSApi.config.http_caching_strategy.new
-      caching_strategy.headers(context).each { |key, value| header key, value }
+      if context.environment == 'production'
+        caching_strategy = SoupCMSApi.config.http_caching_strategy.new
+        caching_strategy.headers(context).each { |key, value| header key, value }
+      end
     end
 
     group ':app_name' do
