@@ -62,14 +62,24 @@ describe 'API' do
 
     end
 
+    context 'resolvers' do
+      it 'should add url to the post object' do
+        BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED).create
+        get '/api/soupcms-test/posts'
+        docs = JSON.parse(last_response.body)
+        expect(docs[0]['url']).to eq('/soupcms-test/posts/first-post')
+      end
 
-    it 'should add url to the post object' do
-      BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED).create
-      get '/api/soupcms-test/posts'
-      docs = JSON.parse(last_response.body)
-      expect(docs[0]['url']).to eq('/soupcms-test/posts/first-post')
-
+      it 'should resolve reference dependency' do
+        BlogPostBuilder.new.with('slug' => 'second-post', 'state' => PUBLISHED, 'title' => 'Title 2').create
+        BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED, 'title' => 'Title 1', 'another_post_ref' => { 'model' => 'posts', 'match' => {'slug' => 'second-post'}}).create
+        get '/api/soupcms-test/posts/slug/first-post'
+        doc = JSON.parse(last_response.body)
+        expect(doc['another_post_ref']['title']).to eq('Title 2')
+      end
     end
+
+
 
   end
 

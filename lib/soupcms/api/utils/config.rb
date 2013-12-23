@@ -5,9 +5,10 @@ module SoupCMS
 
       module ConfigDefaults
         DEPENDENCY_RESOLVERS = {
-            /link$/ => SoupCMS::Api::Resolver::LinkResolver,
+            /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
             'tags' => SoupCMS::Api::Resolver::TagResolver,
-            /content$/ => SoupCMS::Api::Resolver::MarkdownResolver
+            /content$/ => SoupCMS::Api::Resolver::MarkdownResolver,
+            /link$/ => SoupCMS::Api::Resolver::LinkResolver
         }
         ENRICHERS = [
             SoupCMS::Api::Enricher::PageEnricher,
