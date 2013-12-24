@@ -11,7 +11,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
       result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
       expect(continue).to eq(false)
-      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags="popular"'))
+      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags=popular'))
     end
 
     it 'should return value if it is absolute url and not a hash' do
@@ -29,7 +29,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
       result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
       expect(continue).to eq(false)
-      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags="popular"&include=drafts'))
+      expect(result['url']).to eq(URI.escape('/soupcms-test/posts?tags=popular&include=drafts'))
     end
 
   end
@@ -39,7 +39,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
     value = { 'match' => {'tags' => 'popular'}}
     result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
     expect(continue).to eq(false)
-    expect(result['url']).to eq(URI.escape('/soupcms-test/abcd?tags="popular"'))
+    expect(result['url']).to eq(URI.escape('/soupcms-test/abcd?tags=popular'))
 
   end
 

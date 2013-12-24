@@ -13,7 +13,7 @@ describe SoupCMS::Api::DependencyResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
+        'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -35,7 +35,7 @@ describe SoupCMS::Api::DependencyResolver do
         'menu' => [
             {
                 'label' => 'Menu 1',
-                'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
+                'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
             }
         ]
     }
@@ -51,7 +51,7 @@ describe SoupCMS::Api::DependencyResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
+        'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
     }
     SoupCMS::Api::DependencyResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -66,11 +66,11 @@ describe SoupCMS::Api::DependencyResolver do
         'tags' => [
             {
                 'label' => 'tag1',
-                'link' => {'match' => {'tags' => 'tag1'},'url' => '/soupcms-test/posts?tags=%22tag1%22'}
+                'link' => {'match' => {'tags' => 'tag1'},'url' => '/soupcms-test/posts?tags=tag1'}
             },
             {
                 'label' => 'tag2',
-                'link' => {'match' => {'tags' => 'tag2'},'url' => '/soupcms-test/posts?tags=%22tag2%22'}
+                'link' => {'match' => {'tags' => 'tag2'},'url' => '/soupcms-test/posts?tags=tag2'}
             }
         ]
     }
@@ -122,11 +122,11 @@ describe SoupCMS::Api::DependencyResolver do
             [
                 {
                     'label' => 'popular',
-                    'link' => {'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=%22popular%22'}
+                    'link' => {'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
                 },
                 {
                     'label' => 'agile',
-                    'link' => {'match' => {'tags' => 'agile'}, 'url' => '/soupcms-test/posts?tags=%22agile%22'}
+                    'link' => {'match' => {'tags' => 'agile'}, 'url' => '/soupcms-test/posts?tags=agile'}
                 }
             ]
     }

@@ -11,8 +11,9 @@ module SoupCMS
           url = (context.model_name == 'pages') ?
               File.join('/', context.application.name, page['slug']) :
               File.join('/', context.application.name, context.model_name, page['slug'])
-          url = SoupCMS::Api::Utils::UrlBuilder.drafts(url, context.drafts?)
-          page['url'] = URI.escape(url)
+
+          page['url'] = context.drafts? ? URI.escape(url + '?include=drafts') : URI.escape(url)
+
         end
 
       end

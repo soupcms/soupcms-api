@@ -13,12 +13,12 @@ describe 'API' do
   context 'search by title' do
 
     before do
-      BlogPostBuilder.new.with('publish_datetime' => 1405000000, 'state' => PUBLISHED, 'title' => 'My first blog post', 'category' => 'cooking', 'rank' => 25).create
-      BlogPostBuilder.new.with('publish_datetime' => 1305000000,'state' => PUBLISHED, 'title' => 'My second blog post', 'category' => 'technical', 'rank' => 30).create
+      BlogPostBuilder.new.with('publish_datetime' => 1405000000, 'state' => PUBLISHED, 'title' => 'My first blog post', 'category' => 'cooking', 'rank' => 25, 'public' => true).create
+      BlogPostBuilder.new.with('publish_datetime' => 1305000000,'state' => PUBLISHED, 'title' => 'My second blog post', 'category' => 'technical', 'rank' => 30, 'public' => false).create
     end
 
     it 'should exactly match' do
-      get URI.escape('/api/soupcms-test/posts?filters=title&title="My first blog post"')
+      get URI.escape('/api/soupcms-test/posts?filters=title&title=My first blog post')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(1)
@@ -35,7 +35,7 @@ describe 'API' do
     end
 
     it 'should match multiple filters' do
-      get URI.escape('/api/soupcms-test/posts?filters[]=title&filters[]=category&title=/post/&category="cooking"')
+      get URI.escape('/api/soupcms-test/posts?filters[]=title&filters[]=category&title=/post/&category=cooking')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(1)
@@ -43,7 +43,7 @@ describe 'API' do
     end
 
     it 'should match filter with multiple value as or condition' do
-      get URI.escape('/api/soupcms-test/posts?filters[]=title&filters[]=category&title=/post/&category[]="cooking"&category[]="technical"')
+      get URI.escape('/api/soupcms-test/posts?filters[]=title&filters[]=category&title=/post/&category[]=cooking&category[]=technical')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(2)
@@ -53,6 +53,14 @@ describe 'API' do
 
     it 'should match filter with integer value' do
       get URI.escape('/api/soupcms-test/posts?filters=rank&rank=25')
+
+      docs = JSON.parse(last_response.body)
+      expect(docs.length).to eq(1)
+      expect(docs[0]['title']).to eq('My first blog post')
+    end
+
+    it 'should match filter with boolean value' do
+      get URI.escape('/api/soupcms-test/posts?filters=public&public=true')
 
       docs = JSON.parse(last_response.body)
       expect(docs.length).to eq(1)
