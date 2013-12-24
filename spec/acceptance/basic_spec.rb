@@ -79,6 +79,29 @@ describe 'API' do
       end
     end
 
+    context 'fields' do
+      before(:each) do
+        BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED, 'title' => 'Title 1', 'tags' => %w(tag1 tag2)).create
+      end
+
+      it 'should return only fields asked for from model' do
+        get '/api/soupcms-test/posts/slug/first-post?fields[]=title&fields[]=slug'
+        doc = JSON.parse(last_response.body)
+        expect(doc['title']).to eq('Title 1')
+        expect(doc['slug']).to eq('first-post')
+        expect(doc['tags']).to be_nil
+      end
+
+      it 'should return all fields when not specified' do
+        get '/api/soupcms-test/posts/slug/first-post'
+        doc = JSON.parse(last_response.body)
+        expect(doc['title']).to eq('Title 1')
+        expect(doc['slug']).to eq('first-post')
+        expect(doc['tags']).not_to be_nil
+      end
+
+    end
+
 
 
   end

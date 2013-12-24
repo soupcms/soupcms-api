@@ -13,6 +13,7 @@ module SoupCMS
       def initialize(context)
         @context = context
         @filters = {}
+        @fields = []
         @duplicate_docs_compare_key = 'version'
         @sort = DEFAULT_SORT_ON_PUBLISH_DATETIME
         @limit = 10
@@ -77,12 +78,19 @@ module SoupCMS
         self
       end
 
+      def fields(*fields)
+        @fields.concat fields.flatten
+        self
+      end
+
 
       def fetch_all
         published if @filters.empty?
         locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
-        collection.find(@filters, {limit: @limit}).sort(@sort).each do |doc|
+        options = {limit: @limit}
+        options[:fields] = @fields.concat(['doc_id',@duplicate_docs_compare_key]).uniq unless @fields.empty?
+        collection.find(@filters, options).sort(@sort).each do |doc|
           doc = SoupCMS::Api::Document.new(doc)
           docs.add(doc)
         end

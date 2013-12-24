@@ -60,4 +60,13 @@ describe 'basic' do
     expect(documents.size).to eq(3)
   end
 
+  it 'should fetch only fields asked for' do
+    BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'Title 1', 'slug'=> 'title_1','tags' => %w(tag1 tag2)}).create
+    document = posts.with('title' => 'Title 1').fields('title','slug').fetch_one
+    expect(document['title']).to eq('Title 1')
+    expect(document['slug']).to eq('title_1')
+    expect(document['tags']).to be_nil
+
+  end
+
 end

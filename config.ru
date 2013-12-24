@@ -4,6 +4,6 @@ require 'rack/cache'
 use Rack::Cache,
     :metastore   => 'heap:/',
     :entitystore => 'heap:/',
-    :verbose     => true
+    :verbose     => false
 
 run SoupCMSApi
