@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'redcarpet'
-gem 'rouge'
-
 group :development do
   gem 'puma'
   gem 'rack-cache'
