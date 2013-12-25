@@ -41,7 +41,7 @@ module SoupCMS
       end
 
       def resolve(context)
-        SoupCMS::Api::DependencyResolver.new(context).resolve(self)
+        SoupCMS::Api::DataResolver.new(context).resolve(self)
         self
       end
 

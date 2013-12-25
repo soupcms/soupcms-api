@@ -1,6 +1,6 @@
 module SoupCMS
   module Api
-    class DependencyResolver
+    class DataResolver
 
       def self.register_dependency_resolver(key, resolver)
         dependency_resolvers[key] = resolver

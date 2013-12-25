@@ -2,7 +2,7 @@ require 'json'
 
 require 'soupcms/api/version'
 
-require 'soupcms/api/resolver/dependency_resolver'
+require 'soupcms/api/resolver/data_resolver'
 require 'soupcms/api/resolver/base'
 require 'soupcms/api/resolver/link_resolver'
 require 'soupcms/api/resolver/tag_resolver'

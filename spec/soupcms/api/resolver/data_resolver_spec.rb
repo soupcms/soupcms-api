@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SoupCMS::Api::DependencyResolver do
+describe SoupCMS::Api::DataResolver do
 
   let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
@@ -15,7 +15,7 @@ describe SoupCMS::Api::DependencyResolver do
         'title' => 'Title',
         'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
   end
 
@@ -39,7 +39,7 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
   end
 
@@ -53,7 +53,7 @@ describe SoupCMS::Api::DependencyResolver do
         'title' => 'Title',
         'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
   end
 
@@ -74,7 +74,7 @@ describe SoupCMS::Api::DependencyResolver do
             }
         ]
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
   end
 
@@ -106,7 +106,7 @@ describe SoupCMS::Api::DependencyResolver do
             'value' => 'Getting started'
         }
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
 
   end
@@ -130,7 +130,7 @@ describe SoupCMS::Api::DependencyResolver do
                 }
             ]
     }
-    SoupCMS::Api::DependencyResolver.new(context).resolve(document)
+    SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
 
   end
