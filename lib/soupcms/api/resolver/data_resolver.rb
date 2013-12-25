@@ -2,16 +2,16 @@ module SoupCMS
   module Api
     class DataResolver
 
-      def self.register_dependency_resolver(key, resolver)
-        dependency_resolvers[key] = resolver
+      def self.register(key, resolver)
+        resolvers[key] = resolver
       end
 
-      def self.clear_dependency_resolvers
-        @@dependency_resolvers = {}
+      def self.clear_all
+        @@resolvers = {}
       end
 
-      def self.dependency_resolvers
-        @@dependency_resolvers ||= {
+      def self.resolvers
+        @@resolvers ||= {
             /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
             'tags' => SoupCMS::Api::Resolver::TagResolver,
             /content$/ => SoupCMS::Api::Resolver::MarkdownResolver,
@@ -49,7 +49,7 @@ module SoupCMS
       @@key_resolvers = {}  # key and its resolvers are cached
       def find_resolver(key)
         if @@key_resolvers[key].nil?
-          @@key_resolvers[key] = self.class.dependency_resolvers.select { |k, v| key.match(k) }.values.compact[0]
+          @@key_resolvers[key] = self.class.resolvers.select { |k, v| key.match(k) }.values.compact[0]
         end
         @@key_resolvers[key]
       end
