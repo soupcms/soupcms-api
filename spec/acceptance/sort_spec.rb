@@ -7,7 +7,7 @@ describe 'API' do
   include Rack::Test::Methods
 
   def app
-    SoupCMSApi
+    SoupCMSApiRackApp.new
   end
 
   context 'sort' do

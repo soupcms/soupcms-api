@@ -6,4 +6,4 @@ use Rack::Cache,
     :entitystore => 'heap:/',
     :verbose     => false
 
-run SoupCMSApi
+run SoupCMSApiRackApp.new

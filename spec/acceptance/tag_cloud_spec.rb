@@ -7,7 +7,7 @@ describe 'API' do
   include Rack::Test::Methods
 
   def app
-    SoupCMSApi
+    SoupCMSApiRackApp.new
   end
 
   context 'search by tags' do

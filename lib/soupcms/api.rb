@@ -1,3 +1,5 @@
+require 'json'
+
 require 'soupcms/api/version'
 
 require 'soupcms/api/resolver/dependency_resolver'
@@ -24,4 +26,4 @@ require 'soupcms/api/model/tag_cloud'
 require 'soupcms/api/model/document_repository'
 
 require 'soupcms/api/service/document_service'
-require 'soupcms/soupcms_api'
+require 'soupcms/soupcms_api_rack_app'

@@ -45,7 +45,7 @@ module SoupCMS
         private
         def apply_common_filters
           context.drafts? ? repo.drafts : repo.published
-          repo.locale(params['locale'])
+          repo.locale(params['locale']) if params['locale']
         end
 
         def apply_custom_field_filters
