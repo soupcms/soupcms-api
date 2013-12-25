@@ -5,7 +5,7 @@ require 'soupcms/api/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'soupcms-api'
-  spec.version       = Soupcms::Api::VERSION
+  spec.version       = SoupCMS::Api::VERSION
   spec.authors       = ['Sunit Parekh']
   spec.email         = ['parekh.sunit@gmail.com']
   spec.summary       = %q{soupCMS api project provides generic API for editorial data like blog posts, authors etc.}
