@@ -19,27 +19,18 @@ module SoupCMS
           apply_custom_field_filters
           repo.fields(params['fields']) if params['fields']
           repo.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
-          docs = repo.fetch_all
-          docs.enrich_documents(context)
-          docs.resolve_dependencies(context)
-          docs
+          repo.fetch_all.enrich(context).resolve(context)
         end
 
         def fetch_one
           repo.with(params['key'] => params['value'])
           repo.fields(params['fields']) if params['fields']
           doc = repo.fetch_one
-          if doc
-            doc.enrich_document(context)
-            doc.resolve_dependencies(context)
-          end
-          doc
+          doc.enrich(context).resolve(context) if doc
         end
 
         def tag_cloud
-          docs = repo.tag_cloud
-          docs.resolve_dependencies(context)
-          docs
+          repo.tag_cloud.resolve(context)
         end
 
         private

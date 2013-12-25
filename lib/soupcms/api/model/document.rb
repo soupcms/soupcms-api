@@ -40,13 +40,13 @@ module SoupCMS
         @document.to_hash
       end
 
-      def resolve_dependencies(context)
+      def resolve(context)
         SoupCMS::Api::DependencyResolver.new(context).resolve(self)
         self
       end
 
-      def enrich_document(context)
-        SoupCMS::Api::Utils::Config.configs.enrichers.each { |enricher| enricher.new(context).enrich(self) }
+      def enrich(context)
+        SoupCMSApi.config.enrichers.each { |enricher| enricher.new(context).enrich(self) }
         self
       end
 

@@ -2,12 +2,27 @@ module SoupCMS
   module Api
     class DependencyResolver
 
-      def initialize(context)
-        @context = context
-        @resolvers = SoupCMS::Api::Utils::Config.configs.dependency_resolvers
+      def self.register_dependency_resolver(key, resolver)
+        dependency_resolvers[key] = resolver
       end
 
-      attr_reader :resolvers
+      def self.clear_dependency_resolvers
+        @@dependency_resolvers = {}
+      end
+
+      def self.dependency_resolvers
+        @@dependency_resolvers ||= {
+            /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
+            'tags' => SoupCMS::Api::Resolver::TagResolver,
+            /content$/ => SoupCMS::Api::Resolver::MarkdownResolver,
+            /link$/ => SoupCMS::Api::Resolver::LinkResolver
+        }
+      end
+
+
+      def initialize(context)
+        @context = context
+      end
 
       def resolve(doc)
         resolve_dependency_recursive(doc.to_hash)
@@ -29,10 +44,14 @@ module SoupCMS
         end
       end
 
+      private
+
+      @@key_resolvers = {}  # key and its resolvers are cached
       def find_resolver(key)
-        resolver = nil
-        resolvers.select { |k,v| resolver = v if key.match(k) }
-        resolver
+        if @@key_resolvers[key].nil?
+          @@key_resolvers[key] = self.class.dependency_resolvers.select { |k, v| key.match(k) }.values.compact[0]
+        end
+        @@key_resolvers[key]
       end
 
     end

@@ -34,13 +34,14 @@ module SoupCMS
         @documents[index]
       end
 
-      def resolve_dependencies(context)
-        documents.each { |doc| doc.resolve_dependencies(context) }
+      def resolve(context)
+        documents.each { |doc| doc.resolve(context) }
         self
       end
 
-      def enrich_documents(context)
-        documents.each { |doc| doc.enrich_document(context)  }
+      def enrich(context)
+        documents.each { |doc| doc.enrich(context)  }
+        self
       end
 
     end

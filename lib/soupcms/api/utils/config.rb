@@ -3,44 +3,28 @@ module SoupCMS
 
     module Utils
 
-      module ConfigDefaults
-        DEPENDENCY_RESOLVERS = {
-            /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
-            'tags' => SoupCMS::Api::Resolver::TagResolver,
-            /content$/ => SoupCMS::Api::Resolver::MarkdownResolver,
-            /link$/ => SoupCMS::Api::Resolver::LinkResolver
-        }
-        ENRICHERS = [
-            SoupCMS::Api::Enricher::PageEnricher,
-            SoupCMS::Api::Enricher::UrlEnricher
-        ]
-      end
-
       class Config
 
-        def self.configs
-          @@config ||= SoupCMS::Api::Utils::Config.new
-        end
-
         def initialize
-          @dependency_resolvers = ConfigDefaults::DEPENDENCY_RESOLVERS
-          @enrichers = ConfigDefaults::ENRICHERS
+          @enrichers = [
+              SoupCMS::Api::Enricher::PageEnricher,
+              SoupCMS::Api::Enricher::UrlEnricher
+          ]
           @http_caching_strategy = SoupCMS::Api::Utils::HttpCacheStrategy
         end
 
-        attr_accessor :http_caching_strategy
-        attr_reader :dependency_resolvers, :enrichers
+        attr_accessor :http_caching_strategy, :enrichers
 
         def register_dependency_resolver(key, resolver)
-          @dependency_resolvers[key] = resolver
+          SoupCMS::Api::DependencyResolver.register_dependency_resolver key, resolver
         end
 
         def clear_dependency_resolvers
-          @dependency_resolvers = {}
+          SoupCMS::Api::DependencyResolver.clear_dependency_resolvers
         end
 
-        def register_enricher(enricher)
-          @enrichers << enricher
+        def register_enricher(enricher, prepend = false)
+          prepend ? @enrichers.unshift(enricher) : @enrichers << enricher
         end
 
         def clear_enrichers

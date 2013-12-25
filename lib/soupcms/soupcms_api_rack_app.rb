@@ -27,7 +27,7 @@ class SoupCMSApiRackApp
       return [404, headers, [{ error: "Document #{request.params['value']} not found."}.to_json]] if result.nil?
     end
 
-    headers.merge! SoupCMS::Api::Utils::Config.configs.http_caching_strategy.new.headers(context) if context.environment == 'production'
+    headers.merge! SoupCMSApi.config.http_caching_strategy.new.headers(context) if context.environment == 'production'
     [status, headers, [result.to_json]]
   end
 
