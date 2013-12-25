@@ -5,10 +5,6 @@ class SoupCMSApi < Grape::API
     prefix 'api'
     format :json
 
-    def self.config
-      @@config ||= SoupCMS::Api::Utils::Config.new
-    end
-
     helpers do
 
       def context
@@ -23,7 +19,7 @@ class SoupCMSApi < Grape::API
 
     after do
       if context.environment == 'production'
-        caching_strategy = SoupCMSApi.config.http_caching_strategy.new
+        caching_strategy = SoupCMS::Api::Utils::Config.configs.http_caching_strategy.new
         caching_strategy.headers(context).each { |key, value| header key, value }
       end
     end

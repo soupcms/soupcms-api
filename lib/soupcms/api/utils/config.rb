@@ -18,6 +18,10 @@ module SoupCMS
 
       class Config
 
+        def self.configs
+          @@config ||= SoupCMS::Api::Utils::Config.new
+        end
+
         def initialize
           @dependency_resolvers = ConfigDefaults::DEPENDENCY_RESOLVERS
           @enrichers = ConfigDefaults::ENRICHERS
