@@ -3,19 +3,19 @@ module SoupCMS
     class DataResolver
 
       def self.register(key, resolver)
-        resolvers[key] = resolver
+        resolvers.push({key: key, resolver: resolver})
       end
 
       def self.clear_all
-        @@resolvers = {}
+        @@resolvers = []
       end
 
       def self.resolvers
-        @@resolvers ||= {
-              /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
-              'tags' => SoupCMS::Api::Resolver::TagResolver,
-              /link$/ => SoupCMS::Api::Resolver::LinkResolver
-        }
+        @@resolvers ||= [
+            {key: /ref$/, resolver: SoupCMS::Api::Resolver::ReferenceResolver},
+            {key: 'tags', resolver: SoupCMS::Api::Resolver::TagResolver},
+            {key: /link$/, resolver: SoupCMS::Api::Resolver::LinkResolver}
+        ]
       end
 
 
@@ -29,10 +29,14 @@ module SoupCMS
 
       def resolve_dependency_recursive(document)
         document.each do |key, value|
-          resolver = find_resolver(key)
-          if resolver
-            value, continue = resolver.new.resolve(value,@context)
-            document[key] = value
+          resolvers = find_resolver(key)
+          continue = true
+          if !resolvers.empty?
+            resolvers.each do |resolver|
+              value, continue = resolver.new.resolve(value, @context)
+              document[key] = value
+              break unless continue
+            end
             next unless continue
           end
           if value.kind_of?(Array)
@@ -45,10 +49,10 @@ module SoupCMS
 
       private
 
-      @@key_resolvers = {}  # key and its resolvers are cached
+      @@key_resolvers = {} # key and its resolvers are cached
       def find_resolver(key)
         if @@key_resolvers[key].nil?
-          @@key_resolvers[key] = self.class.resolvers.select { |k, v| key.match(k) }.values.compact[0]
+          @@key_resolvers[key] = self.class.resolvers.collect { |kv| kv[:resolver] if key.match(kv[:key]) }.compact
         end
         @@key_resolvers[key]
       end

@@ -7,7 +7,7 @@ describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
   context 'type = markdown' do
     it 'should parse simple markdown headings' do
       value = '## Getting started'
-      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
     end
@@ -25,11 +25,11 @@ describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
   end
 ```
       markdowm
-      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
-      expect(result['value']).to include('<pre class="highlight ruby">')
-      expect(result['value']).to include('\'Password\'')
+      expect(result['value']).to include('<div class="CodeRay">')
+      expect(result['value']).to include('Password')
     end
 
     it 'should parse tables markdown' do
@@ -48,13 +48,13 @@ Content Cell  | Content Cell
   end
 ```
       markdowm
-      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
       expect(result['value']).to include('<table>')
       expect(result['value']).to include('</table>')
       expect(result['value']).to include('First Header')
-      expect(result['value']).to include('<pre class="highlight ruby">')
+      expect(result['value']).to include('<div class="CodeRay">')
       expect(result['value']).to include('method_name')
     end
   end

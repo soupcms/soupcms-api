@@ -8,6 +8,7 @@ use Rack::Cache,
 
 SoupCMSApi.configure do |config|
   config.data_resolver.register(/content$/,SoupCMS::Api::Resolver::RedcarpetMarkdownResolver)
+  config.data_resolver.register(/content$/,SoupCMS::Api::Resolver::KramdownMarkdownResolver)
 end
 
 run SoupCMSApiRackApp.new

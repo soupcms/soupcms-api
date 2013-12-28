@@ -6,7 +6,8 @@ group :development do
   gem 'puma'
   gem 'rack-cache'
   gem 'redcarpet'
-  gem 'rouge'
+  gem 'kramdown'
+  gem 'coderay'
 end
 
 group :test do

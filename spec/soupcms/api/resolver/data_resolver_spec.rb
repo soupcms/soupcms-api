@@ -82,6 +82,7 @@ describe SoupCMS::Api::DataResolver do
     document_hash = {
         'markdown_content' => {
             'type' => 'markdown',
+            'flavor' => 'redcarpet',
             'value' => '# Getting started'
         },
         'html_content' => {
@@ -96,6 +97,7 @@ describe SoupCMS::Api::DataResolver do
     expected = {
         'markdown_content' => {
             'type' => 'markdown',
+            'flavor' => 'redcarpet',
             'value' => "<h1>Getting started</h1>\n"
         },
         'html_content' => {
