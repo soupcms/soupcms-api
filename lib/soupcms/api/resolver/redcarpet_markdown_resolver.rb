@@ -11,7 +11,7 @@ module SoupCMS
         include Rouge::Plugins::Redcarpet
       end
 
-      class MarkdownResolver < Base
+      class RedcarpetMarkdownResolver < Base
 
         def resolve(value, context)
           return value, true if value['type'] != 'markdown'

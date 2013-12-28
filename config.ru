@@ -6,4 +6,8 @@ use Rack::Cache,
     :entitystore => 'heap:/',
     :verbose     => false
 
+SoupCMSApi.configure do |config|
+  config.data_resolver.register(/content$/,SoupCMS::Api::Resolver::RedcarpetMarkdownResolver)
+end
+
 run SoupCMSApiRackApp.new

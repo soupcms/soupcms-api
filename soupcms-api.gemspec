@@ -21,6 +21,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency('mongo')
   spec.add_dependency('bson_ext')
 
-  spec.add_dependency('redcarpet')
-  spec.add_dependency('rouge')
 end

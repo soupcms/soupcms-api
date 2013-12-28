@@ -12,10 +12,9 @@ module SoupCMS
 
       def self.resolvers
         @@resolvers ||= {
-            /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
-            'tags' => SoupCMS::Api::Resolver::TagResolver,
-            /content$/ => SoupCMS::Api::Resolver::MarkdownResolver,
-            /link$/ => SoupCMS::Api::Resolver::LinkResolver
+              /ref$/ => SoupCMS::Api::Resolver::ReferenceResolver,
+              'tags' => SoupCMS::Api::Resolver::TagResolver,
+              /link$/ => SoupCMS::Api::Resolver::LinkResolver
         }
       end
 

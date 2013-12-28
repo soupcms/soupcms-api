@@ -5,6 +5,8 @@ gemspec
 group :development do
   gem 'puma'
   gem 'rack-cache'
+  gem 'redcarpet'
+  gem 'rouge'
 end
 
 group :test do

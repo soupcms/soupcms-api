@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe SoupCMS::Api::Resolver::MarkdownResolver do
+describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
 
   let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
   context 'type = markdown' do
     it 'should parse simple markdown headings' do
       value = '## Getting started'
-      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
     end
@@ -25,7 +25,7 @@ describe SoupCMS::Api::Resolver::MarkdownResolver do
   end
 ```
       markdowm
-      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
       expect(result['value']).to include('<pre class="highlight ruby">')
@@ -48,7 +48,7 @@ Content Cell  | Content Cell
   end
 ```
       markdowm
-      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown', 'value' => value}, context)
       expect(continue).to eq(false)
       expect(result['value']).to include('<h2>Getting started</h2>')
       expect(result['value']).to include('<table>')
@@ -63,7 +63,7 @@ Content Cell  | Content Cell
 
     it 'should return value as is' do
       value = '## Getting started'
-      result, continue = SoupCMS::Api::Resolver::MarkdownResolver.new.resolve({'type' => 'not-markdown', 'value' => value}, context)
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'not-markdown', 'value' => value}, context)
       expect(continue).to eq(true)
       expect(result['value']).to include('## Getting started')
 

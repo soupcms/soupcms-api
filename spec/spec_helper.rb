@@ -3,6 +3,10 @@ require 'soupcms/api'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+SoupCMSApi.configure do |config|
+  config.data_resolver.register(/content$/,SoupCMS::Api::Resolver::RedcarpetMarkdownResolver)
+end
+
 RSpec.configure do |config|
   config.order = 'random'
   config.expect_with :rspec

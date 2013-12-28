@@ -6,8 +6,14 @@ require 'soupcms/api/resolver/data_resolver'
 require 'soupcms/api/resolver/base'
 require 'soupcms/api/resolver/link_resolver'
 require 'soupcms/api/resolver/tag_resolver'
-require 'soupcms/api/resolver/markdown_resolver'
 require 'soupcms/api/resolver/reference_resolver'
+begin
+  require 'redcarpet'
+  require 'rouge'
+  require 'soupcms/api/resolver/redcarpet_markdown_resolver'
+rescue LoadError
+  puts "To load redcarpet_markdown_resolver add gems 'redcarpet' and 'rouge'"
+end
 
 require 'soupcms/api/enricher/base'
 require 'soupcms/api/enricher/page_enricher'
