@@ -12,13 +12,13 @@ begin
   require 'coderay'
   require 'soupcms/api/resolver/redcarpet_markdown_resolver'
 rescue LoadError
-  puts "To load redcarpet_markdown_resolver add gems 'redcarpet' and 'coderay'"
+  #puts "To load redcarpet_markdown_resolver add gems 'redcarpet' and 'coderay'"
 end
 begin
   require 'kramdown'
   require 'soupcms/api/resolver/kramdown_markdown_resolver'
 rescue LoadError
-  puts "To load kramdown_markdown_resolver add gems 'kramdown'"
+  #puts "To load kramdown_markdown_resolver add gems 'kramdown'"
 end
 
 require 'soupcms/api/enricher/base'

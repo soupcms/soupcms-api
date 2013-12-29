@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SoupCMS::Api::VERSION
   spec.authors       = ['Sunit Parekh']
   spec.email         = ['parekh.sunit@gmail.com']
-  spec.summary       = %q{soupCMS api project provides generic API for editorial data like blog posts, authors etc.}
-  spec.description   = %q{soupCMS api project provides generic API for editorial data like blog posts, authors etc.}
+  spec.summary       = %q{soupCMS api project provides generic API for editorial data like blog posts, authors etc}
+  spec.description   = %q{soupCMS api project provides generic API for editorial data like blog posts, authors etc}
   spec.homepage      = 'http://www.soupcms.com/soucms-api'
   spec.license       = 'MIT'
 
