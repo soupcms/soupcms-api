@@ -98,7 +98,7 @@ describe SoupCMS::Api::DataResolver do
         'markdown_content' => {
             'type' => 'markdown',
             'flavor' => 'redcarpet',
-            'value' => "<h1>Getting started</h1>\n"
+            'value' => "<h1 id=\"toc_0\">Getting started</h1>\n"
         },
         'html_content' => {
             'type' => 'html',

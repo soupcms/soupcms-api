@@ -20,7 +20,7 @@ module SoupCMS
 
         def resolve(value, context)
           return value, true if value['type'] != 'markdown' || value['flavor'] != 'redcarpet'
-          markdown = Redcarpet::Markdown.new(CodeRayHTML, fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true, footnotes: true, superscript: true, highlight: true)
+          markdown = Redcarpet::Markdown.new(CodeRayHTML.new(with_toc_data: true), fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true, footnotes: true, superscript: true, highlight: true)
           value['value'] = markdown.render(value['value'])
           return value, false
         end

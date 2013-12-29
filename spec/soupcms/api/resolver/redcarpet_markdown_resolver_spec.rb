@@ -9,7 +9,7 @@ describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
       value = '## Getting started'
       result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
-      expect(result['value']).to include('<h2>Getting started</h2>')
+      expect(result['value']).to include('<h2 id="toc_0">Getting started</h2>')
     end
 
     it 'should parse fenced code blocks markdown' do
@@ -27,7 +27,7 @@ describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
       markdowm
       result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
-      expect(result['value']).to include('<h2>Getting started</h2>')
+      expect(result['value']).to include('<h2 id="toc_0">Getting started</h2>')
       expect(result['value']).to include('<div class="CodeRay">')
       expect(result['value']).to include('Password')
     end
@@ -50,7 +50,7 @@ Content Cell  | Content Cell
       markdowm
       result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
       expect(continue).to eq(false)
-      expect(result['value']).to include('<h2>Getting started</h2>')
+      expect(result['value']).to include('<h2 id="toc_0">Getting started</h2>')
       expect(result['value']).to include('<table>')
       expect(result['value']).to include('</table>')
       expect(result['value']).to include('First Header')
