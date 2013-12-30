@@ -17,14 +17,12 @@ module SoupCMS
         def fetch_all
           repo.tags(params['tags'].collect { |tag| tag }) unless params['tags'].empty?
           apply_custom_field_filters
-          repo.fields(params['fields']) if params['fields']
           repo.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
           repo.fetch_all.enrich(context).resolve(context)
         end
 
         def fetch_one
           repo.with(params['key'] => params['value'])
-          repo.fields(params['fields']) if params['fields']
           doc = repo.fetch_one
           doc.enrich(context).resolve(context) if doc
         end
@@ -37,6 +35,8 @@ module SoupCMS
         def apply_common_filters
           context.drafts? ? repo.drafts : repo.published
           repo.locale(params['locale']) if params['locale']
+          repo.fields(params['fields']) if params['fields']
+          repo.limit(params['limit'].to_i) if params['limit']
         end
 
         def apply_custom_field_filters
