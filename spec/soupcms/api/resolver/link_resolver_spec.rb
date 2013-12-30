@@ -20,6 +20,13 @@ describe SoupCMS::Api::Resolver::LinkResolver do
       expect(continue).to eq(true)
       expect(result['url']).to eq('http://www.google.com/')
     end
+
+    it 'should return value if it url stats with /' do
+      value = { 'url' => '/app-name/test' }
+      result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+      expect(continue).to eq(true)
+      expect(result['url']).to eq('/app-name/test')
+    end
   end
 
   context 'build drafts links' do

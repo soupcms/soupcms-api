@@ -7,7 +7,7 @@ module SoupCMS
 
         def resolve(value, context)
           url = value['url'] || ''
-          return value, true if !value.kind_of?(Hash) || url.match(/http/)
+          return value, true if !value.kind_of?(Hash) || url.match(/^http/) || url.match(/^\//)
 
           url = File.join(url, (value['model_name'] || context.model_name)) if url.empty?
           url = File.join("/#{context.application.name}", url) unless url.include?(context.application.name)
