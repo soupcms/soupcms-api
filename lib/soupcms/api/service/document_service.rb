@@ -37,6 +37,19 @@ module SoupCMS
           repo.locale(params['locale']) if params['locale']
           repo.fields(params['fields']) if params['fields']
           repo.limit(params['limit'].to_i) if params['limit']
+          repo.sort(sort_to_hash(params['sort'])) if params['sort']
+        end
+
+        def sort_to_hash(sorts = [])
+          sort_hash = {}
+          sorts.each do |sort|
+            if sort.match(/^-/)
+              sort_hash[sort.match(/^-/).post_match] = :descending
+            else
+              sort_hash[sort] = :ascending
+            end
+          end
+          sort_hash
         end
 
         def apply_custom_field_filters
