@@ -7,27 +7,16 @@ module SoupCMS
       class Application
 
 
-        def initialize(name)
+        def initialize(name, app_base_url, mongo_uri = nil)
           @name = name
+          @app_base_url = app_base_url
+          @mongo_uri = (mongo_uri || "mongodb://localhost:27017/#{name}")
         end
 
-        attr_writer :mongo_uri
-        attr_reader :name
-
-        def mongo_uri
-          @mongo_uri || "mongodb://localhost:27017/#{name}"
-        end
+        attr_reader :name, :app_base_url, :mongo_uri
 
         def connection
           Mongo::MongoClient.from_uri(mongo_uri)
-        end
-
-        def self.get(name)
-          @@apps ||= {}
-          if @@apps[name].nil?
-            @@apps[name] = Application.new(name)
-          end
-          @@apps[name]
         end
 
       end

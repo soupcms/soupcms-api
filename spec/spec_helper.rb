@@ -16,7 +16,10 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    db = SoupCMS::Api::Model::Application.new('soupcms-test').connection.db
+    application = SoupCMS::Api::Model::Application.new('soupcms-test', 'http://localhost:9292/soupcms-test')
+    SoupCMS::Api::Strategy::Application::UrlBased.apps = { 'soupcms-test' => application}
+
+    db = application.connection.db
     db.collection_names.each do |collection_name|
       next if collection_name.match(/^system/)
       db.collection(collection_name).remove

@@ -67,7 +67,7 @@ describe 'API' do
         BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED).create
         get '/api/soupcms-test/posts'
         docs = JSON.parse(last_response.body)
-        expect(docs[0]['url']).to eq('/soupcms-test/posts/first-post')
+        expect(docs[0]['url']).to eq('http://localhost:9292/soupcms-test/posts/first-post')
       end
 
       it 'should resolve reference dependency' do

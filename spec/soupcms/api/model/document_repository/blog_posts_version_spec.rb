@@ -5,7 +5,7 @@ include SoupCMS::Api::Model
 
 describe 'versions' do
 
-  let(:application) { Application.new('soupcms-test') }
+  let(:application) { Application.new('soupcms-test','http://localhost:9292/soupcms-test') }
   let(:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
   let(:service) { SoupCMS::Api::DocumentRepository.new(context) }
 

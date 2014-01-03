@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
 
-  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
+  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test','http://localhost:9292/soupcms-test') }
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
   context 'type = markdown' do
     it 'should parse simple markdown headings' do

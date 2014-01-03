@@ -25,7 +25,7 @@ describe 'API' do
       expect(tags.size).to eq(4)
       expect(tags[0]['label']).to eq('tag1')
       expect(tags[0]['weight']).to eq(1)
-      expect(tags[0]['link']['url']).to eq(URI.escape('/soupcms-test/posts?tags=tag1'))
+      expect(tags[0]['link']['url']).to eq(URI.escape('http://localhost:9292/soupcms-test/posts?tags=tag1'))
       expect(tags[1]['label']).to eq('tag2')
       expect(tags[1]['weight']).to eq(2)
       expect(tags[2]['label']).to eq('tag3')

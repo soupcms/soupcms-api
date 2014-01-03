@@ -5,6 +5,14 @@ module SoupCMS
 
       class Config
 
+        def application_strategy
+          @application_strategy ||= SoupCMS::Api::Strategy::Application::UrlBased
+        end
+
+        def application_strategy=(strategy)
+          @application_strategy = strategy
+        end
+
         def http_caching_strategy
           @http_caching_strategy ||= SoupCMS::Api::Utils::HttpCacheStrategy
         end

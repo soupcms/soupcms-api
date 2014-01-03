@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::DataResolver do
 
-  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test') }
+  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test','http://localhost:9292/soupcms-test') }
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
 
   it 'should resolve link dependency' do
@@ -13,7 +13,7 @@ describe SoupCMS::Api::DataResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
+        'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => 'http://localhost:9292/soupcms-test/posts?tags=popular'}
     }
     SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -35,7 +35,7 @@ describe SoupCMS::Api::DataResolver do
         'menu' => [
             {
                 'label' => 'Menu 1',
-                'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
+                'link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => 'http://localhost:9292/soupcms-test/posts?tags=popular'}
             }
         ]
     }
@@ -51,7 +51,7 @@ describe SoupCMS::Api::DataResolver do
     document = SoupCMS::Api::Document.new(document_hash)
     expected = {
         'title' => 'Title',
-        'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
+        'title_link' => {'model_name' => 'posts', 'match' => {'tags' => 'popular'}, 'url' => 'http://localhost:9292/soupcms-test/posts?tags=popular'}
     }
     SoupCMS::Api::DataResolver.new(context).resolve(document)
     expect(document.to_hash).to eq(expected)
@@ -66,11 +66,11 @@ describe SoupCMS::Api::DataResolver do
         'tags' => [
             {
                 'label' => 'tag1',
-                'link' => {'match' => {'tags' => 'tag1'},'url' => '/soupcms-test/posts?tags=tag1'}
+                'link' => {'match' => {'tags' => 'tag1'},'url' => 'http://localhost:9292/soupcms-test/posts?tags=tag1'}
             },
             {
                 'label' => 'tag2',
-                'link' => {'match' => {'tags' => 'tag2'},'url' => '/soupcms-test/posts?tags=tag2'}
+                'link' => {'match' => {'tags' => 'tag2'},'url' => 'http://localhost:9292/soupcms-test/posts?tags=tag2'}
             }
         ]
     }
@@ -124,11 +124,11 @@ describe SoupCMS::Api::DataResolver do
             [
                 {
                     'label' => 'popular',
-                    'link' => {'match' => {'tags' => 'popular'}, 'url' => '/soupcms-test/posts?tags=popular'}
+                    'link' => {'match' => {'tags' => 'popular'}, 'url' => 'http://localhost:9292/soupcms-test/posts?tags=popular'}
                 },
                 {
                     'label' => 'agile',
-                    'link' => {'match' => {'tags' => 'agile'}, 'url' => '/soupcms-test/posts?tags=agile'}
+                    'link' => {'match' => {'tags' => 'agile'}, 'url' => 'http://localhost:9292/soupcms-test/posts?tags=agile'}
                 }
             ]
     }

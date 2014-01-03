@@ -21,6 +21,11 @@ rescue LoadError
   #puts "To load kramdown_markdown_resolver add gems 'kramdown'"
 end
 
+require 'soupcms/api/strategy/application/application_strategy'
+require 'soupcms/api/strategy/application/single_app'
+require 'soupcms/api/strategy/application/sub_domain_based'
+require 'soupcms/api/strategy/application/url_based'
+
 require 'soupcms/api/enricher/base'
 require 'soupcms/api/enricher/page_enricher'
 require 'soupcms/api/enricher/url_enricher'

@@ -5,7 +5,7 @@ class DocumentBuilder
   def initialize model
     @model = model
     @data = {}
-    application = SoupCMS::Api::Model::Application.new('soupcms-test')
+    application = SoupCMS::Api::Model::Application.new('soupcms-test','http://localhost:9292/soupcms-test')
     @@db ||= application.connection.db
   end
 
