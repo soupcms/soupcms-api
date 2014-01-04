@@ -14,7 +14,7 @@ module SoupCMS
         end
 
         def http_caching_strategy
-          @http_caching_strategy ||= SoupCMS::Api::Utils::HttpCacheStrategy
+          @http_caching_strategy ||= SoupCMS::Common::Util::HttpCacheStrategy
         end
 
         def http_caching_strategy=(caching_strategy)

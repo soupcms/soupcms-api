@@ -13,15 +13,24 @@ describe 'API' do
   context 'basic default' do
 
     context 'get published documents' do
+
+      let(:env) { ENV['RACK_ENV'] }
       before do
+        env
+        ENV['RACK_ENV'] = 'production'
+
         20.times { BlogPostBuilder.new.with('state' => PUBLISHED).create }
         get '/api/soupcms-test/posts'
       end
 
+      after do
+        ENV['RACK_ENV'] = env
+      end
+
       it { expect(last_response.status).to eq(200) }
       it { expect(JSON.parse(last_response.body).length).to eq(10) }
-      #it { expect(last_response.headers['Cache-Control']).to eq('public, max-age=300') }
-      #it { expect(last_response.headers['Expires']).not_to be_nil }
+      it { expect(last_response.headers['Cache-Control']).to eq('public, max-age=300') }
+      it { expect(last_response.headers['Expires']).not_to be_nil }
 
     end
 

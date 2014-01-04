@@ -31,9 +31,7 @@ require 'soupcms/api/enricher/page_enricher'
 require 'soupcms/api/enricher/url_enricher'
 
 require 'soupcms/api/utils/params_hash'
-require 'soupcms/api/utils/url_builder'
 require 'soupcms/api/utils/config'
-require 'soupcms/api/utils/http_cache_strategy'
 
 require 'soupcms/api/model/request_context'
 require 'soupcms/api/model/document'
