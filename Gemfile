@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'soupcms-common', path: '../soupcms-common'
+#gem 'soupcms-common', path: '../soupcms-common'
+gem 'soupcms-common', github: 'soupcms/soupcms-common'
 
 group :development do
   gem 'puma'

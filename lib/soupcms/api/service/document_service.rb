@@ -45,7 +45,6 @@ module SoupCMS
             if sort.match(/^-/)
               sort_hash[sort.gsub('-','').strip] = :descending
             else
-              puts sort
               sort_hash[sort.gsub('+','').strip] = :ascending
             end
           end
