@@ -24,7 +24,8 @@ module SoupCMS
       attr_writer :model_name
 
       def collection
-        @collection ||= context.application.connection.db.collection(model_name)
+        return @collection if @collection
+        @collection ||= Mongo::MongoClient.from_uri(context.application.mongo_uri).db.collection(model_name)
       end
 
       def model_name

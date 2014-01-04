@@ -1,5 +1,15 @@
 class SoupCMSApiRackApp
 
+
+  def initialize
+    @router = SoupCMS::Api::Router.new
+    @router.add ':model_name', SoupCMS::Api::Controller::ModelController
+    @router.add ':model_name/tag-cloud', SoupCMS::Api::Controller::TagCloudController
+    @router.add ':model_name/:key/:value', SoupCMS::Api::Controller::KeyValueController
+  end
+
+  attr_accessor :router
+
   def call(env)
     status = 200
     headers = {'Content-Type' => 'application/json'}
@@ -8,28 +18,21 @@ class SoupCMSApiRackApp
     app_strategy = SoupCMSApi.config.application_strategy.new(request)
     request.params['app_name'] = app_strategy.app_name
 
-    url_parts = app_strategy.path.split('/')
-    request.params['model_name'] = url_parts[0]
     request.params['tags'] = [].concat([request.params['tags']].flatten.compact)
     request.params['filters'] = [].concat([request.params['filters']].flatten.compact)
 
     application = app_strategy.application
     context = SoupCMS::Api::Model::RequestContext.new(application, request.params)
-    service = SoupCMS::Api::Service::DocumentService.new(context)
 
-    if url_parts.size == 1
-      result = service.fetch_all || []
-    elsif url_parts[1] == 'tag-cloud'
-      result = service.tag_cloud || []
+    result = router.resolve(app_strategy.path, request).new.execute(context)
+
+    if result.nil?
+      return [404, headers, [{error: "Document #{request.params['value']} not found."}.to_json]]
     else
-      request.params['key'] = url_parts[1]
-      request.params['value'] = url_parts[2]
-      result = service.fetch_one
-      return [404, headers, [{ error: "Document #{request.params['value']} not found."}.to_json]] if result.nil?
+      headers.merge! SoupCMSApi.config.http_caching_strategy.new.headers(context) if context.environment == 'production'
+      [status, headers, [result.to_json]]
     end
 
-    headers.merge! SoupCMSApi.config.http_caching_strategy.new.headers(context) if context.environment == 'production'
-    [status, headers, [result.to_json]]
   end
 
 end

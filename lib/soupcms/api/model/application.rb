@@ -15,10 +15,6 @@ module SoupCMS
 
         attr_reader :name, :app_base_url, :mongo_uri
 
-        def connection
-          Mongo::MongoClient.from_uri(mongo_uri)
-        end
-
       end
 
 
