@@ -2,7 +2,7 @@ class SoupCMSApiRackApp
 
 
   def initialize
-    @router = SoupCMS::Api::Router.new
+    @router = SoupCMS::Common::Router.new
     @router.add ':model_name', SoupCMS::Api::Controller::ModelController
     @router.add ':model_name/tag-cloud', SoupCMS::Api::Controller::TagCloudController
     @router.add ':model_name/:key/:value', SoupCMS::Api::Controller::KeyValueController
@@ -21,10 +21,9 @@ class SoupCMSApiRackApp
 
     app_strategy = SoupCMSApi.config.application_strategy.new(request)
     request.params['app_name'] = app_strategy.app_name
-    application = app_strategy.application
-    context = SoupCMS::Api::Model::RequestContext.new(application, request.params)
 
-    result = router.resolve(app_strategy.path, request).new.execute(context)
+    context = SoupCMS::Api::Model::RequestContext.new(app_strategy.application, request.params)
+    result = router.resolve(app_strategy.path, request.params).new.execute(context)
 
     if result.nil?
       return [404, headers, [{error: "Document #{request.params['value']} not found."}.to_json]]

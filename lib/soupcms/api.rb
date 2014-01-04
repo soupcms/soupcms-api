@@ -3,7 +3,6 @@ require 'soupcms/common'
 
 require 'soupcms/api/version'
 
-require 'soupcms/api/router'
 require 'soupcms/api/controller/model_controller'
 require 'soupcms/api/controller/tag_cloud_controller'
 require 'soupcms/api/controller/key_value_controller'
