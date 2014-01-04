@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::DataResolver do
 
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
+  let (:context) { SoupCMS::Common::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
 
   it 'should resolve link dependency' do
     document_hash = {
@@ -113,7 +113,7 @@ describe SoupCMS::Api::DataResolver do
   end
 
   it 'should continue when resolves return true for further dependency resolution' do
-    context = SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'})
+    context = SoupCMS::Common::Model::RequestContext.new(application, {'model_name' => 'posts'})
     document_hash = {
         'tags' => %w(popular agile)
     }

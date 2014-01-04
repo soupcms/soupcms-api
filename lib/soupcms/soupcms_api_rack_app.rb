@@ -22,8 +22,8 @@ class SoupCMSApiRackApp
     app_strategy = SoupCMSApi.config.application_strategy.new(request)
     request.params['app_name'] = app_strategy.app_name
 
-    context = SoupCMS::Api::Model::RequestContext.new(app_strategy.application, request.params)
-    result = router.resolve(app_strategy.path, request.params).new.execute(context)
+    context = SoupCMS::Common::Model::RequestContext.new(app_strategy.application, request.params)
+    result = router.resolve(app_strategy.path, request.params).new(context).execute
 
     if result.nil?
       return [404, headers, [{error: "Document #{request.params['value']} not found."}.to_json]]

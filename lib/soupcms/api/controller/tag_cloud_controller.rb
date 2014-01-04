@@ -3,9 +3,9 @@ module SoupCMS
     module Controller
 
 
-      class TagCloudController
+      class TagCloudController < SoupCMS::Common::Controller::BaseController
 
-        def execute(context)
+        def execute
           service = SoupCMS::Api::Service::DocumentService.new(context)
           service.tag_cloud || []
         end

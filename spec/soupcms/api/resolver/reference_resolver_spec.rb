@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Resolver::ReferenceResolver do
 
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application) }
+  let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
 
   before(:each) do
     BlogPostBuilder.new.with('create_datetime' => 1305000000, 'state' => SoupCMS::Api::DocumentState::PUBLISHED, 'title' => 'Title 1', 'slug' => 'title_1', 'latest' => true).create

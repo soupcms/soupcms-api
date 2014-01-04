@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Resolver::LinkResolver do
 
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
+  let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
   it 'should resolve link dependency' do
     value = %w(popular agile)

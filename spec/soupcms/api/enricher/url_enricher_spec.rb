@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoupCMS::Api::Enricher::UrlEnricher do
 
   context 'pages' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'pages' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'pages' }) }
 
     it 'should build and add url without model name to the page object when slug is present' do
       document = { 'title' => 'Title', 'slug' => 'latest' }
@@ -21,7 +21,7 @@ describe SoupCMS::Api::Enricher::UrlEnricher do
   end
 
   context 'posts' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
     it 'should build and add url with model name to the post object when slug is present' do
       document = { 'title' => 'Title', 'slug' => 'first-post' }
@@ -39,7 +39,7 @@ describe SoupCMS::Api::Enricher::UrlEnricher do
   end
 
   context 'drafts' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts', 'include' => 'drafts' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'posts', 'include' => 'drafts' }) }
 
     it 'should add include=drafts to link when context is drafts' do
       document = { 'title' => 'Title', 'slug' => 'first-post' }

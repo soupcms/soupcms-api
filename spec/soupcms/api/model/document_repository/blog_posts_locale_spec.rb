@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
-include SoupCMS::Api::Model
 
 describe 'locale' do
 
-  let (:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
+  let (:context) { SoupCMS::Common::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
   let(:posts) { SoupCMS::Api::DocumentRepository.new(context) }
 
   it 'should return en_US locale documents by default' do

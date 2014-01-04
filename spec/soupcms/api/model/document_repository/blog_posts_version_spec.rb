@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 include SoupCMS::Api::DocumentState
-include SoupCMS::Api::Model
 
 describe 'versions' do
 
-  let(:context) { RequestContext.new(application, {'model_name' => 'posts'}) }
+  let(:context) { SoupCMS::Common::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
   let(:service) { SoupCMS::Api::DocumentRepository.new(context) }
 
   it 'should return only one latest published blog post for multiple versions of posts' do

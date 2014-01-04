@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Resolver::RedcarpetMarkdownResolver do
 
-  let (:context) { SoupCMS::Api::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
+  let (:context) { SoupCMS::Common::Model::RequestContext.new(application, {'model_name' => 'posts'}) }
   context 'type = markdown' do
     it 'should parse simple markdown headings' do
       value = '## Getting started'

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoupCMS::Api::Resolver::LinkResolver do
 
   context 'build published links' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
 
     it 'should resolve link dependency' do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
@@ -28,7 +28,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
   end
 
   context 'build drafts links' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'include' => 'drafts'} ) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'include' => 'drafts'} ) }
 
     it 'should add drafts to the url when context is drafts' do
       value = {'model_name' => 'posts', 'match' => {'tags' => 'popular'}}
@@ -40,7 +40,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
   end
 
   it 'build url using context model when model is not present in the link container hash' do
-    context = SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
+    context = SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
     value = { 'match' => {'tags' => 'popular'}}
     result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
     expect(continue).to eq(false)
@@ -49,7 +49,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
   end
 
   it 'should add application name if url is not absolute and application name not prefixed' do
-    context = SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
+    context = SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
     value = { 'url' => 'home' }
     result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
     expect(continue).to eq(false)
@@ -57,7 +57,7 @@ describe SoupCMS::Api::Resolver::LinkResolver do
   end
 
   it 'should include drafts if url is not absolute and application name not prefixed' do
-    context = SoupCMS::Api::Model::RequestContext.new(application, { 'include' => 'drafts' })
+    context = SoupCMS::Common::Model::RequestContext.new(application, { 'include' => 'drafts' })
     value = { 'url' => 'home' }
     result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
     expect(continue).to eq(false)

@@ -3,9 +3,9 @@ module SoupCMS
     module Controller
 
 
-      class ModelController
+      class ModelController < SoupCMS::Common::Controller::BaseController
 
-        def execute(context)
+        def execute
           service = SoupCMS::Api::Service::DocumentService.new(context)
           service.fetch_all || []
         end

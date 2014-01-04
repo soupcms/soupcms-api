@@ -3,9 +3,9 @@ module SoupCMS
     module Controller
 
 
-      class KeyValueController
+      class KeyValueController < SoupCMS::Common::Controller::BaseController
 
-        def execute(context)
+        def execute
           service = SoupCMS::Api::Service::DocumentService.new(context)
           service.fetch_one
         end

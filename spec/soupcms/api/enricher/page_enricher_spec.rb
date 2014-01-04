@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoupCMS::Api::Enricher::PageEnricher do
 
   context 'models other than pages' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
     it 'should be ignored' do
       document = { 'title' => 'Title' }
@@ -13,7 +13,7 @@ describe SoupCMS::Api::Enricher::PageEnricher do
   end
 
   context 'pages model' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'pages' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'pages' }) }
 
     it 'should add layout using enricher page when not present' do
       PageBuilder.enricher_page.create
@@ -36,7 +36,7 @@ describe SoupCMS::Api::Enricher::PageEnricher do
   end
 
   context 'use draft enricher' do
-    let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'pages', 'include' => 'drafts' }) }
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'pages', 'include' => 'drafts' }) }
 
     it 'should load draft version when context is drafts' do
       PageBuilder.enricher_page.with({'state' => SoupCMS::Api::DocumentState::DRAFT, 'latest' => true}).create
