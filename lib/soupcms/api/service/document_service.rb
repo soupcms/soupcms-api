@@ -17,7 +17,6 @@ module SoupCMS
         def fetch_all
           repo.tags(params['tags'].collect { |tag| tag }) unless params['tags'].empty?
           apply_custom_field_filters
-          repo.sort({ params['sort_by'] => params['sort_order'] }) if params['sort_by']
           repo.fetch_all.enrich(context).resolve(context)
         end
 
@@ -44,9 +43,10 @@ module SoupCMS
           sort_hash = {}
           sorts.each do |sort|
             if sort.match(/^-/)
-              sort_hash[sort.match(/^-/).post_match] = :descending
+              sort_hash[sort.gsub('-','').strip] = :descending
             else
-              sort_hash[sort] = :ascending
+              puts sort
+              sort_hash[sort.gsub('+','').strip] = :ascending
             end
           end
           sort_hash
@@ -56,28 +56,12 @@ module SoupCMS
           params['filters'].each { |filter|
             filter_value = params[filter]
             if filter_value.kind_of?(Array)
-              values = filter_value.collect { |v| eval_value(v) }
+              values = filter_value.collect { |v| SoupCMS::Common::Util::EvalValue.new(v).eval_value }
               repo.with(filter => { '$in' => values} )
             else
-              repo.with(filter => eval_value(filter_value))
+              repo.with(filter => SoupCMS::Common::Util::EvalValue.new(filter_value).eval_value )
             end
           }
-        end
-
-        def eval_value(value)
-          number?(value) || boolean?(value) || matcher?(value) ? eval(value) : value
-        end
-
-        def number?(value)
-          !value.match(/^([+-]?)\d*([\.]?)\d*$/).nil?
-        end
-
-        def boolean?(value)
-          value == 'true' || value == 'false'
-        end
-
-        def matcher?(value)
-          !value.match(/^\/.*\/$/).nil?
         end
 
       end
