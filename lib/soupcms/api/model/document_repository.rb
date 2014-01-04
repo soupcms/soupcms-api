@@ -1,4 +1,5 @@
 require 'bson'
+require 'mongo'
 
 module SoupCMS
   module Api
