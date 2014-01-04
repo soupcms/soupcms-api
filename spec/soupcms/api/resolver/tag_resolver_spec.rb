@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Resolver::LinkResolver do
 
-  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test','http://localhost:9292/soupcms-test') }
   let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'posts' }) }
 
   it 'should resolve link dependency' do

@@ -15,12 +15,12 @@ class SoupCMSApiRackApp
     headers = {'Content-Type' => 'application/json'}
 
     request = Rack::Request.new(env)
-    app_strategy = SoupCMSApi.config.application_strategy.new(request)
-    request.params['app_name'] = app_strategy.app_name
 
     request.params['tags'] = [].concat([request.params['tags']].flatten.compact)
     request.params['filters'] = [].concat([request.params['filters']].flatten.compact)
 
+    app_strategy = SoupCMSApi.config.application_strategy.new(request)
+    request.params['app_name'] = app_strategy.app_name
     application = app_strategy.application
     context = SoupCMS::Api::Model::RequestContext.new(application, request.params)
 

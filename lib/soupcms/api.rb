@@ -1,4 +1,5 @@
 require 'json'
+require 'soupcms/common'
 
 require 'soupcms/api/version'
 
@@ -26,11 +27,6 @@ rescue LoadError
   #puts "To load kramdown_markdown_resolver add gems 'kramdown'"
 end
 
-require 'soupcms/api/strategy/application/application_strategy'
-require 'soupcms/api/strategy/application/single_app'
-require 'soupcms/api/strategy/application/sub_domain_based'
-require 'soupcms/api/strategy/application/url_based'
-
 require 'soupcms/api/enricher/base'
 require 'soupcms/api/enricher/page_enricher'
 require 'soupcms/api/enricher/url_enricher'
@@ -40,7 +36,6 @@ require 'soupcms/api/utils/url_builder'
 require 'soupcms/api/utils/config'
 require 'soupcms/api/utils/http_cache_strategy'
 
-require 'soupcms/api/model/application'
 require 'soupcms/api/model/request_context'
 require 'soupcms/api/model/document'
 require 'soupcms/api/model/documents'

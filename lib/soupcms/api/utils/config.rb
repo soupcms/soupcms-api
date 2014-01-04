@@ -6,7 +6,7 @@ module SoupCMS
       class Config
 
         def application_strategy
-          @application_strategy ||= SoupCMS::Api::Strategy::Application::UrlBased
+          @application_strategy ||= SoupCMS::Common::Strategy::Application::UrlBased
         end
 
         def application_strategy=(strategy)

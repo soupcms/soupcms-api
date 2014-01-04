@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe SoupCMS::Api::Enricher::UrlEnricher do
 
-  let (:application) { SoupCMS::Api::Model::Application.new('soupcms-test','http://localhost:9292/soupcms-test') }
-
   context 'pages' do
     let (:context) { SoupCMS::Api::Model::RequestContext.new(application, { 'model_name' => 'pages' }) }
 

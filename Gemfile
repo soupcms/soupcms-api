@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'soupcms-common', path: '../soupcms-common'
+
 group :development do
   gem 'puma'
   gem 'rack-cache'
