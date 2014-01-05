@@ -23,8 +23,8 @@ module SoupCMS
             next if (index == 0 || index.even?)
             key = url_parts[index]
             value = url_parts[index+1]
-            params['filters'].push key
-            params[key] = value
+            params['filters'].push key if params['filters'].index(key).nil?
+            params[key] ? params[key] = [params[key], value].flatten : params[key] = value
           end
           params
         end
