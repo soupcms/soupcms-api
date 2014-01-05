@@ -5,7 +5,7 @@ class SoupCMSApiRackApp
     @router = SoupCMS::Common::Router.new
     @router.add ':model_name', SoupCMS::Api::Controller::ModelController
     @router.add ':model_name/tag-cloud', SoupCMS::Api::Controller::TagCloudController
-    @router.add ':model_name/:key/:value', SoupCMS::Api::Controller::KeyValueController
+    @router.add_route SoupCMS::Api::Route::MultiKeyValueRoute.new(SoupCMS::Api::Controller::MultiKeyValueController)
   end
 
   attr_accessor :router
@@ -26,7 +26,7 @@ class SoupCMSApiRackApp
     result = router.resolve(app_strategy.path, request.params).new(context).execute
 
     if result.nil?
-      return [404, headers, [{error: "Document #{request.params['value']} not found."}.to_json]]
+      return [404, headers, [{error: "Document #{app_strategy.path} not found."}.to_json]]
     else
       headers.merge! SoupCMSApi.config.http_caching_strategy.new.headers(request.params)
       [status, headers, [result.to_json]]

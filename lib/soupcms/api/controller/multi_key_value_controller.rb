@@ -3,7 +3,7 @@ module SoupCMS
     module Controller
 
 
-      class KeyValueController < SoupCMS::Common::Controller::BaseController
+      class MultiKeyValueController < SoupCMS::Common::Controller::BaseController
 
         def execute
           service = SoupCMS::Api::Service::DocumentService.new(context)

@@ -5,7 +5,9 @@ require 'soupcms/api/version'
 
 require 'soupcms/api/controller/model_controller'
 require 'soupcms/api/controller/tag_cloud_controller'
-require 'soupcms/api/controller/key_value_controller'
+require 'soupcms/api/controller/multi_key_value_controller'
+
+require 'soupcms/api/route/multi_key_value_route'
 
 require 'soupcms/api/resolver/data_resolver'
 require 'soupcms/api/resolver/base'

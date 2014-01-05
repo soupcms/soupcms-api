@@ -8,20 +8,22 @@ module SoupCMS
         def initialize(context)
           @context = context
           @params = context.params
-          @repo = SoupCMS::Api::DocumentRepository.new(context)
-          apply_common_filters
         end
 
         attr_reader :context, :params, :repo
 
+        def repo
+          @repo ||= SoupCMS::Api::DocumentRepository.new(context)
+        end
+
         def fetch_all
-          repo.tags(params['tags'].collect { |tag| tag }) unless params['tags'].empty?
-          apply_custom_field_filters
-          repo.fetch_all.enrich(context).resolve(context)
+          apply_common_filters
+          docs = repo.fetch_all
+          docs.enrich(context).resolve(context) if docs
         end
 
         def fetch_one
-          repo.with(params['key'] => params['value'])
+          apply_common_filters
           doc = repo.fetch_one
           doc.enrich(context).resolve(context) if doc
         end
@@ -33,6 +35,7 @@ module SoupCMS
         private
         def apply_common_filters
           context.drafts? ? repo.drafts : repo.published
+          apply_custom_field_filters
           repo.locale(params['locale']) if params['locale']
           repo.fields(params['fields']) if params['fields']
           repo.limit(params['limit'].to_i) if params['limit']
@@ -40,6 +43,7 @@ module SoupCMS
         end
 
         def sort_to_hash(sorts = [])
+          sorts = sorts || []
           sort_hash = {}
           sorts.each do |sort|
             if sort.match(/^-/)
@@ -52,7 +56,8 @@ module SoupCMS
         end
 
         def apply_custom_field_filters
-          params['filters'].each { |filter|
+          filters = params['filters'] || []
+          filters.each { |filter|
             filter_value = params[filter]
             if filter_value.kind_of?(Array)
               values = filter_value.collect { |v| SoupCMS::Common::Util::EvalValue.new(v).eval_value }
