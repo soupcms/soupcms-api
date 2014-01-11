@@ -5,15 +5,19 @@ module SoupCMS
 
       class UrlEnricher < Base
 
-        def enrich(page)
-          return unless page['slug']
+        def enrich(model)
+          return unless model['slug']
 
-          url = (context.model_name == 'pages') ?
-              File.join(context.application.app_base_url, page['slug']) :
-              File.join(context.application.app_base_url, context.model_name, page['slug'])
-
-          page['url'] = context.drafts? ? URI.escape(url + '?include=drafts') : URI.escape(url)
-
+          case context.model_name
+            when 'pages'
+              url = File.join(context.application.app_base_url, model['slug'])
+            when 'chapters'
+              puts model.to_hash
+              url = File.join(context.application.app_base_url, context.model_name, model['release'], model['slug'])
+            else
+              url = File.join(context.application.app_base_url, context.model_name, model['slug'])
+          end
+          model['url'] = context.drafts? ? URI.escape(url + '?include=drafts') : URI.escape(url)
         end
 
       end
