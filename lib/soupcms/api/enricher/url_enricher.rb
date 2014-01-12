@@ -12,7 +12,6 @@ module SoupCMS
             when 'pages'
               url = File.join(context.application.app_base_url, model['slug'])
             when 'chapters'
-              puts model.to_hash
               url = File.join(context.application.app_base_url, context.model_name, model['release'], model['slug'])
             else
               url = File.join(context.application.app_base_url, context.model_name, model['slug'])
