@@ -1,10 +1,4 @@
 require 'soupcms/api'
-require 'rack/cache'
-
-use Rack::Cache,
-    :metastore   => 'heap:/',
-    :entitystore => 'heap:/',
-    :verbose     => false
 
 SoupCMSApi.configure do |config|
   SoupCMS::Common::Strategy::Application::SingleApp.configure do |app|
