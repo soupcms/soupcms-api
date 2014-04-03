@@ -129,7 +129,7 @@ module SoupCMS
 
       def tag_cloud
 
-        result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, filters: @filters})
+        result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, query: @filters})
 
         docs = SoupCMS::Api::TagCloud.new
         result['results'].each do |tag|

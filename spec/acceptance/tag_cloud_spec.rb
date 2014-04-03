@@ -16,6 +16,7 @@ describe 'API' do
       BlogPostBuilder.new.with('state' => PUBLISHED, 'publish_datetime' => 1305000000, 'tags' => %w(tag1 tag2), 'title' => 'Title 1').create
       BlogPostBuilder.new.with('state' => PUBLISHED, 'publish_datetime' => 1306000000, 'tags' => %w(tag2 tag3), 'title' => 'Title 2').create
       BlogPostBuilder.new.with('state' => PUBLISHED, 'publish_datetime' => 1307000000, 'tags' => %w(tag4), 'title' => 'Title 3').create
+      BlogPostBuilder.new.with('state' => DRAFT, 'publish_datetime' => 1308000000, 'tags' => %w(tag1, tag2, tag4), 'title' => 'Title 4').create
     end
 
     it 'should return tag cloud with weight' do
