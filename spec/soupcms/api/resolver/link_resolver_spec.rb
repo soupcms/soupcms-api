@@ -37,6 +37,14 @@ describe SoupCMS::Api::Resolver::LinkResolver do
       expect(result['url']).to eq(URI.escape('http://localhost:9292/soupcms-test/posts?tags=popular&include=drafts'))
     end
 
+    it 'should include drafts if url is not absolute and application name not prefixed' do
+      context = SoupCMS::Common::Model::RequestContext.new(application, { 'include' => 'drafts' })
+      value = { 'url' => 'home' }
+      result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
+      expect(continue).to eq(false)
+      expect(result['url']).to eq('http://localhost:9292/soupcms-test/home?include=drafts')
+    end
+
   end
 
   it 'build url using context model when model is not present in the link container hash' do
@@ -49,19 +57,11 @@ describe SoupCMS::Api::Resolver::LinkResolver do
   end
 
   it 'should add application name if url is not absolute and application name not prefixed' do
-    context = SoupCMS::Common::Model::RequestContext.new(application, { 'model_name' => 'abcd'})
+    context = SoupCMS::Common::Model::RequestContext.new(application)
     value = { 'url' => 'home' }
     result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
     expect(continue).to eq(false)
     expect(result['url']).to eq('http://localhost:9292/soupcms-test/home')
-  end
-
-  it 'should include drafts if url is not absolute and application name not prefixed' do
-    context = SoupCMS::Common::Model::RequestContext.new(application, { 'include' => 'drafts' })
-    value = { 'url' => 'home' }
-    result, continue = SoupCMS::Api::Resolver::LinkResolver.new.resolve(value, context)
-    expect(continue).to eq(false)
-    expect(result['url']).to eq('http://localhost:9292/soupcms-test/home?include=drafts')
   end
 
 
