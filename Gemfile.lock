@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: e2704d3079df7f240735921a909e83340d803021
+  revision: 68ec5e35ad3b5ce51757fb2fcfd876fb7c144b12
   specs:
     soupcms-common (0.5.0)
 
@@ -31,18 +31,18 @@ GEM
       rack (>= 1.0)
     rake (10.3.2)
     redcarpet (3.1.2)
-    rspec (3.0.0.rc1)
-      rspec-core (= 3.0.0.rc1)
-      rspec-expectations (= 3.0.0.rc1)
-      rspec-mocks (= 3.0.0.rc1)
-    rspec-core (3.0.0.rc1)
-      rspec-support (= 3.0.0.rc1)
-    rspec-expectations (3.0.0.rc1)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+    rspec-core (3.0.0)
+      rspec-support (~> 3.0.0)
+    rspec-expectations (3.0.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.0.0.rc1)
-    rspec-mocks (3.0.0.rc1)
-      rspec-support (= 3.0.0.rc1)
-    rspec-support (3.0.0.rc1)
+      rspec-support (~> 3.0.0)
+    rspec-mocks (3.0.0)
+      rspec-support (~> 3.0.0)
+    rspec-support (3.0.0)
 
 PLATFORMS
   ruby
@@ -55,6 +55,6 @@ DEPENDENCIES
   rack-test
   rake
   redcarpet
-  rspec (~> 3.0.0.rc1)
+  rspec
   soupcms-api!
   soupcms-common!
