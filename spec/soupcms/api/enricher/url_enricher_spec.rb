@@ -18,6 +18,12 @@ describe SoupCMS::Api::Enricher::UrlEnricher do
       expect(document['url']).to be_nil
     end
 
+    it 'should not update url of the page if present' do
+      document = { 'title' => 'Title', 'url' => 'http://www.google.com', 'slug' => 'latest' }
+      SoupCMS::Api::Enricher::UrlEnricher.new(context).enrich(document)
+      expect(document['url']).to eq('http://www.google.com')
+    end
+
   end
 
   context 'posts' do

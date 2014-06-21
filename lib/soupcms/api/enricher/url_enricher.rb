@@ -6,6 +6,7 @@ module SoupCMS
       class UrlEnricher < Base
 
         def enrich(model)
+          return if model['url']
           return unless model['slug']
 
           case context.model_name
