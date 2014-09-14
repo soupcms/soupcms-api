@@ -12,7 +12,6 @@ module SoupCMS
 
       def self.resolvers
         @@resolvers ||= [
-            {key: /ref$/, resolver: SoupCMS::Api::Resolver::ReferenceResolver},
             {key: 'tags', resolver: SoupCMS::Api::Resolver::TagResolver},
             {key: /link$/, resolver: SoupCMS::Api::Resolver::LinkResolver}
         ]

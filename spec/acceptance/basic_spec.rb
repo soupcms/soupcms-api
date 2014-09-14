@@ -80,11 +80,11 @@ describe 'API' do
       end
 
       it 'should resolve reference dependency' do
-        BlogPostBuilder.new.with('slug' => 'second-post', 'state' => PUBLISHED, 'title' => 'Title 2').create
-        BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED, 'title' => 'Title 1', 'another_post_ref' => { 'model' => 'posts', 'match' => {'slug' => 'second-post'}}).create
+        BlogPostBuilder.new.with('doc_id' => 'second_post','slug' => 'second-post', 'state' => PUBLISHED, 'title' => 'Title 2').create
+        BlogPostBuilder.new.with('slug' => 'first-post', 'state' => PUBLISHED, 'title' => 'Title 1', 'another_post' => 'ref:posts:second_post').create
         get '/api/soupcms-test/posts/slug/first-post'
         doc = JSON.parse(last_response.body)
-        expect(doc['another_post_ref']['title']).to eq('Title 2')
+        expect(doc['another_post']['title']).to eq('Title 2')
       end
     end
 
