@@ -136,6 +136,65 @@ describe SoupCMS::Api::DataResolver do
 
   end
 
+  context 'value reference resolver' do
+    before(:each) do
+      BlogPostBuilder.new.with('create_datetime' => 1305000000, 'state' => SoupCMS::Api::DocumentState::PUBLISHED, 'title' => 'First Post', 'slug' => 'first_post', 'latest' => true, 'doc_id' => 'first_post').create
+      BlogPostBuilder.new.with('create_datetime' => 1305000000, 'state' => SoupCMS::Api::DocumentState::PUBLISHED, 'title' => 'Second Post', 'slug' => 'second_post', 'latest' => true, 'doc_id' => 'second_post','third_post' => 'ref:posts:third_post').create
+
+      BlogPostBuilder.new.with('create_datetime' => 1305000000, 'state' => SoupCMS::Api::DocumentState::PUBLISHED, 'title' => 'Third Post', 'slug' => 'third_post', 'latest' => true, 'doc_id' => 'third_post').create
+
+    end
+
+    it 'should resolve references at top level' do
+      document_hash = {
+          'my_first_post' => 'ref:posts:first_post',
+          'title' => 'My first post'
+      }
+      document = SoupCMS::Api::Document.new(document_hash)
+      SoupCMS::Api::DataResolver.new(context).resolve(document)
+      expect(document['my_first_post']['title']).to eq('First Post')
+    end
+
+
+    it 'should resolve references at deep level' do
+      document_hash = {
+          'my_posts' => {
+              'first' => 'ref:posts:first_post',
+              'second' => 'ref:posts:second_post'
+          },
+          'title' => 'My first post'
+      }
+      document = SoupCMS::Api::Document.new(document_hash)
+      SoupCMS::Api::DataResolver.new(context).resolve(document)
+      expect(document['my_posts']['first']['title']).to eq('First Post')
+      expect(document['my_posts']['second']['title']).to eq('Second Post')
+    end
+
+    it 'should resolve references within array' do
+      document_hash = {
+          'my_posts' => %w(ref:posts:first_post ref:posts:second_post),
+          'title' => 'My first post'
+      }
+      document = SoupCMS::Api::Document.new(document_hash)
+      SoupCMS::Api::DataResolver.new(context).resolve(document)
+      expect(document['my_posts'][0]['title']).to eq('First Post')
+      expect(document['my_posts'][1]['title']).to eq('Second Post')
+    end
+
+
+    it 'should continue to resolve referenced entity as well' do
+      document_hash = {
+          'my_post' => 'ref:posts:second_post',
+          'title' => 'My first post'
+      }
+      document = SoupCMS::Api::Document.new(document_hash)
+      SoupCMS::Api::DataResolver.new(context).resolve(document)
+      expect(document['my_post']['title']).to eq('Second Post')
+      expect(document['my_post']['third_post']['title']).to eq('Third Post')
+    end
+
+  end
+
 end
 
 

@@ -29,9 +29,15 @@ module SoupCMS
 
       def resolve_dependency_recursive(document)
         document.each do |key, value|
+
+          if value.kind_of?(String) && value.start_with?('ref:')
+            value, continue = SoupCMS::Api::Resolver::ValueReferenceResolver.new.resolve(value,@context)
+            document[key] = value
+          end
+
           resolvers = find_resolver(key)
           continue = true
-          if !resolvers.empty?
+          unless resolvers.empty?
             resolvers.each do |resolver|
               value, continue = resolver.new.resolve(value, @context)
               document[key] = value
@@ -40,7 +46,18 @@ module SoupCMS
             next unless continue
           end
           if value.kind_of?(Array)
-            document[key] = value.collect { |item| item.kind_of?(Hash) ? resolve_dependency_recursive(item) : item }
+
+            document[key] = value.collect do |item|
+              if item.kind_of?(Hash)
+                resolve_dependency_recursive(item)
+              elsif item.kind_of?(String) && item.start_with?('ref:')
+                item_value, continue = SoupCMS::Api::Resolver::ValueReferenceResolver.new.resolve(item,@context)
+                resolve_dependency_recursive(item_value)
+              else
+                item
+              end
+            end
+
           elsif value.kind_of?(Hash)
             document[key] = resolve_dependency_recursive(value)
           end
