@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: 6a952e46172693d95fc6d8adc0c5eae0a9c404d0
+  revision: aaedd7ec8070b4b5b55b21b0edd94ece8fe4b491
   specs:
     soupcms-common (0.5.0)
 
@@ -35,7 +35,7 @@ GEM
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
       rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.1)
+    rspec-core (3.1.2)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.0)
       diff-lcs (>= 1.2.0, < 2.0)
