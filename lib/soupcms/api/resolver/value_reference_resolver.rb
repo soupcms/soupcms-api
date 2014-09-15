@@ -14,7 +14,11 @@ module SoupCMS
           context.drafts? ? repo.drafts : repo.published
           repo.with({'doc_id' => parts[2]})
           doc = repo.fetch_one
-          return doc.to_hash, true
+          if doc.nil? then
+            return value, true
+          else
+            return doc.to_hash, true
+          end
         end
       end
 

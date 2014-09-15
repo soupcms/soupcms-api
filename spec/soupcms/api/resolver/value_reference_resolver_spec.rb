@@ -17,4 +17,11 @@ describe SoupCMS::Api::Resolver::ValueReferenceResolver do
     expect(result['title']).to eq('Title 1')
   end
 
+  it 'should return value back when could not resolve reference' do
+    value = 'ref:posts:second_post'
+    result, continue = SoupCMS::Api::Resolver::ValueReferenceResolver.new.resolve(value, context)
+    expect(result).to eq('ref:posts:second_post')
+
+  end
+
 end

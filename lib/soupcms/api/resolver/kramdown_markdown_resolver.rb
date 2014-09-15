@@ -31,6 +31,7 @@ module SoupCMS
             next unless image['src'].start_with?('ref:')
             src = image['src']
             image_doc, continue = ValueReferenceResolver.new.resolve(src, context)
+            next if image_doc == src
             image['data-src-desktop'] = File.join(base_url(image_doc,context),image_doc['desktop'])
             image['data-src-tablet'] = File.join(base_url(image_doc,context),image_doc['tablet']) if image_doc['tablet']
             image['data-src-mobile'] = File.join(base_url(image_doc,context),image_doc['mobile']) if image_doc['mobile']
