@@ -62,12 +62,59 @@ Content Cell  | Content Cell
 
   context 'image markdown syntax' do
 
-    it 'should parse and render referenced image' do
-      value = '![my image]($abc.png$)'
+    it 'should not resolve not referenced images' do
+      value = '![my image](http://www.soupcms.com/logo.png)'
       result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
 
       expect(continue).to eq(false)
-      expect(result['value']).to include('<img src="$abc.png$" alt="my image" />')
+      expect(result['value']).to include('<img src="http://www.soupcms.com/logo.png" alt="my image">')
+    end
+
+    it 'should resolve referenced image having only desktop version' do
+      ImageBuilder.new.with(
+              'doc_id' => 'posts/first-post/abc.png',
+              'desktop' => 'v1234/desktopMD5.png',
+              'desktopMD5' => 'desktopMD5'
+          ).create
+
+      value = '![my image](ref:images:posts/first-post/abc.png)'
+      result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
+
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png">')
+    end
+
+    it 'should resolve referenced image having all 3 versions' do
+      ImageBuilder.new.with(
+              'doc_id' => 'posts/first-post/abc.png',
+              'desktop' => 'v1234/desktopMD5.png',
+              'desktopMD5' => 'desktopMD5',
+              'mobile' => 'v1234/mobileMD5.png',
+              'mobileMD5' => 'mobileMD5',
+              'tablet' => 'v1234/tabletMD5.png',
+              'tabletMD5' => 'tabletMD5'
+          ).create
+
+      value = '![my image](ref:images:posts/first-post/abc.png)'
+      result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
+
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" data-src-tablet="http://cloudinary.com/v1234/tabletMD5.png" data-src-mobile="http://cloudinary.com/v1234/mobileMD5.png">')
+    end
+
+    it 'should resolve multiple referenced images' do
+      ImageBuilder.new.with(
+              'doc_id' => 'posts/first-post/abc.png',
+              'desktop' => 'v1234/desktopMD5.png',
+              'desktopMD5' => 'desktopMD5'
+          ).create
+
+      value = "![first image](ref:images:posts/first-post/abc.png)\n![second image](ref:images:posts/first-post/abc.png)"
+      result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
+
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<img alt="first image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png">')
+      expect(result['value']).to include('<img alt="second image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png">')
     end
 
   end

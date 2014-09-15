@@ -5,6 +5,8 @@ gemspec
 gem 'soupcms-common', github: 'soupcms/soupcms-common'
 #gem 'soupcms-common', path: '../soupcms-common'
 
+gem 'nokogiri'
+
 group :development do
   gem 'puma'
   gem 'rack-cache'
