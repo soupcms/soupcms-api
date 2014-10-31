@@ -36,7 +36,7 @@ module SoupCMS
             image['data-src-tablet'] = File.join(base_url(image_doc,context),image_doc['tablet']) if image_doc['tablet']
             image['data-src-mobile'] = File.join(base_url(image_doc,context),image_doc['mobile']) if image_doc['mobile']
             image.attributes['src'].remove
-            image['class'] = "responsive-image default-responsive-image markdown-image #{image['class']}"
+            image['class'] = "img-responsive default-responsive-image markdown-image #{image['class']}"
           end
           doc.to_html
         end

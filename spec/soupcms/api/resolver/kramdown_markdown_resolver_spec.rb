@@ -81,7 +81,7 @@ Content Cell  | Content Cell
       result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
 
       expect(continue).to eq(false)
-      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="responsive-image default-responsive-image markdown-image ">')
+      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="img-responsive default-responsive-image markdown-image ">')
     end
 
     it 'should resolve referenced image having all 3 versions' do
@@ -99,7 +99,7 @@ Content Cell  | Content Cell
       result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
 
       expect(continue).to eq(false)
-      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" data-src-tablet="http://cloudinary.com/v1234/tabletMD5.png" data-src-mobile="http://cloudinary.com/v1234/mobileMD5.png" class="responsive-image default-responsive-image markdown-image ">')
+      expect(result['value']).to include('<img alt="my image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" data-src-tablet="http://cloudinary.com/v1234/tabletMD5.png" data-src-mobile="http://cloudinary.com/v1234/mobileMD5.png" class="img-responsive default-responsive-image markdown-image ">')
     end
 
     it 'should resolve multiple referenced images' do
@@ -113,8 +113,8 @@ Content Cell  | Content Cell
       result, continue = SoupCMS::Api::Resolver::KramdownMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'kramdown', 'value' => value}, context)
 
       expect(continue).to eq(false)
-      expect(result['value']).to include('<img alt="first image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="responsive-image default-responsive-image markdown-image ">')
-      expect(result['value']).to include('<img alt="second image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="responsive-image default-responsive-image markdown-image ">')
+      expect(result['value']).to include('<img alt="first image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="img-responsive default-responsive-image markdown-image ">')
+      expect(result['value']).to include('<img alt="second image" data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png" class="img-responsive default-responsive-image markdown-image ">')
     end
 
   end
