@@ -69,6 +69,24 @@ Content Cell  | Content Cell
     end
   end
 
+  context 'image markdown syntax' do
+
+    it 'should resolve referenced image' do
+      ImageBuilder.new.with(
+          'doc_id' => 'posts/first-post/abc.png',
+          'desktop' => 'v1234/desktopMD5.png',
+          'desktopMD5' => 'desktopMD5'
+      ).create
+
+      value = '![my image](ref:images:posts/first-post/abc.png)'
+      result, continue = SoupCMS::Api::Resolver::RedcarpetMarkdownResolver.new.resolve({'type' => 'markdown','flavor' => 'redcarpet', 'value' => value}, context)
+
+      expect(continue).to eq(false)
+      expect(result['value']).to include('<img src="http://cloudinary.com/v1234/desktopMD5.png" alt="my image" class="img-responsive markdown-image ">')
+    end
+
+  end
+
 
 end
 
