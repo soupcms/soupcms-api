@@ -10,6 +10,14 @@ module SoupCMS
       include SoupCMS::Api::DocumentDefaults
 
       DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
+      @@database_connections = {}
+
+      def self.database_connection(mongo_uri)
+        if @@database_connections[mongo_uri].nil? || @@database_connections[mongo_uri].active?
+          @@database_connections[mongo_uri] = Mongo::MongoClient.from_uri(mongo_uri)
+        end
+        @@database_connections[mongo_uri].db
+      end
 
       def initialize(context)
         @context = context
@@ -26,8 +34,9 @@ module SoupCMS
 
       def collection
         return @collection if @collection
-        @collection ||= Mongo::MongoClient.from_uri(context.application.mongo_uri).db.collection(model_name)
+        @collection ||= SoupCMS::Api::DocumentRepository.database_connection(context.application.mongo_uri).collection(model_name)
       end
+
 
       def model_name
         @model_name || context.model_name
