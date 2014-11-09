@@ -39,7 +39,7 @@ module SoupCMS
           return value, true if value['type'] != 'markdown' || value['flavor'] != 'redcarpet'
           markdown = Redcarpet::Markdown.new(CodeRayHTML.new(with_toc_data: true), options)
           html = markdown.render(value['value'])
-          value['value'] = SoupCMS::Api::Resolver::Markdown::ImageRef.new.resolve(html,context)
+          value['value'] = SoupCMS::Api::Resolver::Markdown::Base.apply_resolvers(html, context)
           return value, false
         end
 

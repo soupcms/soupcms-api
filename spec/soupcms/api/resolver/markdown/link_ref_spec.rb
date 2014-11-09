@@ -11,10 +11,10 @@ describe SoupCMS::Api::Resolver::Markdown::LinkRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<a href="ref:posts:first-post">' }
-    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new }
+    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new(context) }
 
     it 'should resolve image references for desktop' do
-      result = link_ref.resolve(html_document, context)
+      result = link_ref.resolve(html_document)
       expect(result).to include('href="http://localhost:9292/soupcms-test/posts/my-first-post"')
     end
 
@@ -24,10 +24,10 @@ describe SoupCMS::Api::Resolver::Markdown::LinkRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<a href="ref:posts:first-post">' }
-    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new }
+    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new(context) }
 
     it 'should resolve image references for desktop' do
-      result = link_ref.resolve(html_document, context)
+      result = link_ref.resolve(html_document)
       expect(result).to include('href="ref:posts:first-post"')
     end
 
@@ -36,10 +36,10 @@ describe SoupCMS::Api::Resolver::Markdown::LinkRef do
   context 'continue to work for non-referenced link' do
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<a href="http://www.soupcms.com/home">' }
-    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new }
+    let (:link_ref) { SoupCMS::Api::Resolver::Markdown::LinkRef.new(context) }
 
     it 'should continue without any reference resolution for absolute link' do
-      result = link_ref.resolve(html_document, context)
+      result = link_ref.resolve(html_document)
       expect(result).to include('href="http://www.soupcms.com/home"')
     end
 

@@ -14,6 +14,8 @@ require 'soupcms/api/resolver/base'
 require 'soupcms/api/resolver/link_resolver'
 require 'soupcms/api/resolver/tag_resolver'
 require 'soupcms/api/resolver/value_reference_resolver'
+
+require 'soupcms/api/resolver/markdown/base'
 require 'soupcms/api/resolver/markdown/image_ref'
 require 'soupcms/api/resolver/markdown/link_ref'
 

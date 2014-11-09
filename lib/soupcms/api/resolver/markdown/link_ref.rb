@@ -3,19 +3,23 @@ module SoupCMS
     module Resolver
       module Markdown
 
-        class LinkRef
+        class LinkRef < Base
 
-          def resolve(html,context)
+          def resolve(html)
             doc = Nokogiri::HTML.fragment(html)
             links = doc.css('a')
             links.each do |link|
               next unless link['href'].start_with?('ref:')
-              href = link['href']
-              ref_doc, continue = ValueReferenceResolver.new.resolve(href, context)
-              next if ref_doc == href
-              link['href'] = SoupCMS::Api::Enricher::UrlEnricher.new(context).enrich(ref_doc)['url']
+              ref_href = link['href']
+              link['href'] = resolve_link(ref_href)
             end
             doc.to_html
+          end
+
+          def resolve_link(ref_href)
+            ref_doc, continue = ValueReferenceResolver.new.resolve(ref_href, context)
+            return ref_href if ref_doc == ref_href
+            SoupCMS::Api::Enricher::UrlEnricher.new(context).enrich(ref_doc)['url']
           end
 
 

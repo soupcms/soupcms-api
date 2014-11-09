@@ -3,9 +3,9 @@ module SoupCMS
     module Resolver
       module Markdown
 
-        class ImageRef
+        class ImageRef < Base
 
-          def resolve(html,context)
+          def resolve(html)
             doc = Nokogiri::HTML.fragment(html)
             images = doc.css('img')
             images.each do |image|

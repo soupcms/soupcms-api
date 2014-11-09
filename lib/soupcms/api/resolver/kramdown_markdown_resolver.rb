@@ -19,7 +19,7 @@ module SoupCMS
         def resolve(value, context)
           return value, true if value['type'] != 'markdown' || value['flavor'] != 'kramdown'
           html = Kramdown::Document.new(value['value'], options).to_html
-          value['value'] = SoupCMS::Api::Resolver::Markdown::ImageRef.new.resolve(html,context)
+          value['value'] = SoupCMS::Api::Resolver::Markdown::Base.apply_resolvers(html, context)
           return value, false
         end
 

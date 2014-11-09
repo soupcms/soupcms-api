@@ -18,30 +18,30 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<img alt="my image" src="ref:images:posts/first-post/abc.png" class="full-width">' }
-    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new(context) }
 
     it 'should resolve image references for desktop' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('data-src-desktop="http://cloudinary.com/v1234/desktopMD5.png"')
     end
 
     it 'should resolve image references for mobile' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('data-src-mobile="http://cloudinary.com/v1234/mobileMD5.png"')
     end
 
     it 'should resolve image references for tablet' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('data-src-tablet="http://cloudinary.com/v1234/tabletMD5.png"')
     end
 
     it 'should retain existing classes' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('full-width')
     end
 
     it 'should add responsive image classes' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('img-responsive default-responsive-image markdown-image')
     end
 
@@ -59,20 +59,20 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<img alt="my image" src="ref:images:posts/first-post/abc.png" class="full-width">' }
-    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new(context) }
 
     it 'should resolve image references for desktop' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('src="http://cloudinary.com/v1234/desktopMD5.png"')
     end
 
     it 'should retain existing classes' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('full-width')
     end
 
     it 'should add responsive image classes' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('img-responsive markdown-image ')
     end
 
@@ -81,10 +81,10 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
   context 'continue to work for non-referenced images' do
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<img alt="my image" src="http://www.soupcms.com/logo.png" class="full-width">' }
-    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new(context) }
 
     it 'should continue without any reference resolution for non referenced images' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('src="http://www.soupcms.com/logo.png"')
     end
 
@@ -94,10 +94,10 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<img alt="my image" src="ref:images:posts/first-post/abc.png" class="full-width">' }
-    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new(context) }
 
     it 'should continue without any reference resolution for non referenced images' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('src="ref:images:posts/first-post/abc.png"')
     end
   end
@@ -118,10 +118,10 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
 
     let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
     let (:html_document) { '<img alt="my image" src="ref:images:posts/first-post/abc.png" class="full-width"><img alt="my image" src="ref:images:posts/first-post/xyz.png" class="full-width">' }
-    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new(context) }
 
     it 'should resolve image references for desktop' do
-      result = image_ref.resolve(html_document, context)
+      result = image_ref.resolve(html_document)
       expect(result).to include('src="http://cloudinary.com/v1234/desktopMD5abc.png"')
       expect(result).to include('src="http://cloudinary.com/v1234/desktopMD5xyz.png"')
     end
