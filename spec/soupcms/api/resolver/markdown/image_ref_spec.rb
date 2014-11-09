@@ -88,6 +88,19 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
       expect(result).to include('src="http://www.soupcms.com/logo.png"')
     end
 
+  end
+
+  context 'invalid reference' do
+
+    let (:context) { SoupCMS::Common::Model::RequestContext.new(application) }
+    let (:html_document) { '<img alt="my image" src="ref:images:posts/first-post/abc.png" class="full-width">' }
+    let (:image_ref) { SoupCMS::Api::Resolver::Markdown::ImageRef.new }
+
+    it 'should continue without any reference resolution for non referenced images' do
+      result = image_ref.resolve(html_document, context)
+      expect(result).to include('src="ref:images:posts/first-post/abc.png"')
+    end
+  end
 
   context 'handle multiple images' do
     before(:each) do
@@ -115,8 +128,6 @@ describe SoupCMS::Api::Resolver::Markdown::ImageRef do
 
   end
 
-
-  end
 
 end
 

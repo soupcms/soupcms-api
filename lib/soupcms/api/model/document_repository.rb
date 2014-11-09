@@ -94,6 +94,7 @@ module SoupCMS
         options[:fields] = @fields.concat(['doc_id',@duplicate_docs_compare_key]).uniq unless @fields.empty?
         collection.find(@filters, options).sort(@sort).each do |doc|
           doc = SoupCMS::Api::Document.new(doc)
+          doc['model_name'] = @model_name
           docs.add(doc)
         end
         docs
