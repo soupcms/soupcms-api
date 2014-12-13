@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: a2f43bca5b94007de4c52efd464f38eca2f3e051
+  revision: 70dce869607c1f93039f270aaf92e9b89006c0ee
   specs:
     soupcms-common (0.5.0)
 
@@ -23,17 +23,17 @@ GEM
     mini_portile (0.6.1)
     mongo (1.11.1)
       bson (= 1.11.1)
-    nokogiri (1.6.4.1)
+    nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
-    puma (2.9.2)
+    puma (2.10.2)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.3.2)
-    redcarpet (3.2.0)
+    rake (10.4.2)
+    redcarpet (3.2.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
