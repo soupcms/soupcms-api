@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: 9561adbd27e8aaa28992d2f77514a196c2df4f2c
+  revision: 2fae436b8b68c9d1fcc9bb601869c8b8a838c90c
   specs:
     soupcms-common (0.5.0)
 
@@ -25,7 +25,7 @@ GEM
       bson (= 1.12.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    puma (2.11.0)
+    puma (2.11.1)
       rack (>= 1.1, < 2.0)
     rack (1.6.0)
     rack-cache (1.2)
@@ -38,15 +38,15 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
-    rspec-core (3.2.0)
+    rspec-core (3.2.1)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
-    rspec-mocks (3.2.0)
+    rspec-mocks (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
-    rspec-support (3.2.1)
+    rspec-support (3.2.2)
 
 PLATFORMS
   ruby
