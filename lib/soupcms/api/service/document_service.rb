@@ -47,9 +47,9 @@ module SoupCMS
           sort_hash = {}
           sorts.each do |sort|
             if sort.match(/^-/)
-              sort_hash[sort.gsub('-','').strip] = :descending
+              sort_hash[sort.gsub('-','').strip] = -1
             else
-              sort_hash[sort.gsub('+','').strip] = :ascending
+              sort_hash[sort.gsub('+','').strip] = 1
             end
           end
           sort_hash

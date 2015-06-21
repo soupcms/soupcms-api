@@ -130,7 +130,7 @@ describe 'filters n sorting' do
     it 'should return documents sorted based on specified field and order' do
       BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'B My first blog post'}).create
       BlogPostBuilder.new.with({'state' => PUBLISHED, 'title' => 'A My second blog post'}).create
-      documents = posts.published.sort({'title' => :asc}).fetch_all
+      documents = posts.published.sort({'title' => 1}).fetch_all
       expect(documents.size).to eq(2)
       expect(documents[0]['title']).to eq('A My second blog post')
       expect(documents[1]['title']).to eq('B My first blog post')

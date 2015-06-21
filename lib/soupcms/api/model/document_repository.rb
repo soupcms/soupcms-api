@@ -9,14 +9,14 @@ module SoupCMS
       include SoupCMS::Api::DocumentState
       include SoupCMS::Api::DocumentDefaults
 
-      DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => :desc}
+      DEFAULT_SORT_ON_PUBLISH_DATETIME = {'publish_datetime' => -1}
       @@database_connections = {}
 
       def self.database_connection(mongo_uri)
-        if @@database_connections[mongo_uri].nil? || @@database_connections[mongo_uri].active?
-          @@database_connections[mongo_uri] = Mongo::MongoClient.from_uri(mongo_uri)
+        if @@database_connections[mongo_uri].nil?
+          @@database_connections[mongo_uri] = Mongo::Client.new(mongo_uri)
         end
-        @@database_connections[mongo_uri].db
+        @@database_connections[mongo_uri].database
       end
 
       def initialize(context)
@@ -34,7 +34,7 @@ module SoupCMS
 
       def collection
         return @collection if @collection
-        @collection ||= SoupCMS::Api::DocumentRepository.database_connection(context.application.mongo_uri).collection(model_name)
+        @collection ||= SoupCMS::Api::DocumentRepository.database_connection(context.application.mongo_uri)[model_name]
       end
 
 
@@ -51,7 +51,7 @@ module SoupCMS
       end
 
       def drafts
-        @sort = {'create_datetime' => :desc}
+        @sort = {'create_datetime' => -1}
         @duplicate_docs_compare_key = 'create_datetime'
         @filters.delete('state') # remove if state added in filters, conflicting filters
         @filters.merge!({'latest' => true})
@@ -100,8 +100,12 @@ module SoupCMS
         locale(DEFAULT_LOCALE) unless @filters['locale']
         docs = SoupCMS::Api::Documents.new(@duplicate_docs_compare_key)
         options = {limit: @limit}
-        options[:fields] = @fields.concat(['doc_id',@duplicate_docs_compare_key]).uniq unless @fields.empty?
-        collection.find(@filters, options).sort(@sort).each do |doc|
+        projection = @fields.concat(['doc_id',@duplicate_docs_compare_key]).uniq unless @fields.empty?
+        view = collection.find(@filters)
+        view = view.projection(Hash[projection.collect {|f| [f,1] }]) if projection
+        view = view.sort(@sort) if @sort
+        view = view.limit(@limit) if @limit
+        view.each do |doc|
           doc = SoupCMS::Api::Document.new(doc)
           doc['model_name'] = @model_name
           docs.add(doc)
@@ -139,10 +143,13 @@ module SoupCMS
 
       def tag_cloud
 
-        result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, query: @filters})
+        #result = collection.map_reduce(TAG_CLOUD_MAP_FUNCTION, TAG_CLOUD_REDUCE_FUNCTION, {out: {inline: true}, raw: true, query: @filters})
+
+        map_reduce = Mongo::Collection::View::MapReduce.new(collection.find(@filters),TAG_CLOUD_MAP_FUNCTION,TAG_CLOUD_REDUCE_FUNCTION)
+        map_reduce.out(inline: 1)    
 
         docs = SoupCMS::Api::TagCloud.new
-        result['results'].each do |tag|
+        map_reduce.each do |tag|
           tag_result = {}
           tag_result['label'] = tag['_id']
           tag_result['weight'] = Integer(tag['value'])
