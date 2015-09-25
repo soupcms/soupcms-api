@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: 889efffcc269bdb6eabbf0ad06f4051a97cde903
+  revision: acb604c631fc859badfacee9e436bfd0ebb00eb9
   specs:
     soupcms-common (0.5.0)
 
@@ -13,16 +13,16 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    bson (3.1.2)
+    bson (3.2.4)
     coderay (1.1.0)
     diff-lcs (1.2.5)
     kramdown (1.8.0)
     mini_portile (0.6.2)
-    mongo (2.0.6)
+    mongo (2.1.0)
       bson (~> 3.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    puma (2.12.1)
+    puma (2.14.0)
     rack (1.6.4)
     rack-cache (1.2)
       rack (>= 0.4)
