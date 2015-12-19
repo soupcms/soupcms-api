@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: acb604c631fc859badfacee9e436bfd0ebb00eb9
+  revision: 92e0ba1825449f177b2b46a22461649881970895
   specs:
     soupcms-common (0.5.0)
 
@@ -13,16 +13,16 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    bson (3.2.6)
+    bson (4.0.0)
     coderay (1.1.0)
     diff-lcs (1.2.5)
     kramdown (1.9.0)
-    mini_portile (0.6.2)
-    mongo (2.1.2)
-      bson (~> 3.0)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
-    puma (2.15.2)
+    mini_portile2 (2.0.0)
+    mongo (2.2.1)
+      bson (~> 4.0)
+    nokogiri (1.6.7.1)
+      mini_portile2 (~> 2.0.0.rc2)
+    puma (2.15.3)
     rack (1.6.4)
     rack-cache (1.5.1)
       rack (>= 0.4)
@@ -30,19 +30,19 @@ GEM
       rack (>= 1.0)
     rake (10.4.2)
     redcarpet (3.3.3)
-    rspec (3.3.0)
-      rspec-core (~> 3.3.0)
-      rspec-expectations (~> 3.3.0)
-      rspec-mocks (~> 3.3.0)
-    rspec-core (3.3.2)
-      rspec-support (~> 3.3.0)
-    rspec-expectations (3.3.1)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.1)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-mocks (3.3.2)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-support (3.3.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
 
 PLATFORMS
   ruby
@@ -59,3 +59,6 @@ DEPENDENCIES
   rspec
   soupcms-api!
   soupcms-common!
+
+BUNDLED WITH
+   1.11.2
