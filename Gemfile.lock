@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/soupcms/soupcms-common.git
-  revision: 47cb99413ff06ca302b68d1ba2f189cd75cc09b2
+  revision: c5473df6fdb8ad5ee9112fb340a08bc10b73379b
   specs:
     soupcms-common (0.5.0)
 
@@ -13,22 +13,22 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    bson (4.0.4)
+    bson (4.1.1)
     coderay (1.1.1)
     diff-lcs (1.2.5)
-    kramdown (1.10.0)
+    kramdown (1.11.1)
     mini_portile2 (2.0.0)
-    mongo (2.2.4)
+    mongo (2.2.5)
       bson (~> 4.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    puma (3.2.0)
+    puma (3.4.0)
     rack (1.6.4)
     rack-cache (1.6.1)
       rack (>= 0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
-    rake (11.1.1)
+    rake (11.1.2)
     redcarpet (3.3.4)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -61,4 +61,4 @@ DEPENDENCIES
   soupcms-common!
 
 BUNDLED WITH
-   1.11.2
+   1.12.3
